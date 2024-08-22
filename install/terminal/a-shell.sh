@@ -5,7 +5,7 @@ fi
 
 [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ] && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-z" ] && git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
+[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-z" ] && git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
 
 # Configure the zsh shell using Omakma defaults since zsh became the default shell in macOS
 [ -f "$HOME/.zshrc" ] && mv $HOME/.zshrc $HOME/.zshrc.bak
