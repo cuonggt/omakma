@@ -1,0 +1,1 @@
+brew install jesseduffield/lazydocker/lazydocker

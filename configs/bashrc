@@ -1,0 +1,6 @@
+source ~/.local/share/omakma/defaults/bash/rc
+
+# Editor used by CLI
+export EDITOR=vim
+export SUDO_EDITOR="$EDITOR"
+export GIT_EDITOR=vim

@@ -1,0 +1,90 @@
+[alias]
+  pul = pull
+  pus = push
+
+  a = add
+  aa = add --all
+  ap = add --patch
+  au = add --update
+
+  b = branch
+  ba = branch --all
+  bd = branch --delete
+  bD = branch --delete --force
+  bm = branch --move
+  bM = branch --move --force
+
+  c = commit
+  ca = commit --amend
+  ci = commit --interactive
+  cm = commit --message
+  cv = commit --verbose
+
+  d = diff
+  dc = diff --cached
+  ds = diff --staged
+  dw = diff --word-diff
+
+  f = flow
+
+  ff = flow feature
+  ffs = flow feature start
+  ffo = flow feature checkout
+  ffp = flow feature publish
+
+  fh = flow hotfix
+  fhs = flow hotfix start
+  fho = flow hotfix checkout
+  fhp = flow hotfix publish
+
+  l = log
+  lg = log --graph
+  lk = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset'
+  lo = log --oneline
+  lp = log --patch
+  lt = log --topo-order
+
+  o = checkout
+  ob = checkout -b
+
+  s = status --short --branch
+
+  branch-list-merged = "!git branch --merged develop | grep -v -E '(develop|origin|master)'"
+  branch-delete-merged = "!git branch-list-merged | xargs git branch -d"
+
+  unstage = reset HEAD
+  undo-commit = reset --soft HEAD^
+  set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
+
+[color]
+  ui = auto
+[core]
+  editor = nvim
+  excludesfile = ~/.local/share/omakma/configs/git/gitignore_global
+[diff]
+  tool = vimdiff
+[fetch]
+  prune = true
+[help]
+  autocorrect = 10
+[include]
+  path = ~/.gitconfig_local
+[push]
+  default = current
+[rerere]
+  enabled = true
+[merge]
+  conflictstyle = diff3
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  line-numbers = true
+  syntax-theme = Dracula
+  plus-style = "syntax #2A363B"
+  plus-emph-style = "syntax #2D4E45"
+  minus-style = "syntax #3B2C37"
+  minus-emph-style = "syntax #613038"
+[pull]
+  rebase = true
+[init]
+  defaultBranch = master

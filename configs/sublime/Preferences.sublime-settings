@@ -1,0 +1,106 @@
+{
+  // Sets the colors used within the text area.
+  "color_scheme": "Packages/Inspired GitHub Color Scheme/InspiredGitHub.tmtheme-1.3.1/InspiredGitHub.tmTheme",
+
+  "font_face": "JetBrainsMono Nerd Font Mono",
+  "font_size": 16,
+  "font_options": [],
+
+  // Set to true to insert spaces when tab is pressed
+  "translate_tabs_to_spaces": true,
+
+  // Adds whitespace up to the first open bracket when indenting. Requires
+  // auto_indent to be enabled.
+  "indent_to_bracket": true,
+
+  // Disables horizontal scrolling if enabled.
+  // May be set to true, false, or "auto", where it will be disabled for
+  // source code, and otherwise enabled.
+  "word_wrap": false,
+
+  // Valid values are "smooth", "phase", "blink" and "solid". Previous
+  // versions of Sublime Text used "smooth" by default.
+  "caret_style": "phase",
+
+  // Additional spacing at the top of each line, in pixels
+  "line_padding_top": 10,
+
+  // Additional spacing at the bottom of each line, in pixels
+  "line_padding_bottom": 10,
+
+  // Controls where trailing white space is removed on save.
+  // - "none": Do not remove any trailing white space on save.
+  // - "all": Remove all trailing white space on save.
+  // - "not_on_caret": Only remove white space that won't affect the caret.
+  //                   When used in conjunction with "save_on_focus_lost" and
+  //                   certain desktop environments that frequently make the
+  //                   application lose focus this avoids the caret jumping
+  //                   around a lot.
+  "trim_trailing_white_space_on_save": "all",
+
+  // Set to true to ensure the last line of the file ends in a newline
+  // character when saving
+  "ensure_newline_at_eof_on_save": true,
+
+  // When enabled, hovering over a word will show a popup listing all
+  // possible locations for the definition symbol. Requires index_files.
+  "show_definitions": false,
+
+  //
+  // User Interface Settings
+  //
+
+  // The theme controls the look of Sublime Text's UI (buttons, tabs, scroll
+  // bars, etc)
+  // The value "auto" will switch between the "light_theme" and "dark_theme"
+  // based on the operating system appearance.
+  "theme": "auto",
+
+  "light_theme": "Github Light.sublime-theme",
+  "dark_theme": "Github Dark.sublime-theme",
+
+  // Determines which side the close button is on
+  "show_tab_close_buttons_on_left": true,
+
+  // Show folders in the sidebar in bold
+  "bold_folder_labels": true,
+
+  // Valid values are "system", "enabled" and "disabled"
+  "overlay_scroll_bars": "enabled",
+
+  //
+  // Application Behavior Settings
+  //
+
+  // Exiting the application with hot_exit enabled will cause it to close
+  // immediately without prompting. Unsaved modifications and open files will
+  // be preserved and restored when next starting.
+  //
+  // Hot exit has different modes to choose from:
+  // - "always": Always perform a hot exit when the application exits. This
+  //             includes when the last window is closed on relevant
+  //             platforms.
+  // - "only_on_quit": Only perform a hot exit when the application is asked
+  //                   to exit, not when the last window is closed. This
+  //                   setting is only used on Windows and Linux.
+  // - "disabled": Disable hot exit.
+  "hot_exit": "disabled",
+
+  // Set to true to close windows as soon as the last file is closed, unless
+  // there's a folder open within the window.
+  // On Mac, this value is overridden in the platform specific settings, so
+  // you'll need to place this line in your user settings to override it.
+  "close_windows_when_empty": true,
+
+  // Shows the Build Results panel when building. If set to false, the Build
+  // Results can be shown via the Tools/Build Results menu.
+  "show_panel_on_build": false,
+
+  // List any packages to ignore here. When removing entries from this list,
+  // a restart may be required if the package contains plugins.
+  "ignored_packages": ["Vintage"],
+
+  "added_words": ["Laravel"],
+  "phpunit-sublime-terminal": "iTerm",
+  "show_minimap": false
+}

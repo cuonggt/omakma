@@ -1,0 +1,11 @@
+brew install fzf
+brew install ripgrep
+brew install bat
+brew install eza
+brew install zoxide
+brew install btop
+brew install fd
+brew install tlrc
+brew install gnu-sed
+brew install tmux
+brew install overmind

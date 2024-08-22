@@ -1,0 +1,57 @@
+#--------------------------------------------------------------------------
+# Oh My Zsh
+#--------------------------------------------------------------------------
+
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+HYPHEN_INSENSITIVE="true"
+COMPLETION_WAITING_DOTS="true"
+HIST_STAMPS="yyyy-mm-dd"
+VI_MODE_SET_CURSOR=true
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-z
+)
+
+source $ZSH/oh-my-zsh.sh
+
+#--------------------------------------------------------------------------
+# Configuration
+#--------------------------------------------------------------------------
+
+# Decrease delay that vi-mode waits for the end of a key sequence
+export KEYTIMEOUT=15
+
+typeset -U path cdpath fpath
+path=(
+  /usr/local/bin
+  $HOME/.local/bin
+  $HOME/.local/share/omakma/bin
+  $HOME/.composer/vendor/bin
+  $HOME/.cargo/bin
+  /opt/homebrew/Cellar/mysql-client@8.4/8.4.2/bin
+  $path
+)
+
+setopt auto_cd
+cdpath=(
+  $HOME/Sites
+  $HOME/Projects
+  $HOME/Codes
+  $HOME/Work
+)
+
+unsetopt sharehistory
+
+source $HOME/.local/share/omakma/defaults/bash/rc
+
+# Editor used by CLI
+export EDITOR=vim
+export SUDO_EDITOR="$EDITOR"
+export GIT_EDITOR=vim
