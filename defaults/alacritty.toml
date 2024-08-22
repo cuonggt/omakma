@@ -8,3 +8,7 @@ decorations = "Buttonless"
 opacity = 0.97
 blur = true
 option_as_alt = "Both"
+
+[font]
+normal.family = "JetBrainsMono Nerd Font Mono"
+size = 16

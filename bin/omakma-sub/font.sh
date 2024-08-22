@@ -8,7 +8,7 @@ set_font() {
     cd /tmp
     wget -O "$file_name.zip" "$url"
     unzip "$file_name.zip" -d "$file_name"
-    cp "$file_name"/*."$file_type" /Library/Fonts
+    cp "$file_name"/*."$file_type" $HOME/Library/Fonts
     rm -rf "$file_name.zip" "$file_name"
     fc-cache
     cd -
@@ -16,7 +16,7 @@ set_font() {
     source $OMAKMA_PATH/ascii.sh
   fi
 
-  cp "$OMAKMA_PATH/configs/alacritty/fonts/$file_name.toml" ~/.config/alacritty/font.toml
+  cp "$OMAKMA_PATH/configs/alacritty/fonts/$file_name.toml" $HOME/.config/alacritty/font.toml
   gsed -i "s/\"font_face\": \".*\"/\"font_face\": \"$file_name Nerd Font Mono, monospace\"/g" $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
   # gsed -i "s/\"editor.fontFamily\": \".*\"/\"editor.fontFamily\": \"$file_name Nerd Font Mono, monospace\"/g" $HOME/Library/Application\ Support/Code/User/settings.json
 }
