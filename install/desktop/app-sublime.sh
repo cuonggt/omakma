@@ -20,33 +20,19 @@ if [ ! -f $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages/P
 fi
 
 if [ ! -d $HOME/Library/Application\ Support/Sublime\ Text/Packages/Github\ Theme ]; then
-  cd /tmp
-  wget -O github-sublime-theme-4070-2.6.0.tar.gz https://github.com/mauroreisvieira/github-sublime-theme/archive/refs/tags/4070-2.6.0.tar.gz
-  tar -xzf github-sublime-theme-4070-2.6.0.tar.gz
-  mv github-sublime-theme-4070-2.6.0 $HOME/Library/Application\ Support/Sublime\ Text/Packages/Github\ Theme
-  rm github-sublime-theme-4070-2.6.0.tar.gz
-  cd -
+  git clone https://github.com/mauroreisvieira/github-sublime-theme.git $HOME/Library/Application\ Support/Sublime\ Text/Packages/Github\ Theme
 fi
 
-if [ ! -f $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages/Inspired\ GitHub\ Color\ Scheme.sublime-package ]; then
-  cd /tmp
-  wget -O Inspired\ GitHub\ Color\ Scheme.sublime-package https://github.com/sethlopezme/InspiredGitHub.tmtheme/archive/refs/tags/v1.3.1.zip
-  mv Inspired\ GitHub\ Color\ Scheme.sublime-package $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages/Inspired\ GitHub\ Color\ Scheme.sublime-package
-  cd -
+if [ ! -d $HOME/Library/Application\ Support/Sublime\ Text/Packages/Inspired\ GitHub\ Color\ Scheme ]; then
+  git clone https://github.com/sethlopezme/InspiredGitHub.tmtheme.git $HOME/Library/Application\ Support/Sublime\ Text/Packages/Inspired\ GitHub\ Color\ Scheme
 fi
 
-if [ ! -f $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages/A\ File\ Icon.sublime-package ]; then
-  cd /tmp
-  wget -O A\ File\ Icon.sublime-package https://github.com/SublimeText/AFileIcon/releases/download/3.28.0/A.File.Icon.sublime-package
-  mv A\ File\ Icon.sublime-package $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages/A\ File\ Icon.sublime-package
-  cd -
+if [ ! -d $HOME/Library/Application\ Support/Sublime\ Text/Packages/AFileIcon ]; then
+  git clone https://github.com/SublimeText/AFileIcon.git $HOME/Library/Application\ Support/Sublime\ Text/Packages/AFileIcon
 fi
 
 if [ ! -d $HOME/Library/Application\ Support/Sublime\ Text/Packages/AdvancedNewFile ]; then
-  cd /tmp
-  git clone https://github.com/SublimeText/AdvancedNewFile
-  mv AdvancedNewFile $HOME/Library/Application\ Support/Sublime\ Text/Packages/AdvancedNewFile
-  cd -
+  git clone https://github.com/SublimeText/AdvancedNewFile.git $HOME/Library/Application\ Support/Sublime\ Text/Packages/AdvancedNewFile
 fi
 
 cp $HOME/.local/share/omakma/configs/sublime/minimap_setting.py $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/minimap_setting.py
