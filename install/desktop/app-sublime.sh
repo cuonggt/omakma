@@ -9,6 +9,9 @@ fi
 
 sudo ln -fs /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 
+mkdir -p $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages
+mkdir -p $HOME/Library/Application\ Support/Sublime\ Text/Packages/User
+
 if [ ! -f $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages/Package\ Control.sublime-package ]; then
   cd /tmp
   wget -O package_control.sublime-package https://packagecontrol.io/Package%20Control.sublime-package
@@ -46,7 +49,6 @@ if [ ! -d $HOME/Library/Application\ Support/Sublime\ Text/Packages/AdvancedNewF
   cd -
 fi
 
-mkdir -p $HOME/Library/Application\ Support/Sublime\ Text/Packages/User
 cp $HOME/.local/share/omakma/configs/sublime/minimap_setting.py $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/minimap_setting.py
 [ -f "$HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings" ] && mv $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings.bak
 cp $HOME/.local/share/omakma/configs/sublime/Preferences.sublime-settings $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
