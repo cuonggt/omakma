@@ -17,7 +17,7 @@ rm -rf $HOME/.local/share/omakma
 git clone https://github.com/cuonggt/omakma.git $HOME/.local/share/omakma >/dev/null
 if [[ $OMAKMA_REF != "master" ]]; then
   cd $HOME/.local/share/omakma
-  git fetch origin "${OMAKMA_REF:-stable}" && git checkout "${OMAKMA_REF:-stable}"
+  git fetch origin "${OMAKMA_REF:-master}" && git checkout "${OMAKMA_REF:-master}"
   cd -
 fi
 
