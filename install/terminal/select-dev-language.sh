@@ -29,6 +29,7 @@ if [[ -n "$languages" ]]; then
       ;;
     Ruby)
       mise use --global ruby@3.3
+      gem install ruby-lsp
       ;;
     Node.js)
       mise use --global node@lts
