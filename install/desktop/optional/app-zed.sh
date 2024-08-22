@@ -1,3 +1,3 @@
 if [ ! -d /Applications/Zed.app ]; then
-  curl https://zed.dev/install.sh | sh
+  brew install --cask zed
 fi
