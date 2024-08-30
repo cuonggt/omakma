@@ -1,7 +1,6 @@
-if [ ! -d $HOME/Library/Application\ Support/Sublime\ Text/Packages/Catppuccin ]; then
-  git clone https://github.com/catppuccin/sublime-text.git $HOME/Library/Application\ Support/Sublime\ Text/Packages/Catppuccin
-fi
-
-gsed -i "s/\"color_scheme\": \".*\"/\"color_scheme\": \"Catppuccin Latte.sublime-color-scheme\"/g" $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
-gsed -i "s/\"light_theme\": \".*\"/\"light_theme\": \"Default.sublime-theme\"/g" $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
-gsed -i "s/\"dark_theme\": \".*\"/\"dark_theme\": \"Default Dark.sublime-theme\"/g" $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
+SUBLIME_PACKAGE_NAME="Catppuccin"
+SUBLIME_PACKAGE_GITHUB="catppuccin/sublime-text"
+SUBLIME_COLOR_SCHEME="Catppuccin Latte"
+SUBLIME_LIGHT_THEME="Default"
+SUBLIME_DARK_THEME="Default Dark"
+source $OMAKMA_PATH/themes/set-sublime-theme.sh
