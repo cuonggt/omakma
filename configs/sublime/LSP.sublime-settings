@@ -1,15 +1,15 @@
 {
-    "clients": {
-        "ruby-lsp": {
-            "enabled": true,
-            "command": ["ruby-lsp"],
-            "selector": "source.ruby | text.html.ruby",
-            "initializationOptions": {
-                "enabledFeatures": {
-                    "diagnostics": true
-                },
-                "experimentalFeaturesEnabled": true
-            }
-        }
+  "clients": {
+    "ruby-lsp": {
+      "enabled": true,
+      "command": ["ruby-lsp"],
+      "selector": "source.ruby | text.html.ruby",
+      "initializationOptions": {
+        "enabledFeatures": {
+          "diagnostics": true
+        },
+        "experimentalFeaturesEnabled": true
+      }
     }
+  }
 }
