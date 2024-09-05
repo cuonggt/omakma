@@ -4,6 +4,7 @@ CHOICES=(
   "Brave         Chrome-based browser with built-in ad blocking"
   "Dropbox       Sync files across computers with ease"
   "Ollama        Run LLMs, like Meta's Llama3, locally"
+  "OpenKey       Bộ gõ tiếng Việt miễn phí mã nguồn mở"
   "PhpStorm      IntelliJ's commercial PHP editor"
   "Pritunl       OpenVPN client"
   "RubyMine      IntelliJ's commercial Ruby editor"
