@@ -1,3 +1,4 @@
 source $HOME/.local/share/omakma/defaults/bash/shell
 source $HOME/.local/share/omakma/defaults/bash/aliases
+source $HOME/.local/share/omakma/defaults/bash/prompt
 source $HOME/.local/share/omakma/defaults/bash/init
