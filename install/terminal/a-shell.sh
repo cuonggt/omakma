@@ -20,6 +20,6 @@ touch $HOME/.hushlogin
 # Load the PATH for use later in the installers
 source $HOME/.local/share/omakma/defaults/bash/shell
 
-[ -f "$HOME/.inputrc" ] && mv $HOME/.inputrc $HOME/.inputrc.bak
 # Configure the inputrc using Omakma defaults
+[ -f "$HOME/.inputrc" ] && mv $HOME/.inputrc $HOME/.inputrc.bak
 cp $HOME/.local/share/omakma/configs/inputrc $HOME/.inputrc
