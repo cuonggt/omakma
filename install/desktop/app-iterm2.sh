@@ -2,6 +2,7 @@ if [ ! -d /Applications/iTerm.app ]; then
   brew install --cask iterm2
 fi
 
+mkdir -p $HOME/Library/Application\ Support/iTerm2/DynamicProfiles
 cp $HOME/.local/share/omakma/configs/iterm2.json $HOME/Library/Application\ Support/iTerm2/DynamicProfiles/omakma.json
 ITERM2_DEFAULT_PROFILE_GUID=$(uuidgen)
 gsed -i "s/\"Guid\" : \".*\"/\"Guid\" : \"$ITERM2_DEFAULT_PROFILE_GUID\"/g" $HOME/Library/Application\ Support/iTerm2/DynamicProfiles/omakma.json
