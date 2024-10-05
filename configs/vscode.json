@@ -10,7 +10,7 @@
     "workbench.startupEditor": "none",
     "workbench.tree.expandMode": "singleClick",
     "workbench.tree.indent": 10,
-    "editor.fontFamily": "JetBrainsMono Nerd Font Mono, Zed Mono Extended, Input Mono, OperatorMono-Book, IntelOne Mono, SF Mono, Fira Code, monospace",
+    "editor.fontFamily": "JetBrainsMono Nerd Font Mono, monospace",
     "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss06', 'zero'",
     "editor.fontSize": 14,
     "editor.lineHeight": 35,

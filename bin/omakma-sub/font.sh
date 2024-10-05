@@ -21,7 +21,7 @@ set_font() {
   gsed -i "s/\"editor.fontFamily\": \".*\"/\"editor.fontFamily\": \"$file_name Nerd Font Mono, monospace\"/g" $HOME/Library/Application\ Support/Code/User/settings.json
 }
 
-FONT_NAMES=("JetBrains Mono" "Cascadia Mono" "Fira Mono" "Meslo" "Zed Mono" "IntelOne Mono")
+FONT_NAMES=("JetBrains Mono" "Cascadia Mono" "Fira Mono" "Meslo")
 
 if [ "$#" -gt 1 ]; then
   choice=${!#}
@@ -41,12 +41,6 @@ case $choice in
   ;;
 "Meslo")
   set_font "MesloLGS Nerd Font" "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.zip" "ttf"
-  ;;
-"Zed Mono")
-  set_font "ZedMono Nerd Font" "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/ZedMono.zip" "ttf"
-  ;;
-"IntelOne Mono")
-  set_font "IntoneMono Nerd Font" "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IntelOneMono.zip" "ttf"
   ;;
 "> Change size")
   source $OMAKMA_PATH/bin/omakma-sub/font-size.sh
