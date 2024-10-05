@@ -3,6 +3,8 @@ THEME=$(gum choose "${THEME_NAMES[@]}" "<< Back" --header "Choose your theme" --
 
 if [ -n "$THEME" ] && [ "$THEME" != "<<-back" ]; then
   cp $OMAKMA_PATH/themes/$THEME/alacritty.toml $HOME/.config/alacritty/theme.toml
+  cp $OMAKMA_PATH/themes/$THEME/zellij.kdl ~/.config/zellij/themes/$THEME.kdl
+  gsed -i "s/theme \".*\"/theme \"$THEME\"/g" ~/.config/zellij/config.kdl
   cp $OMAKMA_PATH/themes/$THEME/neovim.lua $HOME/.config/nvim/lua/plugins/theme.lua
 
   source $OMAKMA_PATH/themes/$THEME/sublime.sh
