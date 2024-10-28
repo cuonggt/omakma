@@ -19,7 +19,7 @@ echo "Get ready to make a few choices..."
 source $HOME/.local/share/omakma/install/terminal/required/app-gum.sh >/dev/null
 source $HOME/.local/share/omakma/install/first-run-choices.sh
 
-echo "Installing terminal and desktop tools.."
+echo "Installing terminal and desktop tools..."
 
 # Install terminal tools
 source $HOME/.local/share/omakma/install/terminal.sh
