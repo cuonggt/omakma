@@ -17,7 +17,6 @@ code --install-extension patbenatar.advanced-new-file
 code --install-extension steoates.autoimport
 code --install-extension antfu.icons-carbon
 code --install-extension streetsidesoftware.code-spell-checker
-code --install-extension Codeium.codeium
 code --install-extension naumovs.color-highlight
 code --install-extension ms-vscode-remote.remote-containers
 code --install-extension ms-azuretools.vscode-docker
@@ -32,8 +31,6 @@ code --install-extension golang.Go
 code --install-extension Lokalise.i18n-ally
 code --install-extension antfu.iconify
 code --install-extension Zignd.html-css-class-completion
-code --install-extension shufo.vscode-blade-formatter
-code --install-extension amiralizadeh9480.laravel-extra-intellisense
 code --install-extension christian-kohler.npm-intellisense
 code --install-extension christian-kohler.path-intellisense
 code --install-extension bmewburn.vscode-intelephense-client
@@ -58,3 +55,4 @@ code --install-extension antfu.theme-vitesse
 code --install-extension KoichiSasada.vscode-rdbg
 code --install-extension bung87.vscode-gemfile
 code --install-extension redhat.vscode-yaml
+code --install-extension laravel.vscode-laravel
