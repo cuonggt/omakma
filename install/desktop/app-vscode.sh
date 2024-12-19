@@ -56,3 +56,5 @@ code --install-extension KoichiSasada.vscode-rdbg
 code --install-extension bung87.vscode-gemfile
 code --install-extension redhat.vscode-yaml
 code --install-extension laravel.vscode-laravel
+code --install-extension GitHub.copilot
+code --install-extension GitHub.copilot-chat
