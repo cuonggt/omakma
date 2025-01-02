@@ -35,7 +35,7 @@ path=(
   $HOME/.local/share/omakma/bin
   $HOME/.composer/vendor/bin
   $HOME/.cargo/bin
-  /opt/homebrew/Cellar/mysql-client@8.4/8.4.2/bin
+  /opt/homebrew/opt/mysql-client@8.4/bin
   $path
 )
 
