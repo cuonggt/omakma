@@ -1,7 +1,7 @@
 [env]
 TERM = "xterm-256color"
 
-[terminal.shell]
+[shell]
 program = "/opt/homebrew/bin/zellij"
 
 [window]
