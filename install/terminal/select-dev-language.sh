@@ -28,7 +28,8 @@ if [[ -n "$languages" ]]; then
       fi
       ;;
     Ruby)
-      mise use --global ruby@3.3
+      mise use --global ruby@latest
+      mise x ruby -- gem install rails --no-document
       ;;
     Node.js)
       mise use --global node@lts
