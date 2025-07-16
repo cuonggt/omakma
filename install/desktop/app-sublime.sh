@@ -1,13 +1,6 @@
 if [ ! -d /Applications/Sublime\ Text.app ]; then
-  cd /tmp
-  wget -O sublime_text.zip 'https://download.sublimetext.com/sublime_text_build_4180_mac.zip'
-  unzip sublime_text.zip
-  sudo mv Sublime\ Text.app /Applications
-  rm sublime_text.zip
-  cd -
+  brew install --cask sublime-text
 fi
-
-sudo ln -fs /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 
 mkdir -p $HOME/Library/Application\ Support/Sublime\ Text/Installed\ Packages
 mkdir -p $HOME/Library/Application\ Support/Sublime\ Text/Packages/User

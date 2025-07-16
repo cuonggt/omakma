@@ -12,6 +12,8 @@ echo -e "$ascii_art"
 echo "=> Omakma is for fresh macOS Sonoma 14.5 installations only!"
 echo -e "\nBegin installation (or abort with ctrl+c)..."
 
+sudo xcode-select --install
+
 echo "Cloning Omakma..."
 rm -rf $HOME/.local/share/omakma
 git clone https://github.com/cuonggt/omakma.git $HOME/.local/share/omakma >/dev/null
