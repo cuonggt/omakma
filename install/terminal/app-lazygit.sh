@@ -1,1 +1,1 @@
-brew install jesseduffield/lazygit/lazygit
+brew install lazygit
