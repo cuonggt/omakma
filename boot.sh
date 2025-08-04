@@ -39,5 +39,5 @@ if [[ $OMAKMA_REF != "master" ]]; then
   cd -
 fi
 
-# echo -e "\nInstallation starting..."
-# source ~/.local/share/omakma/install.sh
+echo -e "\nInstallation starting..."
+source ~/.local/share/omakma/install.sh
