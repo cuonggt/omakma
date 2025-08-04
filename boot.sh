@@ -2,16 +2,18 @@
 
 set -e
 
-ascii_art=' ██████╗ ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ███╗ █████╗
-██╔═══██╗████╗ ████║██╔══██╗██║ ██╔╝██║████╗ ████║██╔══██╗
-██║   ██║██╔████╔██║███████║█████╔╝ ██║██╔████╔██║███████║
-██║   ██║██║╚██╔╝██║██╔══██║██╔═██╗ ██║██║╚██╔╝██║██╔══██║
-╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██╗██║██║ ╚═╝ ██║██║  ██║
- ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝'
+ascii_art='
+ ██████╗ ███╗   ███╗ █████╗ ██╗  ██╗███╗   ███╗ █████╗
+██╔═══██╗████╗ ████║██╔══██╗██║ ██╔╝████╗ ████║██╔══██╗
+██║   ██║██╔████╔██║███████║█████╔╝ ██╔████╔██║███████║
+██║   ██║██║╚██╔╝██║██╔══██║██╔═██╗ ██║╚██╔╝██║██╔══██║
+╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██╗██║ ╚═╝ ██║██║  ██║
+ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+'
 
 clear
-echo -e "\n$ascii_art\n"
-echo "=> Omakma is for fresh macOS Sonoma 14.5 installations only!"
+echo -e "\n$ascii_art"
+echo -e "\n=> Omakma is for fresh macOS Sonoma 14.5 installations only!"
 echo -e "\nBegin installation (or abort with ctrl+c)..."
 
 if xcode-select -p &>/dev/null; then
@@ -28,14 +30,14 @@ else
   fi
 fi
 
-echo "\nCloning Omakma..."
+echo -e "\nCloning Omakma..."
 rm -rf ~/.local/share/omakma
 git clone https://github.com/cuonggt/omakma.git ~/.local/share/omakma >/dev/null
 if [[ $OMAKMA_REF != "master" ]]; then
   cd ~/.local/share/omakma
-  git fetch origin "${OMAKMA_REF:-stable}" && git checkout "${OMAKMA_REF:-stable}"
+  git fetch origin "${OMAKMA_REF:-master}" && git checkout "${OMAKMA_REF:-master}"
   cd -
 fi
 
-echo -e "\nInstallation starting..."
-source ~/.local/share/omakma/install.sh
+# echo -e "\nInstallation starting..."
+# source ~/.local/share/omakma/install.sh
