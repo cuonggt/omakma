@@ -1,0 +1,6 @@
+SUBLIME_PACKAGE_NAME="Nord"
+SUBLIME_PACKAGE_GITHUB="nordtheme/sublime-text"
+SUBLIME_COLOR_SCHEME="Nord"
+SUBLIME_LIGHT_THEME="Nord"
+SUBLIME_DARK_THEME="Nord"
+source $OMAKMA_PATH/themes/set-sublime-theme.sh

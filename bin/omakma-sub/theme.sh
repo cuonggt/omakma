@@ -1,4 +1,4 @@
-THEME_NAMES=("Default" "Catppuccin" "Everforest" "Rose Pine" "Ristretto" "Solarized")
+THEME_NAMES=("Default" "Catppuccin" "Nord" "Everforest" "Rose Pine" "Ristretto" "Solarized")
 THEME=$(gum choose "${THEME_NAMES[@]}" "<< Back" --header "Choose your theme" --height 10 | tr '[:upper:]' '[:lower:]' | gsed 's/ /-/g')
 
 if [ -n "$THEME" ] && [ "$THEME" != "<<-back" ]; then
