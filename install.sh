@@ -15,6 +15,9 @@ fi
 
 export HOMEBREW_NO_INSTALL_FROM_API=1
 
+sudo chown -R $(whoami) ~/Library/Caches/Homebrew
+chmod -R u+rwX ~/Library/Caches/Homebrew
+
 # Update Homebrew recipes
 brew update
 
