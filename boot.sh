@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 ascii_art='
  ██████╗ ███╗   ███╗ █████╗ ██╗  ██╗███╗   ███╗ █████╗
 ██╔═══██╗████╗ ████║██╔══██╗██║ ██╔╝████╗ ████║██╔══██╗
@@ -13,8 +11,7 @@ ascii_art='
 
 clear
 echo -e "\n$ascii_art"
-echo -e "\n=> Omakma is for fresh macOS Sonoma 14.5 installations only!"
-echo -e "\nBegin installation (or abort with ctrl+c)..."
+echo -e "\n=> Omakma is for fresh macOS Sonoma 14.5 and newer installations only!"
 
 if xcode-select -p &>/dev/null; then
   echo -e "\nXcode Command Line Tools already installed."

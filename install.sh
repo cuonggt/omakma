@@ -1,6 +1,9 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+# Give people a chance to retry running the installation
+trap 'echo "Omakma installation failed! You can retry by running: source ~/.local/share/omakma/install.sh"' ERR
+
 # Check the macOS version and abort if incompatible
 source $HOME/.local/share/omakma/install/check-version.sh
 
