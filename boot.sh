@@ -17,7 +17,8 @@ if xcode-select -p &>/dev/null; then
   echo -e "\nXcode Command Line Tools already installed."
 else
   echo -e "\nInstalling Xcode Command Line Tools..."
-  LABEL=$(softwareupdate -l | grep -E '\*.*Command Line Tools' | head -1 | sed 's/^[^C]* //' | tr -d '\n')
+  touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  LABEL=$(softwareupdate -l | grep "\*.*Command Line" | tail -n 1 | sed 's/^[^C]* //')
   if [ -n "$LABEL" ]; then
     sudo softwareupdate --install "$LABEL" --verbose
     sudo xcode-select --switch /Library/Developer/CommandLineTools
