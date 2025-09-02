@@ -1,10 +1,5 @@
 if [ ! -d /Applications/Visual\ Studio\ Code.app ]; then
-  cd /tmp
-  wget -O code.zip 'https://code.visualstudio.com/sha/download?build=stable&os=darwin-arm64'
-  unzip code.zip
-  sudo mv Visual\ Studio\ Code.app /Applications
-  rm code.zip
-  cd -
+  brew install --cask visual-studio-code
 fi
 
 sudo ln -fs /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code
