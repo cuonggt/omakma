@@ -1,0 +1,7 @@
+# Disable warnings for sourced files that can't be resolved statically
+disable=SC1090
+disable=SC1091
+
+# Variables are often set in one script and used in another via sourcing
+disable=SC2034
+disable=SC2154

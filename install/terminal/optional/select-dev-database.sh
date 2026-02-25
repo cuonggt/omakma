@@ -5,13 +5,13 @@ if [[ -n "$dbs" ]]; then
   for db in $dbs; do
     case $db in
     MySQL)
-      brew install mysql@8.4
+      brew list mysql@8.4 &>/dev/null || brew install mysql@8.4
       ;;
     Redis)
-      brew install redis
+      brew list redis &>/dev/null || brew install redis
       ;;
     PostgreSQL)
-      brew install postgresql@16
+      brew list postgresql@16 &>/dev/null || brew install postgresql@16
       ;;
     esac
   done

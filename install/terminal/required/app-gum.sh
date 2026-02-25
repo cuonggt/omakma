@@ -1,1 +1,1 @@
-brew install gum
+brew list gum &>/dev/null || brew install gum

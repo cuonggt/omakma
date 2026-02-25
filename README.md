@@ -12,6 +12,14 @@ bash < <(curl -sL https://raw.githubusercontent.com/cuonggt/omakma/master/boot.s
 
 This will start the installation process. It's almost entirely automated.
 
+## Installing a specific version
+
+Set the `OMAKMA_REF` environment variable to install from a specific branch, tag, or commit:
+
+```
+OMAKMA_REF=my-branch bash < <(curl -sL https://raw.githubusercontent.com/cuonggt/omakma/master/boot.sh)
+```
+
 ## License
 
 Omakma is released under the [MIT License](https://opensource.org/licenses/MIT).

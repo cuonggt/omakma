@@ -1,5 +1,5 @@
 # Display system information in the terminal
-brew install fastfetch
+brew list fastfetch &>/dev/null || brew install fastfetch
 
 # Only attempt to set configuration if fastfetch is not already set
 if [ ! -f "$HOME/.config/fastfetch/config.jsonc" ]; then
