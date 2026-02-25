@@ -1,3 +1,3 @@
-if [ ! -d /Applications/Postman.app ]; then
+if [[ ! -d /Applications/Postman.app ]]; then
   brew install --cask postman
 fi

@@ -1,4 +1,4 @@
-if [ ! -d /Applications/Sublime\ Text.app ]; then
+if [[ ! -d /Applications/Sublime\ Text.app ]]; then
   brew install --cask sublime-text
 fi
 
@@ -13,19 +13,19 @@ if [ ! -f "$SUBLIME_SUPPORT/Installed Packages/Package Control.sublime-package" 
   fi
 fi
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/Github Theme" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/Github Theme" ]]; then
   git clone https://github.com/mauroreisvieira/github-sublime-theme.git "$SUBLIME_SUPPORT/Packages/Github Theme"
 fi
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/Inspired GitHub Color Scheme" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/Inspired GitHub Color Scheme" ]]; then
   git clone https://github.com/sethlopezme/InspiredGitHub.tmtheme.git "$SUBLIME_SUPPORT/Packages/Inspired GitHub Color Scheme"
 fi
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/AFileIcon" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/AFileIcon" ]]; then
   git clone https://github.com/SublimeText/AFileIcon.git "$SUBLIME_SUPPORT/Packages/AFileIcon"
 fi
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/AdvancedNewFile" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/AdvancedNewFile" ]]; then
   git clone https://github.com/SublimeText/AdvancedNewFile.git "$SUBLIME_SUPPORT/Packages/AdvancedNewFile"
 fi
 
@@ -33,15 +33,15 @@ cp "$OMAKMA_PATH/configs/sublime/minimap_setting.py" "$SUBLIME_SUPPORT/Packages/
 [ -f "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings" ] && mv "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings.bak"
 cp "$OMAKMA_PATH/configs/sublime/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings"
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/LSP" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/LSP" ]]; then
   git clone https://github.com/sublimelsp/LSP.git "$SUBLIME_SUPPORT/Packages/LSP"
 fi
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/LSP-json" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/LSP-json" ]]; then
   git clone https://github.com/sublimelsp/LSP-json.git "$SUBLIME_SUPPORT/Packages/LSP-json"
 fi
 
-if [ ! -d "$SUBLIME_SUPPORT/Packages/LSP-intelephense" ]; then
+if [[ ! -d "$SUBLIME_SUPPORT/Packages/LSP-intelephense" ]]; then
   git clone https://github.com/sublimelsp/LSP-intelephense.git "$SUBLIME_SUPPORT/Packages/LSP-intelephense"
 fi
 

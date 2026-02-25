@@ -1,3 +1,3 @@
-if [ ! -d /Applications/Sequel\ Ace.app ]; then
+if [[ ! -d /Applications/Sequel\ Ace.app ]]; then
   brew install --cask sequel-ace
 fi

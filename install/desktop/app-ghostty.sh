@@ -1,4 +1,4 @@
-if [ ! -d /Applications/Ghostty.app ]; then
+if [[ ! -d /Applications/Ghostty.app ]]; then
   brew install --cask ghostty
 fi
 

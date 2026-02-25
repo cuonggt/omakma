@@ -1,5 +1,5 @@
 # Alacritty is a GPU-powered and highly extensible terminal. See https://alacritty.org/
-if [ ! -d /Applications/Alacritty.app ]; then
+if [[ ! -d /Applications/Alacritty.app ]]; then
   brew install alacritty
 fi
 

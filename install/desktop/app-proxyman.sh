@@ -1,3 +1,3 @@
-if [ ! -d /Applications/Proxyman.app ]; then
+if [[ ! -d /Applications/Proxyman.app ]]; then
   brew install --cask proxyman
 fi

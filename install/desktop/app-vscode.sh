@@ -1,4 +1,4 @@
-if [ ! -d /Applications/Visual\ Studio\ Code.app ]; then
+if [[ ! -d /Applications/Visual\ Studio\ Code.app ]]; then
   brew install --cask visual-studio-code
 fi
 

@@ -1,4 +1,4 @@
-if [ ! -d /Applications/iTerm.app ]; then
+if [[ ! -d /Applications/iTerm.app ]]; then
   brew install --cask iterm2
 fi
 

@@ -1,3 +1,3 @@
-if [ ! -d /Applications/Google\ Chrome.app ]; then
+if [[ ! -d /Applications/Google\ Chrome.app ]]; then
   brew install --cask google-chrome
 fi
