@@ -8,8 +8,9 @@ mkdir -p "$SUBLIME_SUPPORT/Installed Packages"
 mkdir -p "$SUBLIME_SUPPORT/Packages/User"
 
 if [ ! -f "$SUBLIME_SUPPORT/Installed Packages/Package Control.sublime-package" ]; then
-  wget -q -O /tmp/package_control.sublime-package https://packagecontrol.io/Package%20Control.sublime-package
-  mv /tmp/package_control.sublime-package "$SUBLIME_SUPPORT/Installed Packages/Package Control.sublime-package"
+  if wget -q -O /tmp/package_control.sublime-package https://packagecontrol.io/Package%20Control.sublime-package; then
+    mv /tmp/package_control.sublime-package "$SUBLIME_SUPPORT/Installed Packages/Package Control.sublime-package"
+  fi
 fi
 
 if [ ! -d "$SUBLIME_SUPPORT/Packages/Github Theme" ]; then
@@ -28,9 +29,9 @@ if [ ! -d "$SUBLIME_SUPPORT/Packages/AdvancedNewFile" ]; then
   git clone https://github.com/SublimeText/AdvancedNewFile.git "$SUBLIME_SUPPORT/Packages/AdvancedNewFile"
 fi
 
-cp "$HOME/.local/share/omakma/configs/sublime/minimap_setting.py" "$SUBLIME_SUPPORT/Packages/User/minimap_setting.py"
+cp "$OMAKMA_PATH/configs/sublime/minimap_setting.py" "$SUBLIME_SUPPORT/Packages/User/minimap_setting.py"
 [ -f "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings" ] && mv "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings.bak"
-cp "$HOME/.local/share/omakma/configs/sublime/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings"
+cp "$OMAKMA_PATH/configs/sublime/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings"
 
 if [ ! -d "$SUBLIME_SUPPORT/Packages/LSP" ]; then
   git clone https://github.com/sublimelsp/LSP.git "$SUBLIME_SUPPORT/Packages/LSP"
@@ -45,4 +46,4 @@ if [ ! -d "$SUBLIME_SUPPORT/Packages/LSP-intelephense" ]; then
 fi
 
 [ -f "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings" ] && mv "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings.bak"
-cp "$HOME/.local/share/omakma/configs/sublime/LSP.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings"
+cp "$OMAKMA_PATH/configs/sublime/LSP.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings"

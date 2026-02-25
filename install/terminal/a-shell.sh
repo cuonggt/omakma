@@ -9,17 +9,17 @@ fi
 
 # Configure the zsh shell using Omakma defaults since zsh became the default shell in macOS
 [ -f "$HOME/.zshrc" ] && mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
-cp "$HOME/.local/share/omakma/configs/zshrc" "$HOME/.zshrc"
+cp "$OMAKMA_PATH/configs/zshrc" "$HOME/.zshrc"
 
 # Configure the bash shell using Omakma defaults
 [ -f "$HOME/.bashrc" ] && mv "$HOME/.bashrc" "$HOME/.bashrc.bak"
-cp "$HOME/.local/share/omakma/configs/bashrc" "$HOME/.bashrc"
+cp "$OMAKMA_PATH/configs/bashrc" "$HOME/.bashrc"
 
 touch "$HOME/.hushlogin"
 
 # Load the PATH for use later in the installers
-source "$HOME/.local/share/omakma/defaults/bash/shell"
+source "$OMAKMA_PATH/defaults/bash/shell"
 
 # Configure the inputrc using Omakma defaults
 [ -f "$HOME/.inputrc" ] && mv "$HOME/.inputrc" "$HOME/.inputrc.bak"
-cp "$HOME/.local/share/omakma/configs/inputrc" "$HOME/.inputrc"
+cp "$OMAKMA_PATH/configs/inputrc" "$HOME/.inputrc"

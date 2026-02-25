@@ -3,10 +3,14 @@ caffeinate -dims &
 CAFFEINATE_PID=$!
 
 # Run desktop installers
-for installer in "$HOME"/.local/share/omakma/install/desktop/*.sh; do source "$installer"; done
+for installer in "$OMAKMA_PATH"/install/desktop/*.sh; do source "$installer"; done
 
 # Revert to normal idle settings
 kill $CAFFEINATE_PID 2>/dev/null
 
-# Logout to pickup changes
-gum confirm "Ready to reboot for all settings to take effect?" && sudo shutdown -r now
+# Reboot to pick up changes
+if gum confirm "Ready to reboot for all settings to take effect?"; then
+  sudo shutdown -r now
+else
+  echo "Skipping reboot. Please reboot manually for all settings to take effect."
+fi

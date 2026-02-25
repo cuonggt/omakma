@@ -1,1 +1,1 @@
-cp "$HOME/.local/share/omakma/configs/git/gitconfig" "$HOME/.gitconfig"
+cp "$OMAKMA_PATH/configs/git/gitconfig" "$HOME/.gitconfig"

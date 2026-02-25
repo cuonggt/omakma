@@ -5,5 +5,5 @@ brew list fastfetch &>/dev/null || brew install fastfetch
 if [ ! -f "$HOME/.config/fastfetch/config.jsonc" ]; then
   # Use Omakma fastfetch config
   mkdir -p ~/.config/fastfetch
-  cp ~/.local/share/omakma/configs/fastfetch.jsonc ~/.config/fastfetch/config.jsonc
+  cp "$OMAKMA_PATH/configs/fastfetch.jsonc" ~/.config/fastfetch/config.jsonc
 fi
