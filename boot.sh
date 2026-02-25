@@ -32,9 +32,9 @@ echo -e "\nCloning Omakma..."
 rm -rf ~/.local/share/omakma
 git clone https://github.com/cuonggt/omakma.git ~/.local/share/omakma >/dev/null
 if [[ $OMAKMA_REF != "master" ]]; then
-  cd ~/.local/share/omakma
+  pushd ~/.local/share/omakma > /dev/null
   git fetch origin "${OMAKMA_REF:-master}" && git checkout "${OMAKMA_REF:-master}"
-  cd -
+  popd > /dev/null
 fi
 
 echo -e "\nInstallation starting..."

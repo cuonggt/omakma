@@ -4,21 +4,22 @@ set_font() {
   local file_type=$3
   local file_name="${font_name/ Nerd Font/}"
 
-  if ! $(fc-list | grep -i "$font_name" >/dev/null); then
-    cd /tmp
-    wget -O "$file_name.zip" "$url"
-    unzip "$file_name.zip" -d "$file_name"
-    cp "$file_name"/*."$file_type" $HOME/Library/Fonts
-    rm -rf "$file_name.zip" "$file_name"
-    fc-cache
-    cd -
-    clear
-    source $OMAKMA_PATH/ascii.sh
+  if ! fc-list | grep -qi "$font_name"; then
+    if wget -q -O "/tmp/$file_name.zip" "$url"; then
+      unzip -o "/tmp/$file_name.zip" -d "/tmp/$file_name"
+      cp "/tmp/$file_name"/*."$file_type" "$HOME/Library/Fonts"
+      rm -rf "/tmp/$file_name.zip" "/tmp/$file_name"
+      fc-cache
+      clear
+      source $OMAKMA_PATH/ascii.sh
+    else
+      echo "Failed to download $font_name font"
+    fi
   fi
 
-  cp "$OMAKMA_PATH/configs/alacritty/fonts/$file_name.toml" $HOME/.config/alacritty/font.toml
-  gsed -i "s/\"font_face\": \".*\"/\"font_face\": \"$file_name Nerd Font Mono, monospace\"/g" $HOME/Library/Application\ Support/Sublime\ Text/Packages/User/Preferences.sublime-settings
-  gsed -i "s/\"editor.fontFamily\": \".*\"/\"editor.fontFamily\": \"$file_name Nerd Font Mono, monospace\"/g" $HOME/Library/Application\ Support/Code/User/settings.json
+  cp "$OMAKMA_PATH/configs/alacritty/fonts/$file_name.toml" "$HOME/.config/alacritty/font.toml"
+  gsed -i "s/\"font_face\": \".*\"/\"font_face\": \"$file_name Nerd Font Mono, monospace\"/g" "$HOME/Library/Application Support/Sublime Text/Packages/User/Preferences.sublime-settings"
+  gsed -i "s/\"editor.fontFamily\": \".*\"/\"editor.fontFamily\": \"$file_name Nerd Font Mono, monospace\"/g" "$HOME/Library/Application Support/Code/User/settings.json"
 }
 
 FONT_NAMES=("JetBrains Mono" "Cascadia Mono" "Fira Mono" "Meslo")

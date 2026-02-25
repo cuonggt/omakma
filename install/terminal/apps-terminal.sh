@@ -9,3 +9,5 @@ brew install tlrc
 brew install gnu-sed
 brew install tmux
 brew install overmind
+brew install git-delta
+brew install git-flow

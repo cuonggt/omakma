@@ -1,5 +1,5 @@
 themes {
-  solarized-light {
+  solarized {
     fg 101 123 131
     bg 253 246 227
     black 7 54 66

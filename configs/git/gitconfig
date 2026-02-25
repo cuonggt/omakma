@@ -49,7 +49,7 @@
 
   s = status --short --branch
 
-  branch-list-merged = "!git branch --merged develop | grep -v -E '(develop|origin|master)'"
+  branch-list-merged = "!f() { local base=${1:-$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')}; git branch --merged \"$base\" | grep -v -E \"($base|origin|\\*)\"; }; f"
   branch-delete-merged = "!git branch-list-merged | xargs git branch -d"
 
   unstage = reset HEAD

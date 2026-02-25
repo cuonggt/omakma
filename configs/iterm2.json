@@ -21,7 +21,7 @@
         "Blue Component" : 1,
         "Red Component" : 1
       },
-      "Normal Font" : "JetBrainsMonoNerdFontCompleteM-Regular 16",
+      "Normal Font" : "JetBrainsMonoNFM-Regular 16",
       "Guid" : "$ITERM2_DEFAULT_PROFILE_GUID",
       "Ansi 2 Color" : {
         "Green Component" : 0.68627452850341797,

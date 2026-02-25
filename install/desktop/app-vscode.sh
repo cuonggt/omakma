@@ -2,10 +2,10 @@ if [ ! -d /Applications/Visual\ Studio\ Code.app ]; then
   brew install --cask visual-studio-code
 fi
 
-sudo ln -fs /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code /usr/local/bin/code
-mkdir -p $HOME/Library/Application\ Support/Code/User
-[ -f "$HOME/Library/Application\ Support/Code/User/settings.json" ] && mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.json.bak
-cp $HOME/.local/share/omakma/configs/vscode.json $HOME/Library/Application\ Support/Code/User/settings.json
+sudo ln -fs "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
+mkdir -p "$HOME/Library/Application Support/Code/User"
+[ -f "$HOME/Library/Application Support/Code/User/settings.json" ] && mv "$HOME/Library/Application Support/Code/User/settings.json" "$HOME/Library/Application Support/Code/User/settings.json.bak"
+cp "$HOME/.local/share/omakma/configs/vscode.json" "$HOME/Library/Application Support/Code/User/settings.json"
 
 # Install extensions
 code --install-extension patbenatar.advanced-new-file

@@ -1,5 +1,5 @@
 themes {
-  tokyo-night {
+  default {
     fg 169 177 214
     bg 26 27 38
     black 56 62 90

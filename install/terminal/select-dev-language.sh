@@ -7,8 +7,8 @@ else
 fi
 
 if [[ -n "$languages" ]]; then
-  for language in $languages; do
-    case $language in
+  while IFS= read -r language; do
+    case "$language" in
     PHP)
       if ! command -v php &> /dev/null; then
         brew install php
@@ -27,7 +27,7 @@ if [[ -n "$languages" ]]; then
         valet trust
       fi
       ;;
-    Ruby)
+    "Ruby on Rails")
       mise use --global ruby@latest
       mise x ruby -- gem install rails --no-document
       ;;
@@ -44,5 +44,5 @@ if [[ -n "$languages" ]]; then
       bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs)" -- -y
       ;;
     esac
-  done
+  done <<< "$languages"
 fi
