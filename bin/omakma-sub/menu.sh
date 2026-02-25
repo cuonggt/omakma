@@ -4,4 +4,4 @@ else
   SUB=$1
 fi
 
-[ -n "$SUB" ] && [ "$SUB" != "quit" ] && source $OMAKMA_PATH/bin/omakma-sub/$SUB.sh
+[ -n "$SUB" ] && [ "$SUB" != "quit" ] && source "$OMAKMA_PATH/bin/omakma-sub/$SUB.sh"

@@ -21,11 +21,11 @@ if [[ "$CHOICE" == "<< Back"* ]] || [[ -z "$CHOICE" ]]; then
   # Don't install anything
   echo ""
 elif [[ "$CHOICE" == "> All"* ]]; then
-  INSTALLER_FILE=$(gum file $OMAKMA_PATH/install)
+  INSTALLER_FILE=$(gum file "$OMAKMA_PATH/install")
 
   [[ -n "$INSTALLER_FILE" ]] &&
     gum confirm "Run installer?" &&
-    source $INSTALLER_FILE &&
+    source "$INSTALLER_FILE" &&
     gum spin --spinner globe --title "Install completed!" -- sleep 3
 else
   INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | gsed 's/ /-/g')
@@ -37,8 +37,8 @@ else
   *) INSTALLER_FILE="$OMAKMA_PATH/install/desktop/optional/app-$INSTALLER.sh" ;;
   esac
 
-  source $INSTALLER_FILE && gum spin --spinner globe --title "Install completed!" -- sleep 3
+  source "$INSTALLER_FILE" && gum spin --spinner globe --title "Install completed!" -- sleep 3
 fi
 
 clear
-source $OMAKMA_PATH/bin/omakma
+source "$OMAKMA_PATH/bin/omakma"

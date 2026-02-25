@@ -1,3 +1,6 @@
+# All scripts are sourced as bash; avoid SC2148 "add a shebang" on every file
+shell=bash
+
 # Disable warnings for sourced files that can't be resolved statically
 disable=SC1090
 disable=SC1091

@@ -11,7 +11,7 @@ set_font() {
       rm -rf "/tmp/$file_name.zip" "/tmp/$file_name"
       fc-cache
       clear
-      source $OMAKMA_PATH/ascii.sh
+      source "$OMAKMA_PATH/ascii.sh"
     else
       echo "Failed to download $font_name font"
     fi
@@ -44,9 +44,9 @@ case $choice in
   set_font "MesloLGS Nerd Font" "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.zip" "ttf"
   ;;
 "> Change size")
-  source $OMAKMA_PATH/bin/omakma-sub/font-size.sh
+  source "$OMAKMA_PATH/bin/omakma-sub/font-size.sh"
   exit
   ;;
 esac
 
-source $OMAKMA_PATH/bin/omakma-sub/menu.sh
+source "$OMAKMA_PATH/bin/omakma-sub/menu.sh"

@@ -11,4 +11,4 @@ if [ -n "$THEME" ] && [ "$THEME" != "<<-back" ]; then
   source "$OMAKMA_PATH/themes/$THEME/vscode.sh"
 fi
 
-source $OMAKMA_PATH/bin/omakma-sub/menu.sh
+source "$OMAKMA_PATH/bin/omakma-sub/menu.sh"
