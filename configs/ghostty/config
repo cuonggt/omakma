@@ -1,0 +1,10 @@
+font-family = JetBrainsMono Nerd Font
+font-size = 16
+window-padding-x = 16
+window-padding-y = 14
+background-opacity = 0.97
+background-blur-radius = 20
+macos-option-as-alt = true
+macos-titlebar-style = hidden
+command = /opt/homebrew/bin/zellij
+theme = tokyonight
