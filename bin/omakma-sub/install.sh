@@ -1,7 +1,6 @@
 CHOICES=(
   "Dev Language  Install programming language environment"
   "Dev Database  Install development database"
-  "Brave         Chrome-based browser with built-in ad blocking"
   "Dropbox       Sync files across computers with ease"
   "Ollama        Run LLMs, like Meta's Llama3, locally"
   "OpenKey       Bộ gõ tiếng Việt miễn phí mã nguồn mở"
@@ -9,7 +8,6 @@ CHOICES=(
   "Spotify       Stream music from the world's most popular service"
   "Steam         Play games from Valve's store"
   "Xmind         Mind mapping software"
-  "Zed           Fast all-purpose editor"
   "Zoom          Attend and host video chat meetings"
   "> All         Re-run any of the default installers"
   "<< Back       "

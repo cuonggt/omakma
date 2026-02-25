@@ -6,7 +6,7 @@ An opinionated Omakase Developer Setup for macOS Sonoma 14.5 and newer heavily i
 
 **Terminal & Shell:** Alacritty, Ghostty, iTerm2, Oh My Zsh (with autosuggestions, syntax highlighting, z), Zellij, Neovim, fzf, ripgrep, bat, eza, zoxide, btop, fd, lazygit, lazydocker, fastfetch, git-delta
 
-**Editors:** VS Code, Sublime Text, Zed
+**Editors:** VS Code, Sublime Text
 
 **Languages (selectable):** PHP, Ruby on Rails, Node.js, Go, Python, Rust — managed via Mise
 

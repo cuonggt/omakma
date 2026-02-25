@@ -1,5 +1,5 @@
-OPTIONAL_APPS=("1111" "Dropbox" "Pritunl" "Xmind" "Zed")
-DEFAULT_OPTIONAL_APPS="1111,Dropbox,Pritunl,Xmind,Zed"
+OPTIONAL_APPS=("1111" "Dropbox" "Pritunl" "Xmind")
+DEFAULT_OPTIONAL_APPS="1111,Dropbox,Pritunl,Xmind"
 OMAKMA_FIRST_RUN_OPTIONAL_APPS=$(gum choose "${OPTIONAL_APPS[@]}" --no-limit --selected "$DEFAULT_OPTIONAL_APPS" --height 7 --header "Select optional apps" | tr ' ' '-')
 export OMAKMA_FIRST_RUN_OPTIONAL_APPS
 
