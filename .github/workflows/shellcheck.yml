@@ -14,6 +14,5 @@ jobs:
       - name: Install ShellCheck
         run: sudo apt-get install -y shellcheck
       - name: Run ShellCheck
-        continue-on-error: true
         run: |
           find . -name '*.sh' -not -path './.git/*' | xargs shellcheck
