@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Omakma is an opinionated macOS developer environment bootstrapper (macOS Sonoma 14.5+), inspired by [Omakub](https://github.com/basecamp/omakub). It automates turning a fresh macOS installation into a fully-configured web development system via a single command. The entire codebase is pure Bash shell scripts (~77 files).
+Omakma is an opinionated macOS developer environment bootstrapper (macOS Sonoma 14.5+), inspired by [Omakub](https://github.com/basecamp/omakub). It automates turning a fresh macOS installation into a fully-configured web development system via a single command. The entire codebase is pure Bash shell scripts (~80 files).
 
 ## Architecture
 
@@ -15,9 +15,9 @@ Omakma is an opinionated macOS developer environment bootstrapper (macOS Sonoma 
 - `install/terminal/` — Individual installer scripts for CLI tools, languages, and databases
 - `install/desktop/` — Individual installer scripts for GUI applications
 - `bin/omakma` — Post-install runtime command providing an interactive menu
-- `bin/omakma-sub/` — Sub-commands: `menu.sh`, `theme.sh`, `font.sh`, `font-size.sh`, `install.sh`
+- `bin/omakma-sub/` — Sub-commands: `menu.sh`, `theme.sh`, `font.sh`, `font-size.sh`, `install.sh`, `update.sh`
 
-**Theme system:** 7 themes (default, catppuccin, nord, everforest, rose-pine, ristretto, solarized) in `themes/`. Each theme directory contains config files for alacritty, vscode, sublime, neovim, and zellij. Theme switching is unified via `bin/omakma-sub/theme.sh`.
+**Theme system:** 7 themes (default, catppuccin, nord, everforest, rose-pine, ristretto, solarized) in `themes/`. Each theme directory contains config files for alacritty, ghostty, vscode, sublime, neovim, and zellij. Theme switching is unified via `bin/omakma-sub/theme.sh`.
 
 **Configuration files:** `configs/` contains dotfiles and settings (zshrc, gitconfig, vscode.json, alacritty/, neovim/, sublime/). `defaults/bash/` contains shell aliases, prompt, and init scripts.
 
