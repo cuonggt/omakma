@@ -20,8 +20,6 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.find.addExtraSpaceOnTop": false,
     "editor.guides.bracketPairs": "active",
-    "editor.inlineSuggest.enabled": true,
-    // "editor.lineNumbers": "interval",
     "editor.multiCursorModifier": "ctrlCmd",
     "editor.renderWhitespace": "boundary",
     "editor.suggestSelection": "first",
@@ -33,8 +31,6 @@
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "window.autoDetectColorScheme": true,
-    "window.dialogStyle": "custom",
-    "window.nativeTabs": true, // this is great, macOS only
     "window.titleBarStyle": "custom",
     "workbench.editor.closeOnFileDelete": true,
     "workbench.editor.highlightModifiedTabs": true,
@@ -45,7 +41,6 @@
     "extensions.ignoreRecommendations": true,
     "files.eol": "\n",
     "files.insertFinalNewline": true,
-    "files.simpleDialog.enable": true,
     "git.autofetch": true,
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
@@ -54,7 +49,6 @@
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.fontWeight": "300",
     "terminal.integrated.persistentSessionReviveProcess": "never",
-    "terminal.integrated.tabs.enabled": true,
     "scm.diffDecorationsGutterWidth": 2,
     "debug.onTaskErrors": "debugAnyway",
     "diffEditor.ignoreTrimWhitespace": false,
@@ -89,9 +83,6 @@
         "Grammarly",
         "eslint"
     ],
-
-    // Enable the ESlint flat config support
-    // "eslint.experimental.useFlatConfig": true,
 
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
@@ -133,18 +124,9 @@
         "graphql"
     ],
 
-    "github.copilot.enable": {
-        "*": true,
-        "markdown": true,
-        "plaintext": false,
-        "yaml": false
-    },
-
     "cSpell.allowCompoundWords": true,
     "cSpell.language": "en,en-US",
     "css.lint.hexColorLength": "ignore",
-    "githubIssues.workingIssueFormatScm": "#${issueNumberLabel}",
-    "githubPullRequests.fileListLayout": "tree",
     "gitlens.codeLens.authors.enabled": false,
     "gitlens.codeLens.enabled": false,
     "gitlens.codeLens.recentChange.enabled": false,
@@ -284,7 +266,6 @@
     // Personal configs
     "editor.minimap.enabled": false,
     "editor.snippetSuggestions": "top",
-    // "explorer.decorations.badges": false,
     "explorer.openEditors.visible": 1,
     "editor.quickSuggestions": {
         "strings": "on"
@@ -299,17 +280,11 @@
         "*.php": "php",
         "*.html.erb": "erb"
     },
-    // "python.formatting.provider": "black",
     "[python]": {
         "editor.defaultFormatter": null,
         "editor.formatOnSave": true,
         "editor.formatOnType": true
     },
-    "[erb]": {
-        "editor.defaultFormatter": "aliariff.vscode-erb-beautify",
-        "editor.formatOnSave": true
-    },
-
     // Extension configs
     "namespaceResolver.sortAlphabetically": true,
     "namespaceResolver.sortOnSave": true,
@@ -346,12 +321,6 @@
         "UPRN",
         "VITE"
     ],
-    "hardhat.telemetry": false,
-    "codeium.enableConfig": {
-        "*": true,
-        "toml": true,
-        "plaintext": true
-    },
     "go.toolsManagement.autoUpdate": true,
     "window.zoomLevel": 1,
     "[ruby]": {
@@ -370,6 +339,5 @@
     },
     "workbench.editor.tabActionLocation": "left",
     "remote.autoForwardPortsSource": "hybrid",
-    "window.customTitleBarVisibility": "never",
-    "solidity.telemetry": false
+    "window.customTitleBarVisibility": "never"
 }

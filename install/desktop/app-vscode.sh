@@ -39,6 +39,4 @@ code --install-extension bradlc.vscode-tailwindcss
 code --install-extension antfu.theme-vitesse
 code --install-extension redhat.vscode-yaml
 code --install-extension laravel.vscode-laravel
-code --install-extension GitHub.copilot
-code --install-extension GitHub.copilot-chat
 code --install-extension Vue.volar
