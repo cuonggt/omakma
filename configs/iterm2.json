@@ -409,6 +409,7 @@
         "Blue Component" : 0.35686275362968445,
         "Red Component" : 0.90980392694473267
       },
+      "Set Locale Vars" : true,
       "Ansi 4 Color" : {
         "Green Component" : 0.58431375026702881,
         "Blue Component" : 0.92941176891326904,
