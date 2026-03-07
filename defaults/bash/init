@@ -3,11 +3,17 @@ if command -v /opt/homebrew/bin/brew &> /dev/null; then
 fi
 
 if command -v mise &> /dev/null; then
-  eval "$(mise activate bash)"
-  eval "$(mise activate zsh)"
+  if [ -n "$ZSH_VERSION" ]; then
+    eval "$(mise activate zsh)"
+  else
+    eval "$(mise activate bash)"
+  fi
 fi
 
 if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init bash)"
-  eval "$(zoxide init zsh)"
+  if [ -n "$ZSH_VERSION" ]; then
+    eval "$(zoxide init zsh)"
+  else
+    eval "$(zoxide init bash)"
+  fi
 fi
