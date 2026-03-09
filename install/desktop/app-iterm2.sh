@@ -2,6 +2,9 @@ if [[ ! -d /Applications/iTerm.app ]]; then
   brew install --cask iterm2
 fi
 
+# Clean up any old dynamic profile
+rm -f "$HOME/Library/Application Support/iTerm2/DynamicProfiles/omakma.json"
+
 ITERM2_PROFILE_GUID=$(uuidgen)
 
 # Build the profile from the config template
