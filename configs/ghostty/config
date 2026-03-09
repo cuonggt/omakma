@@ -1,10 +1,16 @@
+theme = Catppuccin Latte
+
+# Font
 font-family = JetBrainsMono Nerd Font
 font-size = 16
-window-padding-x = 16
+
+# Window
+window-padding-x = 14
 window-padding-y = 14
-background-opacity = 0.97
-background-blur-radius = 20
-macos-option-as-alt = true
-macos-titlebar-style = hidden
-command = /opt/homebrew/bin/zellij
-theme = tokyonight
+window-decoration = server
+confirm-close-surface = false
+resize-overlay = never
+
+# Cursor styling
+cursor-style = "block"
+cursor-style-blink = false
