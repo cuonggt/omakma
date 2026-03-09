@@ -24,6 +24,12 @@ chmod -R u+rwX ~/Library/Caches/Homebrew
 # Update Homebrew recipes
 brew update
 
+# Set macOS system locale to en_US.UTF-8
+defaults write NSGlobalDomain AppleLocale -string "en_US"
+defaults write NSGlobalDomain AppleLanguages -array "en-US"
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
 echo "Get ready to make a few choices..."
 source "$OMAKMA_PATH/install/terminal/required/app-gum.sh" >/dev/null
 source "$OMAKMA_PATH/install/first-run-choices.sh"
