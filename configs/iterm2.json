@@ -402,7 +402,7 @@
     "Blue Component": 0.35686275362968445,
     "Red Component": 0.9098039269447327
   },
-  "Set Locale Vars": false,
+  "Set Locale Vars": true,
   "Ansi 4 Color": {
     "Green Component": 0.5843137502670288,
     "Blue Component": 0.929411768913269,
@@ -413,5 +413,6 @@
   "Environment": {
     "LANG": "en_US.UTF-8",
     "LC_ALL": "en_US.UTF-8"
-  }
+  },
+  "Custom Locale": "en_US.UTF-8"
 }
