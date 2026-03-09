@@ -13,14 +13,11 @@ guid = sys.argv[2]
 home = sys.argv[3]
 
 with open(config_path) as f:
-    data = json.load(f)
+    profile = json.load(f)
 
-profile = data["Profiles"][0]
 profile["Guid"] = guid
 profile["Working Directory"] = home
 profile["Default Bookmark"] = "Yes"
-if "Tags" in profile:
-    del profile["Tags"]
 
 plist_path = pathlib.Path(home) / "Library/Preferences/com.googlecode.iterm2.plist"
 
