@@ -27,9 +27,7 @@ try:
 except (FileNotFoundError, plistlib.InvalidFileException):
     prefs = {}
 
-bookmarks = prefs.get("New Bookmarks", [])
-bookmarks.append(profile)
-prefs["New Bookmarks"] = bookmarks
+prefs["New Bookmarks"] = [profile]
 prefs["Default Bookmark Guid"] = guid
 prefs["TabStyleWithAutomaticOption"] = 5  # Minimal theme
 prefs["StatusBarPosition"] = 1  # Bottom
