@@ -414,6 +414,12 @@
         "Green Component" : 0.58431375026702881,
         "Blue Component" : 0.92941176891326904,
         "Red Component" : 0.39215686917304993
+      },
+      "Initial Text" : "",
+      "Custom Environment" : "Yes",
+      "Environment" : {
+        "LANG" : "en_US.UTF-8",
+        "LC_ALL" : "en_US.UTF-8"
       }
     }
   ]
