@@ -1,6 +1,6 @@
 OPTIONAL_APPS=("1111" "Dropbox" "Pritunl" "Xmind")
 DEFAULT_OPTIONAL_APPS="1111,Dropbox,Pritunl,Xmind"
-OMAKMA_FIRST_RUN_OPTIONAL_APPS=$(gum choose "${OPTIONAL_APPS[@]}" --no-limit --selected "$DEFAULT_OPTIONAL_APPS" --height 7 --header "Select optional apps" | tr ' ' '-')
+OMAKMA_FIRST_RUN_OPTIONAL_APPS=$(gum choose "${OPTIONAL_APPS[@]}" --no-limit --selected "$DEFAULT_OPTIONAL_APPS" --height 7 --header "Select optional apps")
 export OMAKMA_FIRST_RUN_OPTIONAL_APPS
 
 AVAILABLE_LANGUAGES=("PHP" "Ruby on Rails" "Node.js" "Go" "Python" "Rust")
