@@ -1,7 +1,5 @@
 # Alacritty is a GPU-powered and highly extensible terminal. See https://alacritty.org/
-if [[ ! -d /Applications/Alacritty.app ]]; then
-  brew install alacritty
-fi
+brew_app_install alacritty
 
 mkdir -p "$HOME/.config/alacritty"
 cp "$OMAKMA_PATH/configs/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"

@@ -1,6 +1,4 @@
-if [[ ! -d /Applications/Visual\ Studio\ Code.app ]]; then
-  brew install --cask visual-studio-code
-fi
+app_install visual-studio-code "Visual Studio Code.app"
 
 sudo ln -fs "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
 mkdir -p "$HOME/Library/Application Support/Code/User"

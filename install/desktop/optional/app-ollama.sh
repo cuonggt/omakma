@@ -1,3 +1,1 @@
-if [[ ! -d /Applications/Ollama.app ]]; then
-  brew install ollama
-fi
+brew_app_install ollama

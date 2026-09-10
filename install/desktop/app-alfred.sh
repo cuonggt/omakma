@@ -1,3 +1,1 @@
-if [[ ! -d /Applications/Alfred\ 5.app ]]; then
-  brew install --cask alfred
-fi
+app_install alfred "Alfred 5.app"

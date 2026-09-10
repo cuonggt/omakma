@@ -1,7 +1,8 @@
 #!/bin/bash
 
+source "$OMAKMA_PATH/defaults/bash/functions"
 source "$OMAKMA_PATH/ascii.sh"
 echo "" # Add spacing
-echo "                                 $(cat "$OMAKMA_PATH/version")"
+echo "                                v$(cat "$OMAKMA_PATH/version")"
 echo "" # Add spacing
 source "$OMAKMA_PATH/bin/omakma-sub/menu.sh"

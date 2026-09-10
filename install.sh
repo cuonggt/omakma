@@ -7,6 +7,9 @@ trap 'echo "Omakma installation failed! You can retry by running: source ~/.loca
 # Set OMAKMA_PATH early so all sourced scripts can use it
 export OMAKMA_PATH="$HOME/.local/share/omakma"
 
+# Reusable installer helpers (app_install, copy_config, ...)
+source "$OMAKMA_PATH/defaults/bash/functions"
+
 # Check the macOS version and abort if incompatible
 source "$OMAKMA_PATH/install/check-version.sh"
 

@@ -1,3 +1,1 @@
-if [[ ! -d /Applications/Cloudflare\ WARP.app ]]; then
-  brew install --cask cloudflare-warp
-fi
+app_install cloudflare-warp "Cloudflare WARP.app"

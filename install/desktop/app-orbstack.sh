@@ -1,3 +1,1 @@
-if [[ ! -d /Applications/OrbStack.app ]]; then
-  brew install orbstack
-fi
+brew_app_install orbstack "OrbStack.app"
