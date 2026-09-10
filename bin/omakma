@@ -5,4 +5,4 @@ source "$OMAKMA_PATH/ascii.sh"
 echo "" # Add spacing
 echo "                                v$(cat "$OMAKMA_PATH/version")"
 echo "" # Add spacing
-source "$OMAKMA_PATH/bin/omakma-sub/menu.sh"
+source "$OMAKMA_PATH/bin/omakma-sub/menu.sh" "$@"

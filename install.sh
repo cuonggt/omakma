@@ -35,6 +35,7 @@ export LC_ALL="en_US.UTF-8"
 
 echo "Get ready to make a few choices..."
 source "$OMAKMA_PATH/install/terminal/required/app-gum.sh" >/dev/null
+source "$OMAKMA_PATH/install/preflight.sh"
 source "$OMAKMA_PATH/install/first-run-choices.sh"
 
 echo "Installing terminal and desktop tools..."
