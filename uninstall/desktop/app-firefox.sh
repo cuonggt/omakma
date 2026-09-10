@@ -1,0 +1,1 @@
+app_uninstall firefox
