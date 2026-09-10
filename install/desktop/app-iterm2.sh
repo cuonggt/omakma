@@ -1,6 +1,4 @@
-if [[ ! -d /Applications/iTerm.app ]]; then
-  brew install --cask iterm2
-fi
+app_install iterm2 "iTerm.app"
 
 # Clean up any old dynamic profile
 rm -f "$HOME/Library/Application Support/iTerm2/DynamicProfiles/omakma.json"

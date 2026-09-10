@@ -1,3 +1,1 @@
-if [[ ! -d /Applications/Termius.app ]]; then
-  brew install --cask termius
-fi
+app_install termius

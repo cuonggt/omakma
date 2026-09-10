@@ -1,6 +1,4 @@
-if [[ ! -d /Applications/Sublime\ Text.app ]]; then
-  brew install --cask sublime-text
-fi
+app_install sublime-text "Sublime Text.app"
 
 SUBLIME_SUPPORT="$HOME/Library/Application Support/Sublime Text"
 

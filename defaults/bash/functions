@@ -1,0 +1,61 @@
+# Reusable shell helpers for Omakma installers.
+#
+# This file is sourced from install.sh and from bin/omakma so that every
+# installer (whether run during the initial bootstrap or later via the
+# `omakma install` menu) can use the same helpers.
+
+# app_install <cask> [<Bundle.app>]
+# Install a Homebrew cask if its app bundle is not already in /Applications.
+# Defaults the bundle name to "<cask>.app"; pass an explicit bundle when the
+# cask name and the .app name differ (e.g. cask "google-chrome" -> "Google Chrome.app").
+app_install() {
+  local cask="$1"
+  local bundle="${2:-${cask}.app}"
+
+  if [[ ! -d "/Applications/$bundle" ]]; then
+    brew install --cask "$cask"
+  fi
+}
+
+# brew_app_install <formula> [<Bundle.app>]
+# Same as app_install but uses `brew install` (no --cask) for formulae that
+# install GUI app bundles (alacritty, orbstack, localsend, ...).
+brew_app_install() {
+  local formula="$1"
+  local bundle="${2:-${formula}.app}"
+
+  if [[ ! -d "/Applications/$bundle" ]]; then
+    brew install "$formula"
+  fi
+}
+
+# app_uninstall <cask>
+# Uninstall a Homebrew cask, ignoring the "not installed" error so the
+# script is safe to re-run.
+app_uninstall() {
+  brew uninstall --cask "$1" 2>/dev/null || true
+}
+
+# brew_app_uninstall <formula>
+# Same as app_uninstall but for non-cask formulae.
+brew_app_uninstall() {
+  brew uninstall "$1" 2>/dev/null || true
+}
+
+# copy_config <src> <dst>
+# Copy a config file into place, backing up any existing destination as
+# <dst>.bak. Creates the destination directory if needed.
+copy_config() {
+  local src="$1"
+  local dst="$2"
+
+  mkdir -p "$(dirname "$dst")"
+  [[ -f "$dst" ]] && mv "$dst" "$dst.bak"
+  cp "$src" "$dst"
+}
+
+# set_default <domain> <key> <type> <value>
+# Thin wrapper around `defaults write` so callers read top-to-bottom.
+set_default() {
+  defaults write "$1" "$2" "$3" "$4"
+}
