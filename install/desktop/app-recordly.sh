@@ -1,4 +1,4 @@
-if [[ ! -d /Applications/Recordly.app ]]; then
+if ! app_installed "Recordly.app"; then
   if [[ "$(uname -m)" == "arm64" ]]; then
     DMG_NAME="Recordly-arm64.dmg"
   else
