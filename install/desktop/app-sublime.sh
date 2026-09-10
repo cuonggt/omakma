@@ -28,8 +28,7 @@ if [[ ! -d "$SUBLIME_SUPPORT/Packages/AdvancedNewFile" ]]; then
 fi
 
 cp "$OMAKMA_PATH/configs/sublime/minimap_setting.py" "$SUBLIME_SUPPORT/Packages/User/minimap_setting.py"
-[ -f "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings" ] && mv "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings.bak"
-cp "$OMAKMA_PATH/configs/sublime/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings"
+copy_config "$OMAKMA_PATH/configs/sublime/Preferences.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/Preferences.sublime-settings"
 
 if [[ ! -d "$SUBLIME_SUPPORT/Packages/LSP" ]]; then
   git clone https://github.com/sublimelsp/LSP.git "$SUBLIME_SUPPORT/Packages/LSP"
@@ -43,5 +42,4 @@ if [[ ! -d "$SUBLIME_SUPPORT/Packages/LSP-intelephense" ]]; then
   git clone https://github.com/sublimelsp/LSP-intelephense.git "$SUBLIME_SUPPORT/Packages/LSP-intelephense"
 fi
 
-[ -f "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings" ] && mv "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings.bak"
-cp "$OMAKMA_PATH/configs/sublime/LSP.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings"
+copy_config "$OMAKMA_PATH/configs/sublime/LSP.sublime-settings" "$SUBLIME_SUPPORT/Packages/User/LSP.sublime-settings"
