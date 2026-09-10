@@ -4,6 +4,14 @@
 # installer (whether run during the initial bootstrap or later via the
 # `omakma install` menu) can use the same helpers.
 
+# app_installed <Bundle.app>
+# True when the app bundle is already in /Applications. Installers that do
+# their own thing -- a tap, a DMG download -- guard on this so every installer
+# answers "is it already there?" the same way.
+app_installed() {
+  [[ -d "/Applications/$1" ]]
+}
+
 # app_install <cask> [<Bundle.app>]
 # Install a Homebrew cask if its app bundle is not already in /Applications.
 # Defaults the bundle name to "<cask>.app"; pass an explicit bundle when the
@@ -12,9 +20,7 @@ app_install() {
   local cask="$1"
   local bundle="${2:-${cask}.app}"
 
-  if [[ ! -d "/Applications/$bundle" ]]; then
-    brew install --cask "$cask"
-  fi
+  app_installed "$bundle" || brew install --cask "$cask"
 }
 
 # brew_app_install <formula> [<Bundle.app>]
@@ -24,9 +30,7 @@ brew_app_install() {
   local formula="$1"
   local bundle="${2:-${formula}.app}"
 
-  if [[ ! -d "/Applications/$bundle" ]]; then
-    brew install "$formula"
-  fi
+  app_installed "$bundle" || brew install "$formula"
 }
 
 # app_uninstall <cask>
