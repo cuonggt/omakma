@@ -8,12 +8,10 @@ fi
 [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-z" ] && git clone https://github.com/agkozak/zsh-z "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-z"
 
 # Configure the zsh shell using Omakma defaults since zsh became the default shell in macOS
-[ -f "$HOME/.zshrc" ] && mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
-cp "$OMAKMA_PATH/configs/zshrc" "$HOME/.zshrc"
+copy_config "$OMAKMA_PATH/configs/zshrc" "$HOME/.zshrc"
 
 # Configure the bash shell using Omakma defaults
-[ -f "$HOME/.bashrc" ] && mv "$HOME/.bashrc" "$HOME/.bashrc.bak"
-cp "$OMAKMA_PATH/configs/bashrc" "$HOME/.bashrc"
+copy_config "$OMAKMA_PATH/configs/bashrc" "$HOME/.bashrc"
 
 touch "$HOME/.hushlogin"
 
@@ -21,5 +19,4 @@ touch "$HOME/.hushlogin"
 source "$OMAKMA_PATH/defaults/bash/shell"
 
 # Configure the inputrc using Omakma defaults
-[ -f "$HOME/.inputrc" ] && mv "$HOME/.inputrc" "$HOME/.inputrc.bak"
-cp "$OMAKMA_PATH/configs/inputrc" "$HOME/.inputrc"
+copy_config "$OMAKMA_PATH/configs/inputrc" "$HOME/.inputrc"

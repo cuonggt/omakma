@@ -1,1 +1,1 @@
-cp "$OMAKMA_PATH/configs/git/gitconfig" "$HOME/.gitconfig"
+copy_config "$OMAKMA_PATH/configs/git/gitconfig" "$HOME/.gitconfig"

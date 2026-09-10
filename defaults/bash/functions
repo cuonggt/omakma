@@ -47,19 +47,19 @@ brew_app_uninstall() {
 }
 
 # copy_config <src> <dst>
-# Copy a config file into place, backing up any existing destination as
-# <dst>.bak. Creates the destination directory if needed.
+# Copy an Omakma config over a file the user may already own, keeping what was
+# there as <dst>.bak. An existing backup is never overwritten: re-running an
+# installer would otherwise replace the user's original with Omakma's own copy
+# from the previous run.
 copy_config() {
   local src="$1"
   local dst="$2"
 
   mkdir -p "$(dirname "$dst")"
-  [[ -f "$dst" ]] && mv "$dst" "$dst.bak"
-  cp "$src" "$dst"
-}
 
-# set_default <domain> <key> <type> <value>
-# Thin wrapper around `defaults write` so callers read top-to-bottom.
-set_default() {
-  defaults write "$1" "$2" "$3" "$4"
+  if [[ -f "$dst" && ! -e "$dst.bak" ]]; then
+    mv "$dst" "$dst.bak"
+  fi
+
+  cp "$src" "$dst"
 }
