@@ -26,6 +26,18 @@ installs; this file describes *why*.
   installers (initial bootstrap and post-install menu) share them.
 - `CHANGELOG.md` (this file).
 
+### Fixed
+
+- Two locale fixes that previously only reached fresh machines are now
+  backfilled to existing installs as migrations. The Omakma iTerm2 profile
+  is pinned to `en_US.UTF-8` (and a leftover
+  `DynamicProfiles/omakma.json` removed); a system Region with no matching
+  UTF-8 locale -- `en_VN`, say, which leaves `LC_CTYPE` on `C` -- can be
+  normalised to `en_US`. The system-locale one asks before changing
+  anything, since Region and Preferred Languages may be deliberate, and
+  the iTerm2 one defers while iTerm2 is running rather than having its
+  changes overwritten on quit.
+
 ### Changed
 
 - `bin/omakma` now forwards CLI args to sub-commands (e.g.
