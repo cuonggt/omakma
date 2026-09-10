@@ -27,9 +27,11 @@ chmod -R u+rwX ~/Library/Caches/Homebrew
 # Update Homebrew recipes
 brew update
 
-# Set macOS system locale to en_US.UTF-8
+# Terminals derive LANG from the system Region, and a Region with no matching
+# UTF-8 locale (en_VN, say) leaves LC_CTYPE on the non-UTF-8 "C" locale. Set
+# the Region only: Preferred Languages are the user's own, and overwriting
+# them drops whichever languages they read macOS in.
 defaults write NSGlobalDomain AppleLocale -string "en_US"
-defaults write NSGlobalDomain AppleLanguages -array "en-US"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 

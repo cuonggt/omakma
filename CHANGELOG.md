@@ -45,6 +45,10 @@ installs; this file describes *why*.
   `v` in the banner.
 - The simple desktop installers were collapsed from a 3-line guard to a
   single `app_install <cask>` (or `brew_app_install`) call.
+- Installing no longer overwrites Preferred Languages. Setting
+  `AppleLanguages` to `en-US` dropped every other language the user reads
+  macOS in; only the Region (`AppleLocale`) is set now, which is what the
+  UTF-8 locale actually depends on.
 
 ## [0.0.1] - 2026-03-09
 
