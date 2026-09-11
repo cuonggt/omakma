@@ -29,6 +29,11 @@ installs; this file describes *why*.
   which `install/terminal.sh` never descended into, so MySQL, PostgreSQL
   and Redis were only reachable through `omakma install`. Nothing is
   preselected: DBngin ships by default and runs its own instances.
+- `install/trust-taps.sh`, which trusts the five Homebrew taps Omakma
+  installs from (localsend, nicoverbruggen, shivammathur/php,
+  lazydocker, bun). Recent Homebrew asks before loading anything from an
+  untrusted tap, which interrupts the install. Taps the user added
+  themselves are left alone.
 - `CHANGELOG.md` (this file).
 
 ### Fixed
