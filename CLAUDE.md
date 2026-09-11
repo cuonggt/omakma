@@ -14,7 +14,7 @@ Omakma is an opinionated macOS developer environment bootstrapper (macOS Sonoma 
 - `install.sh` — Main orchestrator. Installs Homebrew, sources `defaults/bash/functions`, runs `install/preflight.sh` and the first-run choices via `gum`, then sources the terminal and desktop installers
 - `install/terminal/` — Individual installer scripts for CLI tools, languages, and databases
 - `install/desktop/` — Individual installer scripts for GUI applications
-- `uninstall/` — Mirrors `install/` one-for-one. Each script removes a package and the config its installer put in place, and is safe to re-run when the app is already gone
+- `uninstall/` — Mirrors `install/` one-for-one. Each script removes a package and the config its installer put in place, and is meant to be safe to re-run when the app is already gone. **None of these has been run yet.** They were written and reviewed as a batch and merged unexercised; several remove files with `sudo rm -f`. CI only lints, so a green build says nothing about whether they work. Treat them as unverified, and exercise `omakma uninstall` on a machine you can afford to break before trusting one
 - `migrations/` — One-off fixes for machines that are already installed (see below)
 - `bin/omakma` — Post-install runtime command providing an interactive menu
 - `bin/omakma-sub/` — Sub-commands: `menu.sh`, `theme.sh`, `font.sh`, `font-size.sh`, `install.sh`, `uninstall.sh`, `update.sh`, `migrate.sh`, `dev-add-migration.sh`. `menu.sh` shifts off the sub-command name and forwards the rest, so a sub-command reads its own arguments from `$1`
