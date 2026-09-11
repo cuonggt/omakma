@@ -25,8 +25,10 @@ set_font() {
 
 FONT_NAMES=("JetBrains Mono" "Cascadia Mono" "Fira Mono" "Meslo")
 
-if [ "$#" -gt 1 ]; then
-  choice=${!#}
+# Sub-commands are handed their own arguments, so `omakma font "Fira Mono"`
+# arrives here as $1.
+if [ "$#" -gt 0 ]; then
+  choice=$1
 else
   choice=$(gum choose "${FONT_NAMES[@]}" "> Change size" "<< Back" --height 8 --header "Choose your programming font")
 fi
