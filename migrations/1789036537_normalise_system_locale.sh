@@ -13,6 +13,7 @@ apple_locale=${apple_locale%%@*} # strip extensions, e.g. en_VN@currency=USD
 
 if [[ -n "$apple_locale" ]] && locale -a | grep -qixF "$apple_locale.UTF-8"; then
   echo "  Region is $apple_locale, which has a matching UTF-8 locale. Nothing to do."
+  # shellcheck disable=SC2317  # sourced normally, run directly when testing
   return 0 2>/dev/null || exit 0
 fi
 
