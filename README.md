@@ -4,19 +4,21 @@ An opinionated Omakase Developer Setup for macOS Sonoma 14.5 and newer heavily i
 
 ## What You Get
 
-**Terminal & Shell:** Alacritty, Ghostty, iTerm2, Oh My Zsh (with autosuggestions, syntax highlighting, z), Zellij, Neovim, fzf, ripgrep, bat, eza, zoxide, btop, fd, lazygit, lazydocker, fastfetch, git-delta
+**Terminal & Shell:** Alacritty, Ghostty, iTerm2, Oh My Zsh (with autosuggestions, syntax highlighting, z), Zellij, tmux, Neovim (LazyVim), fzf, ripgrep, bat, eza, zoxide, btop, fd, tlrc, lazygit, lazydocker, git-delta, git-flow, GitHub CLI, Claude Code, fastfetch, overmind, mailpit, mole, wget, gnu-sed
 
-**Editors:** VS Code, Sublime Text
+**Editors:** VS Code and Sublime Text, both configured and themed to match the terminal
 
-**Languages (selectable):** PHP, Ruby on Rails, Node.js, Go, Python, Rust — managed via Mise
+**Languages (selectable):** Node.js, Go, Python and Ruby on Rails through [mise](https://mise.jdx.dev/), PHP through Homebrew with Composer and Laravel Valet, Rust through rustup. Bun is installed either way.
 
-**Databases (selectable):** MySQL, PostgreSQL, Redis — with TablePlus, Sequel Ace, DBngin
+**Databases:** MySQL, PostgreSQL and Redis, added on demand with `omakma install`. TablePlus, Sequel Ace and DBngin are installed as standard.
 
-**Desktop Apps:** Google Chrome, Firefox, Alfred, Rectangle, Slack, Telegram, Postman, Proxyman, Termius, OrbStack, LocalSend, Claude CLI
+**Desktop Apps:** Google Chrome, Firefox, Alfred, Rectangle, Slack, Telegram, Postman, Proxyman, Termius, OrbStack, LocalSend, PHP Monitor, Macshot, Recordly, ChatGPT, Claude
 
-**Themes:** 7 switchable themes (Default, Catppuccin, Nord, Everforest, Rose Pine, Ristretto, Solarized) across Alacritty, Ghostty, Zellij, Neovim, VS Code, and Sublime Text
+**Optional Apps:** Cloudflare WARP, Dropbox, Pritunl and Xmind are offered during installation. Ollama, OpenKey, Spotify, Steam and Zoom can be added later with `omakma install`.
 
-**Fonts:** JetBrains Mono, Cascadia Mono, Fira Mono, Meslo (Nerd Font variants, switchable)
+**Themes:** 7 switchable themes (Default, Catppuccin, Nord, Everforest, Rose Pine, Ristretto, Solarized) across Alacritty, Ghostty, Zellij, Neovim, VS Code and Sublime Text
+
+**Fonts:** JetBrains Mono Nerd Font is installed up front; Cascadia Mono, Fira Mono and Meslo are one `omakma font` away
 
 ## Installation
 
