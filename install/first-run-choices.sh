@@ -7,3 +7,9 @@ AVAILABLE_LANGUAGES=("PHP" "Ruby on Rails" "Node.js" "Go" "Python" "Rust")
 SELECTED_LANGUAGES="PHP,Ruby on Rails,Node.js,Go,Python"
 OMAKMA_FIRST_RUN_LANGUAGES=$(gum choose "${AVAILABLE_LANGUAGES[@]}" --no-limit --selected "$SELECTED_LANGUAGES" --height 10 --header "Select programming languages")
 export OMAKMA_FIRST_RUN_LANGUAGES
+
+AVAILABLE_DATABASES=("MySQL" "Redis" "PostgreSQL")
+# Nothing preselected: DBngin is installed by default and runs its own database
+# instances, so a Homebrew copy is only worth it if you specifically want one.
+OMAKMA_FIRST_RUN_DATABASES=$(gum choose "${AVAILABLE_DATABASES[@]}" --no-limit --height 7 --header "Select databases")
+export OMAKMA_FIRST_RUN_DATABASES

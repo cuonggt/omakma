@@ -30,7 +30,7 @@ else
 
   case "$INSTALLER" in
   "dev-language") INSTALLER_FILE="$OMAKMA_PATH/install/terminal/select-dev-language.sh" ;;
-  "dev-database") INSTALLER_FILE="$OMAKMA_PATH/install/terminal/optional/select-dev-database.sh" ;;
+  "dev-database") INSTALLER_FILE="$OMAKMA_PATH/install/terminal/select-dev-database.sh" ;;
   "ollama") INSTALLER_FILE="$OMAKMA_PATH/install/terminal/optional/app-ollama.sh" ;;
   *) INSTALLER_FILE="$OMAKMA_PATH/install/desktop/optional/app-$INSTALLER.sh" ;;
   esac
