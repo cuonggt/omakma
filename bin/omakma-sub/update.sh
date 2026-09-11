@@ -2,6 +2,7 @@ echo "Updating Omakma..."
 
 if ! git -C "$OMAKMA_PATH" pull --rebase; then
   echo "Omakma update failed. Please check your network connection and try again."
+  # shellcheck disable=SC2317  # sourced normally, run directly when testing
   return 1 2>/dev/null || exit 1
 fi
 
@@ -9,6 +10,7 @@ fi
 # not claim success without checking it.
 if ! source "$OMAKMA_PATH/bin/omakma-sub/migrate.sh"; then
   echo "Omakma was updated, but a migration failed. Fix the problem above and re-run: omakma update"
+  # shellcheck disable=SC2317  # sourced normally, run directly when testing
   return 1 2>/dev/null || exit 1
 fi
 

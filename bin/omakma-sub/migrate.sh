@@ -11,14 +11,11 @@ OMAKMA_MIGRATIONS_STATE="$OMAKMA_STATE_HOME/migrations"
 
 mkdir -p "$OMAKMA_MIGRATIONS_STATE"
 
+# Pathname expansion returns its matches sorted, and the unix-timestamp prefix
+# makes that lexicographic order chronological.
 shopt -s nullglob
 migrations=("$OMAKMA_MIGRATIONS_DIR"/*.sh)
 shopt -u nullglob
-
-# Migrations are sorted lexicographically; the unix-timestamp prefix makes
-# that equivalent to chronological order.
-IFS=$'\n' migrations=($(printf '%s\n' "${migrations[@]}" | sort))
-unset IFS
 
 for migration in "${migrations[@]}"; do
   basename=$(basename "$migration")
@@ -31,6 +28,7 @@ for migration in "${migrations[@]}"; do
     touch "$marker"
   else
     echo "Migration failed: $basename"
+    # shellcheck disable=SC2317  # sourced normally, run directly when testing
     return 1 2>/dev/null || exit 1
   fi
 done
