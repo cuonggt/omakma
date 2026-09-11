@@ -27,6 +27,9 @@ chmod -R u+rwX ~/Library/Caches/Homebrew
 # Update Homebrew recipes
 brew update
 
+# Trust the taps Omakma installs from, so Homebrew does not stop to ask
+source "$OMAKMA_PATH/install/trust-taps.sh"
+
 # Terminals derive LANG from the system Region, and a Region with no matching
 # UTF-8 locale (en_VN, say) leaves LC_CTYPE on the non-UTF-8 "C" locale. Set
 # the Region only: Preferred Languages are the user's own, and overwriting
