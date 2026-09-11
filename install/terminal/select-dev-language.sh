@@ -1,5 +1,5 @@
 # Install default programming languages
-if [[ -n "${OMAKMA_FIRST_RUN_LANGUAGES}" ]]; then
+if [[ -n "${OMAKMA_FIRST_RUN_LANGUAGES+set}" ]]; then
   languages=$OMAKMA_FIRST_RUN_LANGUAGES
 else
   AVAILABLE_LANGUAGES=("PHP" "Ruby on Rails" "Node.js" "Go" "Python" "Rust")

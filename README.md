@@ -10,7 +10,7 @@ An opinionated Omakase Developer Setup for macOS Sonoma 14.5 and newer heavily i
 
 **Languages (selectable):** Node.js, Go, Python and Ruby on Rails through [mise](https://mise.jdx.dev/), PHP through Homebrew with Composer and Laravel Valet, Rust through rustup. Bun is installed either way.
 
-**Databases:** MySQL, PostgreSQL and Redis, added on demand with `omakma install`. TablePlus, Sequel Ace and DBngin are installed as standard.
+**Databases (selectable):** MySQL, PostgreSQL and Redis, offered during installation and available later with `omakma install`. TablePlus, Sequel Ace and DBngin are installed as standard, and DBngin runs its own instances, so no Homebrew database is preselected.
 
 **Desktop Apps:** Google Chrome, Firefox, Alfred, Rectangle, Slack, Telegram, Postman, Proxyman, Termius, OrbStack, LocalSend, PHP Monitor, Macshot, Recordly, ChatGPT, Claude
 

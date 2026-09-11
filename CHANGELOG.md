@@ -24,10 +24,19 @@ installs; this file describes *why*.
   `app_install`, `brew_app_install`, `app_uninstall`, `brew_app_uninstall`
   and `copy_config`. Sourced by `install.sh` and `bin/omakma`, so all
   installers (initial bootstrap and post-install menu) share them.
+- A databases prompt at first run, alongside optional apps and languages.
+  `select-dev-database.sh` moved up out of `install/terminal/optional/`,
+  which `install/terminal.sh` never descended into, so MySQL, PostgreSQL
+  and Redis were only reachable through `omakma install`. Nothing is
+  preselected: DBngin ships by default and runs its own instances.
 - `CHANGELOG.md` (this file).
 
 ### Fixed
 
+- An empty first-run selection is no longer read as "never asked".
+  Deselecting every language meant `select-dev-language.sh` prompted
+  again in the middle of the install; it now checks whether the variable
+  was set rather than whether it holds anything.
 - Two locale fixes that previously only reached fresh machines are now
   backfilled to existing installs as migrations. The Omakma iTerm2 profile
   is pinned to `en_US.UTF-8` (and a leftover
