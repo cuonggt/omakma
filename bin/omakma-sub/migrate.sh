@@ -28,7 +28,6 @@ for migration in "${migrations[@]}"; do
     touch "$marker"
   else
     echo "Migration failed: $basename"
-    # shellcheck disable=SC2317  # sourced normally, run directly when testing
     return 1 2>/dev/null || exit 1
   fi
 done
