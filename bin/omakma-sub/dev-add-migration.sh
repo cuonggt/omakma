@@ -8,7 +8,6 @@ SLUG="$1"
 
 if [[ -z "$SLUG" ]]; then
   echo "Usage: omakma dev-add-migration <slug>"
-  # shellcheck disable=SC2317  # sourced normally, run directly when testing
   return 1 2>/dev/null || exit 1
 fi
 

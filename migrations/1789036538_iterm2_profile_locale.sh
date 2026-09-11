@@ -9,7 +9,6 @@
 
 if [[ ! -d /Applications/iTerm.app ]]; then
   echo "  iTerm2 is not installed. Nothing to do."
-  # shellcheck disable=SC2317  # sourced normally, run directly when testing
   return 0 2>/dev/null || exit 0
 fi
 
@@ -22,7 +21,6 @@ rm -f "$HOME/Library/Application Support/iTerm2/DynamicProfiles/omakma.json"
 if pgrep -qx iTerm2; then
   echo "  iTerm2 is running and would overwrite this change when it quits."
   echo "  Quit iTerm2, then run: omakma update"
-  # shellcheck disable=SC2317  # sourced normally, run directly when testing
   return 1 2>/dev/null || exit 1
 fi
 

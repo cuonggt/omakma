@@ -8,3 +8,8 @@ disable=SC1091
 # Variables are often set in one script and used in another via sourcing
 disable=SC2034
 disable=SC2154
+
+# Installers, sub-commands and migrations are sourced, so an early `return N`
+# ends them; the `|| exit N` half only runs when one is executed directly,
+# which is how they get tested. SC2317 reads that exit as unreachable.
+disable=SC2317
