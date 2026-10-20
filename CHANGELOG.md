@@ -29,6 +29,15 @@ installs; this file describes *why*.
   which `install/terminal.sh` never descended into, so MySQL, PostgreSQL
   and Redis were only reachable through `omakma install`. Nothing is
   preselected: DBngin ships by default and runs its own instances.
+- A test suite, `test/`, covering how installers and uninstallers treat config
+  under the user's home -- the first automated coverage in the project, and the
+  gap that let 44 uninstallers merge unexercised. `test/run.sh` is the entry
+  point, with one case file per app. Each case gets a throwaway `HOME` under
+  `$TMPDIR` and every `brew` call is stubbed, so it is safe to run on a working
+  machine and needs no network; `test/helpers.sh` refuses a `HOME` outside its
+  sandbox, since these cases delete config directories. 70 assertions, run by
+  CI on every push and pull request (`.github/workflows/test.yml`).
+
 - `install/trust-taps.sh`, which trusts the five Homebrew taps Omakma
   installs from (localsend, nicoverbruggen, shivammathur/php,
   lazydocker, bun). Recent Homebrew asks before loading anything from an
