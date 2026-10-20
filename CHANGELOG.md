@@ -51,9 +51,29 @@ installs; this file describes *why*.
   adopt it, which leaves the clone indistinguishable from a config they wrote
   themselves. Two new helpers in `defaults/bash/functions`,
   `remove_installed_config` and `remove_empty_dir`, carry the logic.
-  The Alacritty and Ghostty uninstallers still take their whole directory;
-  those installers write with plain `cp` rather than `copy_config`, so there
-  is no backup to restore and the installer needs fixing first.
+
+- The Alacritty and Ghostty uninstallers no longer take their whole config
+  directory either, which needed the installers fixing first: both wrote with
+  plain `cp`, so a user's own `alacritty.toml` or ghostty `config` was
+  destroyed at install time with no backup, leaving the uninstaller nothing it
+  could put back. Both installers now write every file through `copy_config`,
+  and both uninstallers remove only files that still match a copy Omakma
+  installed, restore the `.bak` once Omakma's own file is gone, and prune the
+  directory only if it empties. `omakma theme` and `omakma font` recopy
+  `theme.toml` and `font.toml`, so any theme's or font's copy counts as ours;
+  `font-size.toml` and ghostty's `config` are rewritten line-by-line in place
+  instead, so once a size, font or theme has been changed those two read as
+  user edits and stay. A third helper, `restore_config_backup`, carries the
+  restore.
+
+- `copy_config` no longer writes a `.bak` when the file already matches what
+  is about to replace it. There is nothing of the user's to keep in that case,
+  and the backup is worse than none: re-running an installer from `omakma
+  install` on a machine already set up left a `.bak` of Omakma's own config
+  behind, which an uninstaller cannot tell from a real one and would dutifully
+  restore -- so uninstalling put the whole config back and achieved nothing.
+  This affects every caller, `.zshrc`, `.gitconfig`, VS Code and Sublime
+  included.
 
 - An empty first-run selection is no longer read as "never asked".
   Deselecting every language meant `select-dev-language.sh` prompted
