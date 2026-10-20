@@ -50,14 +50,17 @@ brew_app_uninstall() {
 # Copy an Omakma config over a file the user may already own, keeping what was
 # there as <dst>.bak. An existing backup is never overwritten: re-running an
 # installer would otherwise replace the user's original with Omakma's own copy
-# from the previous run.
+# from the previous run. A file that already matches what is about to replace it
+# is not backed up either -- there is nothing of the user's to keep, and a .bak
+# holding Omakma's own config is worse than none, because an uninstaller cannot
+# tell it apart from a real one and will faithfully restore it.
 copy_config() {
   local src="$1"
   local dst="$2"
 
   mkdir -p "$(dirname "$dst")"
 
-  if [[ -f "$dst" && ! -e "$dst.bak" ]]; then
+  if [[ -f "$dst" && ! -e "$dst.bak" ]] && ! cmp -s "$dst" "$src"; then
     mv "$dst" "$dst.bak"
   fi
 
@@ -95,6 +98,24 @@ remove_empty_dir() {
 
   for dir in "$@"; do
     [[ -d "$dir" ]] && rmdir "$dir" 2>/dev/null
+  done
+
+  return 0
+}
+
+# restore_config_backup <file>...
+# Put back the original that copy_config moved aside, now that Omakma's own copy
+# is gone. Only acts when the file is absent, so it can never land on top of
+# something the user has edited since -- and an uninstaller only gets the file
+# out of the way when it could show the file was Omakma's.
+restore_config_backup() {
+  local file
+
+  for file in "$@"; do
+    if [[ ! -e "$file" && -f "$file.bak" ]]; then
+      mv "$file.bak" "$file"
+      echo "Restored $file from the backup Omakma made when it installed."
+    fi
   done
 
   return 0
