@@ -63,10 +63,12 @@ One case file per app, `test/app-<name>.sh`. They are sourced by `run.sh` so the
 
 ## ShellCheck
 
-ShellCheck runs in CI (`.github/workflows/shellcheck.yml`) on every push and pull request to master, across every `*.sh` file, and any finding fails the build. Run it before pushing:
+ShellCheck runs in CI (`.github/workflows/shellcheck.yml`) on every push and pull request to master, and any finding fails the build. Run it before pushing:
 
 ```
-find . -name '*.sh' -not -path './.git/*' | xargs shellcheck
+test/lint.sh
 ```
+
+`test/lint.sh` is the one definition of what gets linted, so CI and this file cannot drift apart. It covers every `*.sh`, plus the bash that carries no extension: `bin/omakma`, the shipped `configs/bashrc`, and the helpers under `defaults/bash/`. That last directory is globbed rather than listed, so a new helper cannot escape the linter by being new — which is how `defaults/bash/functions`, the file every installer depends on, went unchecked for as long as the pattern was `*.sh` alone. Left out on purpose: `defaults/bash/inputrc` and `configs/inputrc` are readline config rather than shell, and `configs/zshrc` is zsh, which ShellCheck cannot check.
 
 `.shellcheckrc` holds the repo-wide exemptions that follow from everything being sourced (SC1090, SC1091, SC2034, SC2154, SC2317) and sets `shell=bash` so files without a shebang are still checked as bash. Exemptions that apply to the whole codebase belong there, with a comment explaining why, rather than as inline `# shellcheck disable=` comments repeated at each site.
