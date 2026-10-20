@@ -79,9 +79,9 @@ alias d="docker"
 alias dc="docker compose"
 
 # Common path
-alias sites="cd $HOME/Sites/"
-alias projects="cd $HOME/Projects/"
-alias work="cd $HOME/Work/"
+alias sites='cd $HOME/Sites/'
+alias projects='cd $HOME/Projects/'
+alias work='cd $HOME/Work/'
 
 # Compression
 compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
@@ -96,12 +96,14 @@ webm2mp4() {
 
 composer-link() {
   composer config minimum-stability dev
-  local package=`echo $1 | sed -nr 's/.*\/([^\/]+)$/\1/p'`
-  composer config "repositories.$package" '{"type": "path", "url": "'$1'"}'
+  local package
+  package=$(echo "$1" | sed -nr 's/.*\/([^\/]+)$/\1/p')
+  composer config "repositories.$package" '{"type": "path", "url": "'"$1"'"}'
 }
 
 composer-github() {
   composer config minimum-stability dev
-  local package=`echo $1 | sed -nr 's/.*\/(.*)\.git/\1/p'`
-  composer config "repositories.$package" vcs $1
+  local package
+  package=$(echo "$1" | sed -nr 's/.*\/(.*)\.git/\1/p')
+  composer config "repositories.$package" vcs "$1"
 }

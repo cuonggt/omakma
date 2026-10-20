@@ -14,5 +14,4 @@ jobs:
       - name: Install ShellCheck
         run: sudo apt-get install -y shellcheck
       - name: Run ShellCheck
-        run: |
-          find . -name '*.sh' -not -path './.git/*' | xargs shellcheck
+        run: test/lint.sh

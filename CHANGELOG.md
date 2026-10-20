@@ -47,6 +47,21 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- ShellCheck now covers the bash files that carry no extension, which the
+  `find -name '*.sh'` pattern had never reached: `bin/omakma`, the shipped
+  `configs/bashrc`, and the helpers under `defaults/bash/` -- including
+  `defaults/bash/functions`, which every installer depends on and which had
+  therefore never been linted in CI. `test/lint.sh` is now the single
+  definition of what gets linted, used by CI and documented in CLAUDE.md so
+  the two cannot drift; it globs `defaults/bash/` rather than listing it, so a
+  new helper cannot escape the linter by being new. The readline files
+  (`defaults/bash/inputrc`, `configs/inputrc`) and `configs/zshrc` stay out:
+  the first two are not shell, and ShellCheck cannot check zsh. Widening the
+  net surfaced eleven findings in `defaults/bash/aliases` and
+  `defaults/bash/rc` -- unquoted paths, legacy backticks, and three aliases
+  that expanded `$HOME` when defined rather than when used -- all fixed
+  without changing what any of them do.
+
 - The Neovim, fastfetch and zellij uninstallers no longer delete config
   directories they do not own. Each of those installers deliberately writes
   nothing when a config is already there -- `[ ! -d "$HOME/.config/nvim" ]`
