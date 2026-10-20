@@ -63,3 +63,39 @@ copy_config() {
 
   cp "$src" "$dst"
 }
+
+# remove_installed_config <file> <source>...
+# Remove a config file Omakma installed, but only while it still matches one of
+# the sources Omakma could have put there -- `omakma theme` recopies some of
+# them, so more than one source can be legitimate. A file matching none of them,
+# because the user wrote it or has edited it since, is kept and reported: an
+# uninstaller that cannot show it owns a file has no business deleting it.
+remove_installed_config() {
+  local file="$1"
+  shift
+
+  [[ -f "$file" ]] || return 0
+
+  local src
+  for src in "$@"; do
+    if [[ -f "$src" ]] && cmp -s "$file" "$src"; then
+      rm -f "$file"
+      return 0
+    fi
+  done
+
+  echo "Kept $file: it differs from the copy Omakma installed."
+}
+
+# remove_empty_dir <dir>...
+# Remove each directory, but only while it is empty, so one Omakma created goes
+# away and one still holding the user's own files stays. Innermost first.
+remove_empty_dir() {
+  local dir
+
+  for dir in "$@"; do
+    [[ -d "$dir" ]] && rmdir "$dir" 2>/dev/null
+  done
+
+  return 0
+}

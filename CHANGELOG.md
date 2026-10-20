@@ -38,6 +38,23 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- The Neovim, fastfetch and zellij uninstallers no longer delete config
+  directories they do not own. Each of those installers deliberately writes
+  nothing when a config is already there -- `[ ! -d "$HOME/.config/nvim" ]`
+  and the like -- and the uninstaller then ran `rm -rf` on the whole
+  directory, so a user who already had a Neovim config lost it with no
+  backup anywhere, Omakma never having written one. They now remove only
+  files that still match the copy Omakma installed (any theme's copy counts,
+  since `omakma theme` recopies some of them), prune the directory only if it
+  ends up empty, and report anything they kept. `~/.config/nvim` is never
+  removed: Omakma strips `.git` from the LazyVim starter so the user can
+  adopt it, which leaves the clone indistinguishable from a config they wrote
+  themselves. Two new helpers in `defaults/bash/functions`,
+  `remove_installed_config` and `remove_empty_dir`, carry the logic.
+  The Alacritty and Ghostty uninstallers still take their whole directory;
+  those installers write with plain `cp` rather than `copy_config`, so there
+  is no backup to restore and the installer needs fixing first.
+
 - An empty first-run selection is no longer read as "never asked".
   Deselecting every language meant `select-dev-language.sh` prompted
   again in the middle of the install; it now checks whether the variable
