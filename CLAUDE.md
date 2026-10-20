@@ -46,7 +46,20 @@ A migration should not simply re-source its installer. Installers are written fo
 ## Code Style
 
 - Shell scripts: 2-space indentation, UTF-8, LF line endings (see `.editorconfig`)
-- No build system or test suite — behavioral changes are verified by running the scripts
+- No build system. Most behavioral changes are verified by running the scripts; config handling is the exception and has tests (see below)
+
+## Tests
+
+`test/run.sh` exercises how installers and uninstallers treat config under the user's home. That is the only part of the codebase with automated coverage — everything else is still verified by running the scripts by hand.
+
+```
+test/run.sh            # every case file
+test/run.sh alacritty  # just test/app-alacritty.sh
+```
+
+It is safe to run on a machine you care about: every case gets a throwaway `HOME` under `$TMPDIR`, every `brew` call is stubbed, and nothing reaches the network. `test/helpers.sh` refuses a `HOME` outside its sandbox, because these cases delete config directories and a path that escaped would take the real ones with it. CI runs the suite on every push and pull request to master (`.github/workflows/test.yml`).
+
+One case file per app, `test/app-<name>.sh`. They are sourced by `run.sh` so the pass/fail counters accumulate, which means they are not runnable on their own. Alacritty and Ghostty run their real installers, since those only copy files; Neovim, fastfetch and zellij build the installed state by hand instead, because `install/terminal/app-neovim.sh` clones LazyVim over the network. Add a case file alongside any uninstaller you fix.
 
 ## ShellCheck
 
