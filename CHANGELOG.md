@@ -47,6 +47,20 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- `omakma uninstall` no longer claims success regardless. `app_uninstall` and
+  `brew_app_uninstall` both ended in `|| true` with stderr discarded, so an
+  uninstaller always returned 0 and the `&&` chain in
+  `bin/omakma-sub/uninstall.sh` always reached its "Uninstall completed!"
+  spinner -- with the app still installed, and Homebrew's explanation thrown
+  away. The helpers now tell three outcomes apart: a package that is not
+  installed is nothing to do (which is what keeps them safe to re-run, so it
+  stays silent), a clean removal is not reported, and a removal Homebrew refuses
+  is recorded through `uninstall_failed` with its reason left on screen.
+  `report_failed_uninstalls` names them, and the menu skips its `clear` when
+  there is something to read, since clearing was wiping the only account of it.
+  A refused removal does not stop the uninstaller: the config cleanup still
+  runs, and the summary says so.
+
 - The last two installers that called Homebrew by hand now survive it too.
   `install/desktop/app-localsend.sh` and `install/desktop/app-phpmon.sh` need a
   `brew tap` before installing, so neither could go through `app_install` or
