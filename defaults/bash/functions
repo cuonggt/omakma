@@ -37,6 +37,24 @@ brew_app_install() {
     install_unavailable "$formula"
 }
 
+# brew_install <formula>
+# Install a Homebrew formula unless it is already installed. For a CLI tool with
+# nothing in /Applications -- reach for app_install or brew_app_install when
+# there is an app bundle to guard on.
+brew_install() {
+  brew list "$1" &>/dev/null ||
+    brew install "$1" ||
+    install_unavailable "$1"
+}
+
+# cask_install <cask>
+# Same, for a cask that installs no app bundle of its own (claude-code).
+cask_install() {
+  brew list --cask "$1" &>/dev/null ||
+    brew install --cask "$1" ||
+    install_unavailable "$1"
+}
+
 # A package Homebrew will not hand over -- disabled, renamed or withdrawn
 # upstream -- is not Omakma's error to die on. install.sh runs under `set -e`
 # and install/desktop.sh sources its installers in a loop, so one unavailable

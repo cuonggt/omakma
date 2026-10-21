@@ -47,6 +47,22 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- The terminal installers survive an unavailable package too. The previous
+  change covered `app_install` and `brew_app_install`, which only the desktop
+  installers use; the 15 files under `install/terminal/` called `brew list X ||
+  brew install X` directly, 30 times over, so one disabled formula still took
+  the whole run down -- and `install/terminal.sh` runs *before*
+  `install/desktop.sh`, so it took the desktop installers with it. Two new
+  helpers, `brew_install` and `cask_install`, carry the same record-and-continue
+  behaviour, and every one of those 30 sites now uses them. Three places needed
+  more than a substitution: `app-neovim.sh` keeps its `command -v nvim` guard so
+  an nvim installed by other means is left alone; `select-dev-language.sh` now
+  skips Composer and Valet when PHP could not be installed, and skips Ruby, Node,
+  Go and Python when mise is missing, since tolerating those installs while
+  leaving their dependents unguarded would only move the failure one line down;
+  and `install/terminal/required/app-gum.sh` stays fail-fast on purpose, because
+  `gum` drives the first-run choices and both menus.
+
 - A package Homebrew will not install no longer kills the whole run. The
   `alacritty` cask was disabled upstream on 2026-09-01 for failing the macOS
   Gatekeeper check, and Homebrew raises rather than warns when asked to install

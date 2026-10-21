@@ -8,23 +8,43 @@ fi
 
 if [[ -n "$languages" ]]; then
   while IFS= read -r language; do
+    # Ruby, Node, Go and Python all come through mise, so there is nothing to
+    # try for them if mise itself did not install.
+    case "$language" in
+    "Ruby on Rails" | Node.js | Go | Python)
+      if ! command -v mise &> /dev/null; then
+        echo "Skipping $language: mise is not available."
+        continue
+      fi
+      ;;
+    esac
+
     case "$language" in
     PHP)
       if ! command -v php &> /dev/null; then
-        brew install php
-        brew services start php
+        if brew install php; then
+          brew services start php
+        else
+          install_unavailable php
+        fi
       fi
-      if ! command -v composer &> /dev/null; then
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --quiet
-        sudo mkdir -p /usr/local/bin
-        sudo mv composer.phar /usr/local/bin/composer
-        rm composer-setup.php
-      fi
-      if ! command -v valet &> /dev/null; then
-        composer global require laravel/valet
-        valet install
-        valet trust
+
+      # Composer and Valet are PHP programs. Without PHP they would fail one
+      # after another, so skip them rather than taking the install down.
+      if command -v php &> /dev/null; then
+        if ! command -v composer &> /dev/null; then
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --quiet
+          sudo mkdir -p /usr/local/bin
+          sudo mv composer.phar /usr/local/bin/composer
+          rm composer-setup.php
+        fi
+
+        if ! command -v valet &> /dev/null; then
+          composer global require laravel/valet
+          valet install
+          valet trust
+        fi
       fi
       ;;
     "Ruby on Rails")
