@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.1.0] - 2026-10-21
+
 ### Added
 
 - Migrations system (`migrations/`, `bin/omakma-sub/migrate.sh`,
