@@ -13,3 +13,9 @@ disable=SC2154
 # ends them; the `|| exit N` half only runs when one is executed directly,
 # which is how they get tested. SC2317 reads that exit as unreachable.
 disable=SC2317
+
+# Test cases stub `brew`, `app_installed` and the install helpers so the real
+# installers can be sourced without touching the machine. The stubs are reached
+# only through the sourced script under test, which ShellCheck cannot see, so
+# SC2329 reads every one of them as dead.
+disable=SC2329

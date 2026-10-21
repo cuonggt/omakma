@@ -7,6 +7,7 @@
 #
 #   test/run.sh            # every case file
 #   test/run.sh alacritty  # just test/app-alacritty.sh
+#   test/run.sh install    # just test/helpers-install.sh
 #
 # Case files are sourced, so counters accumulate across them; run.sh is the
 # entry point rather than each file being runnable on its own.
@@ -19,18 +20,24 @@ source "$TEST_DIR/helpers.sh"
 CASE_FILES=()
 if [ "$#" -gt 0 ]; then
   for NAME in "$@"; do
-    CASE_FILES+=("$TEST_DIR/app-$NAME.sh")
+    if [ -f "$TEST_DIR/app-$NAME.sh" ]; then
+      CASE_FILES+=("$TEST_DIR/app-$NAME.sh")
+    elif [ -f "$TEST_DIR/helpers-$NAME.sh" ]; then
+      CASE_FILES+=("$TEST_DIR/helpers-$NAME.sh")
+    else
+      echo "no case file for: $NAME" >&2
+      exit 1
+    fi
   done
 else
-  CASE_FILES=("$TEST_DIR"/app-*.sh)
+  # An unmatched glob stays literal in bash 3.2, so each candidate is tested
+  # rather than assumed to exist.
+  for CANDIDATE in "$TEST_DIR"/app-*.sh "$TEST_DIR"/helpers-*.sh; do
+    if [ -f "$CANDIDATE" ]; then
+      CASE_FILES+=("$CANDIDATE")
+    fi
+  done
 fi
-
-for CASE_FILE in "${CASE_FILES[@]}"; do
-  if [ ! -f "$CASE_FILE" ]; then
-    echo "no such case file: $CASE_FILE" >&2
-    exit 1
-  fi
-done
 
 test_begin
 

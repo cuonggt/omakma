@@ -8,6 +8,10 @@ for installer in "$OMAKMA_PATH"/install/desktop/*.sh; do source "$installer"; do
 # Revert to normal idle settings
 kill $CAFFEINATE_PID 2>/dev/null
 
+# Name anything Homebrew would not install, before the reboot prompt -- after it
+# the user is gone.
+report_failed_installs
+
 # Reboot to pick up changes
 if gum confirm "Ready to reboot for all settings to take effect?"; then
   sudo shutdown -r now
