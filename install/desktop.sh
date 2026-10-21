@@ -1,12 +1,11 @@
 # Ensure computer doesn't go to sleep while installing
-caffeinate -dims &
-CAFFEINATE_PID=$!
+keep_awake
 
 # Run desktop installers
 for installer in "$OMAKMA_PATH"/install/desktop/*.sh; do source "$installer"; done
 
 # Revert to normal idle settings
-kill $CAFFEINATE_PID 2>/dev/null
+let_sleep
 
 # Name anything Homebrew would not install, before the reboot prompt -- after it
 # the user is gone.
