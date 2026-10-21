@@ -1,13 +1,13 @@
-brew list fzf &>/dev/null || brew install fzf
-brew list ripgrep &>/dev/null || brew install ripgrep
-brew list bat &>/dev/null || brew install bat
-brew list eza &>/dev/null || brew install eza
-brew list zoxide &>/dev/null || brew install zoxide
-brew list btop &>/dev/null || brew install btop
-brew list fd &>/dev/null || brew install fd
-brew list tlrc &>/dev/null || brew install tlrc
-brew list gnu-sed &>/dev/null || brew install gnu-sed
-brew list tmux &>/dev/null || brew install tmux
-brew list overmind &>/dev/null || brew install overmind
-brew list git-delta &>/dev/null || brew install git-delta
-brew list git-flow &>/dev/null || brew install git-flow
+brew_install fzf
+brew_install ripgrep
+brew_install bat
+brew_install eza
+brew_install zoxide
+brew_install btop
+brew_install fd
+brew_install tlrc
+brew_install gnu-sed
+brew_install tmux
+brew_install overmind
+brew_install git-delta
+brew_install git-flow

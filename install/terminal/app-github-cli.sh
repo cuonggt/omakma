@@ -1,1 +1,1 @@
-brew list gh &>/dev/null || brew install gh
+brew_install gh

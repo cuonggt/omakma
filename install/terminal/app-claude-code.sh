@@ -1,1 +1,1 @@
-brew list --cask claude-code &>/dev/null || brew install --cask claude-code
+cask_install claude-code

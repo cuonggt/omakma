@@ -1,5 +1,7 @@
+# Guarded on the command rather than on brew, so an nvim installed by other
+# means is left alone.
 if ! command -v nvim &> /dev/null; then
-  brew install neovim
+  brew install neovim || install_unavailable neovim
 fi
 
 # Only attempt to set configuration if Neovim has never been run

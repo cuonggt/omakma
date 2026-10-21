@@ -10,13 +10,13 @@ if [[ -n "$dbs" ]]; then
   while IFS= read -r db; do
     case "$db" in
     MySQL)
-      brew list mysql@8.4 &>/dev/null || brew install mysql@8.4
+      brew_install mysql@8.4
       ;;
     Redis)
-      brew list redis &>/dev/null || brew install redis
+      brew_install redis
       ;;
     PostgreSQL)
-      brew list postgresql@16 &>/dev/null || brew install postgresql@16
+      brew_install postgresql@16
       ;;
     esac
   done <<< "$dbs"

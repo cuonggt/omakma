@@ -1,1 +1,1 @@
-brew list mole &>/dev/null || brew install mole
+brew_install mole
