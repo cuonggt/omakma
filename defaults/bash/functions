@@ -194,6 +194,20 @@ copy_config() {
   cp "$src" "$dst"
 }
 
+# backup_config <file>
+# Keep what is in a file Omakma is about to change in place, as <file>.bak, the
+# way copy_config does for a file it overwrites wholesale. An existing backup is
+# never replaced, so re-running an installer cannot bury the user's original
+# under Omakma's own copy from a previous run.
+backup_config() {
+  local file="$1"
+
+  [ -f "$file" ] || return 0
+  [ -e "$file.bak" ] && return 0
+
+  cp "$file" "$file.bak"
+}
+
 # remove_installed_config <file> <source>...
 # Remove a config file Omakma installed, but only while it still matches one of
 # the sources Omakma could have put there -- `omakma theme` recopies some of
