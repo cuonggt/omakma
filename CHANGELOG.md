@@ -9,7 +9,16 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- The keep-awake no longer outlives a failed install. `install/terminal.sh` and
+  `install/desktop.sh` backgrounded `caffeinate -dims` and killed it after their
+  installer loop, so under `set -e` any failure in that loop skipped the kill
+  and left the process running -- holding the Mac awake indefinitely, with
+  nothing on screen to say so and nothing short of `pkill` to stop it. Two
+  helpers, `keep_awake` and `let_sleep`, now stop it from an EXIT trap as well
+  as explicitly at the end of the loop. The trap is re-armed per loop, so the
+  terminal and desktop passes cannot strand each other's.
 
 ## [0.1.0] - 2026-10-21
 

@@ -37,6 +37,36 @@ brew_app_install() {
     install_unavailable "$formula"
 }
 
+OMAKMA_CAFFEINATE_PID=""
+
+# keep_awake
+# Stop the machine idling while a long install runs. The caffeinate is stopped
+# from an EXIT trap as well as by the explicit let_sleep at the end, because
+# install/terminal.sh and install/desktop.sh used to kill it only after their
+# installer loop: under `set -e` any failure in that loop skipped the kill
+# entirely and left the Mac awake indefinitely, with nothing on screen to say
+# so. Calling this twice is fine -- the second call stops the first.
+keep_awake() {
+  let_sleep
+
+  caffeinate -dims &
+  OMAKMA_CAFFEINATE_PID=$!
+
+  trap let_sleep EXIT
+}
+
+# let_sleep
+# Stop the caffeinate keep_awake started, if there is one. Safe to call more
+# than once, so the explicit call and the trap cannot fight over it.
+let_sleep() {
+  [ -n "${OMAKMA_CAFFEINATE_PID:-}" ] || return 0
+
+  kill "$OMAKMA_CAFFEINATE_PID" 2>/dev/null
+  OMAKMA_CAFFEINATE_PID=""
+
+  return 0
+}
+
 # brew_install <formula>
 # Install a Homebrew formula unless it is already installed. For a CLI tool with
 # nothing in /Applications -- reach for app_install or brew_app_install when
