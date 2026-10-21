@@ -79,6 +79,46 @@ run_script() {
     app_install() { :; }
     brew_app_uninstall() { :; }
     app_uninstall() { :; }
+
+    # Anything that would reach the network, the package manager, or the world
+    # outside the sandbox HOME. Stubbing the install helpers is not enough on
+    # its own: install/desktop/app-vscode.sh also `sudo ln -fs`es into
+    # /usr/local/bin and runs 33 `code --install-extension` calls against the
+    # user's own editor, which it duly did the first time this ran. A blocked
+    # command says so on stderr and fails, so a case that depends on one breaks
+    # loudly rather than quietly doing something real.
+    blocked() {
+      echo "test harness blocked: $*" >&2
+      return 1
+    }
+    sudo() { blocked sudo "$@"; }
+    brew() { blocked brew "$@"; }
+    code() { blocked code "$@"; }
+    wget() { blocked wget "$@"; }
+    curl() { blocked curl "$@"; }
+    defaults() { blocked defaults "$@"; }
+    killall() { blocked killall "$@"; }
+    osascript() { blocked osascript "$@"; }
+    hdiutil() { blocked hdiutil "$@"; }
+    xattr() { blocked xattr "$@"; }
+    caffeinate() { blocked caffeinate "$@"; }
+    shutdown() { blocked shutdown "$@"; }
+    mise() { blocked mise "$@"; }
+    composer() { blocked composer "$@"; }
+    valet() { blocked valet "$@"; }
+    gum() { blocked gum "$@"; }
+
+    # git has to keep working locally, since remove_installed_clone reads a
+    # remote url to decide whether a package directory is Omakma's. Only the
+    # subcommands that reach the network are blocked.
+    git() {
+      if [ "$1" = clone ] || [ "$1" = pull ] || [ "$1" = fetch ] || [ "$1" = push ]; then
+        blocked git "$1"
+        return 1
+      fi
+
+      command git "$@"
+    }
     source "$OMAKMA_PATH/$tree/$script"
   )
 }

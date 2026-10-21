@@ -11,6 +11,39 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- The iTerm2, Sublime Text and Visual Studio Code uninstallers no longer leave
+  the config their installers rewrote. All three removed the app and stopped,
+  so reinstalling it from anywhere brought Omakma's settings back, and the
+  user's own stayed buried in a `.bak` with nothing to restore them. VS Code's
+  `settings.json` and Sublime's two `.sublime-settings` files are now removed
+  while they still match what Omakma installed, with the `.bak` handed back;
+  `omakma theme` and `omakma font` rewrite lines in both in place, so once
+  either has run the file reads as a user edit and stays. Sublime's seven
+  cloned packages, and the colour scheme package `omakma theme` clones, are
+  removed through a new `remove_installed_clone` helper that checks the remote
+  url, since the installer skips a package directory that already exists and a
+  clone cannot be byte-matched. Package Control is left alone: it updates
+  itself, so there is no way to tell Omakma's copy from the user's. iTerm2's
+  profile, the default-profile guid pointing at it, and the two appearance keys
+  the installer sets are cleared out of
+  `~/Library/Preferences/com.googlecode.iterm2.plist`, deferring while iTerm2
+  is running because it writes its preferences back when it quits. What it
+  cannot do is restore the profiles that were there before: the installer
+  replaces them outright and takes no backup, so they are gone at install time.
+
+- `/usr/local/bin/code` is only removed while it is still the symlink the
+  installer made, and `sudo` is not called at all when there is nothing to
+  remove -- `sudo rm -f` on a path that is already gone still stops to ask for
+  a password, so re-running the uninstaller asked for one to do nothing.
+
+- The test harness can no longer touch the machine. `run_script` stubbed the
+  install helpers but not `sudo`, `brew`, `code`, `curl`, `wget` or `git clone`,
+  so sourcing a real installer ran them for real -- which it did, reinstalling
+  two VS Code extensions and attempting a `sudo ln -fs` into `/usr/local/bin`
+  before it was stopped. Those commands are now blocked inside `run_script`,
+  loudly rather than silently, so a case that depends on one fails instead of
+  quietly doing something real.
+
 - The keep-awake no longer outlives a failed install. `install/terminal.sh` and
   `install/desktop.sh` backgrounded `caffeinate -dims` and killed it after their
   installer loop, so under `set -e` any failure in that loop skipped the kill
