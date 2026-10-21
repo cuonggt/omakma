@@ -92,17 +92,55 @@ report_failed_installs() {
   return 0
 }
 
+OMAKMA_FAILED_UNINSTALLS=()
+
+# uninstall_failed <name>
+# Record that Homebrew would not remove a package, and carry on so the rest of
+# the uninstaller still runs.
+uninstall_failed() {
+  OMAKMA_FAILED_UNINSTALLS+=("$1")
+  echo "Could not remove $1 with Homebrew."
+
+  return 0
+}
+
+# report_failed_uninstalls
+# Name anything Homebrew would not remove. Silent when nothing failed.
+report_failed_uninstalls() {
+  [ "${#OMAKMA_FAILED_UNINSTALLS[@]}" -gt 0 ] || return 0
+
+  local app
+
+  echo ""
+  echo "Homebrew could not remove these:"
+  for app in "${OMAKMA_FAILED_UNINSTALLS[@]}"; do
+    echo "  - $app"
+  done
+  echo "The app may still be running, or Homebrew may no longer know that name."
+  echo "Any config the uninstaller cleans up was still removed."
+
+  return 0
+}
+
 # app_uninstall <cask>
-# Uninstall a Homebrew cask, ignoring the "not installed" error so the
-# script is safe to re-run.
+# Remove a Homebrew cask, if it is installed. A cask that is not installed is
+# nothing to do rather than a failure, which is what keeps these scripts safe to
+# re-run. A removal that genuinely fails is recorded, and Homebrew's reason is
+# left on screen: both of these helpers used to end in `|| true` with stderr
+# discarded, so every uninstall returned 0 and looked like a success however it
+# went.
 app_uninstall() {
-  brew uninstall --cask "$1" 2>/dev/null || true
+  brew list --cask "$1" &>/dev/null || return 0
+
+  brew uninstall --cask "$1" || uninstall_failed "$1"
 }
 
 # brew_app_uninstall <formula>
 # Same as app_uninstall but for non-cask formulae.
 brew_app_uninstall() {
-  brew uninstall "$1" 2>/dev/null || true
+  brew list "$1" &>/dev/null || return 0
+
+  brew uninstall "$1" || uninstall_failed "$1"
 }
 
 # copy_config <src> <dst>
