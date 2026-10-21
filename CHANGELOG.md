@@ -11,6 +11,21 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- Installing iTerm2 no longer destroys the profiles you already had. The
+  installer assigned `New Bookmarks` a one-item list, so every profile in
+  `~/Library/Preferences/com.googlecode.iterm2.plist` was replaced by Omakma's
+  the moment Omakma was installed, with no backup to recover them from -- the
+  one place in the project that lost user data outright rather than overwriting
+  a file it could back up. It now adds its profile alongside whatever is there,
+  backs the plist up through a new `backup_config` helper first, and re-uses the
+  guid from a previous run so anything iTerm2 has bound to that profile keeps
+  working. A first install still claims the default profile and the two
+  appearance keys; a re-run only takes them back while they are still pointing
+  at Omakma's own, so a default or tab style the user has since chosen is
+  theirs to keep. It also defers while iTerm2 is running, as the uninstaller
+  does, because iTerm2 writes its preferences back when it quits -- easy to hit
+  from `omakma install`, where the terminal running it may well be iTerm2.
+
 - The iTerm2, Sublime Text and Visual Studio Code uninstallers no longer leave
   the config their installers rewrote. All three removed the app and stopped,
   so reinstalling it from anywhere brought Omakma's settings back, and the
