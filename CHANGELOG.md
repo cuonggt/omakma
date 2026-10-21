@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.0] - 2026-10-21
+
 ### Fixed
 
 - Installing iTerm2 no longer destroys the profiles you already had. The
