@@ -217,6 +217,29 @@ remove_installed_config() {
   echo "Kept $file: it differs from the copy Omakma installed."
 }
 
+# remove_installed_clone <dir> <url>
+# Remove a git clone Omakma made, but only while its origin still points at the
+# URL Omakma cloned from. The installers skip a package directory that is
+# already there, so one with a different origin -- or none at all -- belongs to
+# the user and stays. A clone cannot be matched by content the way a config file
+# can, so the remote is the next best evidence of who made it.
+remove_installed_clone() {
+  local dir="$1"
+  local url="$2"
+
+  [ -d "$dir" ] || return 0
+
+  local origin
+  origin=$(git -C "$dir" config --get remote.origin.url 2>/dev/null)
+
+  if [ "$origin" = "$url" ]; then
+    rm -rf "$dir"
+    return 0
+  fi
+
+  echo "Kept $dir: it is not the clone Omakma made."
+}
+
 # remove_empty_dir <dir>...
 # Remove each directory, but only while it is empty, so one Omakma created goes
 # away and one still holding the user's own files stays. Innermost first.

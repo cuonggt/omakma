@@ -30,6 +30,8 @@ except (FileNotFoundError, plistlib.InvalidFileException):
 
 prefs["New Bookmarks"] = [profile]
 prefs["Default Bookmark Guid"] = guid
+# uninstall/desktop/app-iterm2.sh removes these two again, but only while they
+# still hold these values. Keep the two in step.
 prefs["TabStyleWithAutomaticOption"] = 5  # Minimal theme
 prefs["StatusBarPosition"] = 1  # Bottom
 
