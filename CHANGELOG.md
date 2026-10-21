@@ -47,6 +47,17 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- The last two installers that called Homebrew by hand now survive it too.
+  `install/desktop/app-localsend.sh` and `install/desktop/app-phpmon.sh` need a
+  `brew tap` before installing, so neither could go through `app_install` or
+  `brew_app_install` and both were missed by the two changes above: a failure in
+  either still took the whole install down. All three taps involved are
+  third-party, and `brew tap` can fail on its own when one is renamed, removed
+  or untrusted, so a failure at any step is now recorded once and the install
+  carries on. Every `brew install` and `brew tap` under `install/` is now either
+  behind a helper or explicitly tolerant, with `install/terminal/required/app-gum.sh`
+  as the single deliberate exception.
+
 - The terminal installers survive an unavailable package too. The previous
   change covered `app_install` and `brew_app_install`, which only the desktop
   installers use; the 15 files under `install/terminal/` called `brew list X ||

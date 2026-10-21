@@ -223,3 +223,69 @@ TEST_OUTPUT=$(
 assert_says "the failed PHP install is recorded" "Could not install php from Homebrew"
 assert_says "nothing downstream of PHP is attempted" "reached_end=yes"
 assert_says "exactly one failure" "recorded=1"
+
+echo "a tap-based installer survives the tap failing"
+TEST_OUTPUT=$(
+  exec 2>&1
+  source "$OMAKMA_PATH/defaults/bash/functions"
+  app_installed() { return 1; }
+  # Fails at `brew tap`, before the install is ever reached.
+  brew() {
+    if [ "$1" = tap ]; then
+      return 1
+    fi
+    echo "install should not have been reached"
+  }
+  set -e
+  source "$OMAKMA_PATH/install/desktop/app-localsend.sh"
+  echo "reached_end=yes"
+  echo "recorded=${#OMAKMA_FAILED_INSTALLS[@]}"
+)
+assert_says "a failed tap does not stop the run" "reached_end=yes"
+assert_says "it is recorded once" "recorded=1"
+assert_says "and named" "Could not install localsend from Homebrew"
+case "$TEST_OUTPUT" in
+*"should not have been reached"*) test_fail "it tried to install from a tap that failed" ;;
+*) test_pass "the install is not attempted after the tap failed" ;;
+esac
+
+echo "a tap-based installer survives the install failing"
+TEST_OUTPUT=$(
+  exec 2>&1
+  source "$OMAKMA_PATH/defaults/bash/functions"
+  app_installed() { return 1; }
+  # The tap succeeds; the install is what Homebrew refuses.
+  brew() {
+    if [ "$1" = tap ]; then
+      return 0
+    fi
+    return 1
+  }
+  set -e
+  source "$OMAKMA_PATH/install/desktop/app-localsend.sh"
+  source "$OMAKMA_PATH/install/desktop/app-phpmon.sh"
+  echo "reached_end=yes"
+  echo "recorded=${#OMAKMA_FAILED_INSTALLS[@]}"
+  report_failed_installs
+)
+assert_says "neither stops the run" "reached_end=yes"
+assert_says "both are recorded" "recorded=2"
+assert_says "localsend is named in the summary" "  - localsend"
+assert_says "phpmon is named in the summary" "  - phpmon"
+
+echo "a tap-based installer does nothing when the app is already there"
+TEST_OUTPUT=$(
+  exec 2>&1
+  source "$OMAKMA_PATH/defaults/bash/functions"
+  app_installed() { return 0; }
+  brew() { echo "brew should not have been called"; }
+  set -e
+  source "$OMAKMA_PATH/install/desktop/app-localsend.sh"
+  source "$OMAKMA_PATH/install/desktop/app-phpmon.sh"
+  echo "recorded=${#OMAKMA_FAILED_INSTALLS[@]}"
+)
+assert_says "nothing recorded" "recorded=0"
+case "$TEST_OUTPUT" in
+*"should not have been called"*) test_fail "brew ran for an app already present" ;;
+*) test_pass "neither taps nor installs" ;;
+esac
