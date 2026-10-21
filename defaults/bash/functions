@@ -20,7 +20,9 @@ app_install() {
   local cask="$1"
   local bundle="${2:-${cask}.app}"
 
-  app_installed "$bundle" || brew install --cask "$cask"
+  app_installed "$bundle" ||
+    brew install --cask "$cask" ||
+    install_unavailable "$cask"
 }
 
 # brew_app_install <formula> [<Bundle.app>]
@@ -30,7 +32,46 @@ brew_app_install() {
   local formula="$1"
   local bundle="${2:-${formula}.app}"
 
-  app_installed "$bundle" || brew install "$formula"
+  app_installed "$bundle" ||
+    brew install "$formula" ||
+    install_unavailable "$formula"
+}
+
+# A package Homebrew will not hand over -- disabled, renamed or withdrawn
+# upstream -- is not Omakma's error to die on. install.sh runs under `set -e`
+# and install/desktop.sh sources its installers in a loop, so one unavailable
+# cask took every installer after it (alphabetically, alacritty is the first of
+# 28), the Dock and font tweaks, the reboot prompt, and the `caffeinate`
+# desktop.sh leaves running. Nothing is swallowed: the name is printed here and
+# again by report_failed_installs at the end of the run. Only the `brew install`
+# itself is tolerated -- every other failure still stops the install.
+OMAKMA_FAILED_INSTALLS=()
+
+# install_unavailable <name>
+# Record that a package could not be installed, and carry on.
+install_unavailable() {
+  OMAKMA_FAILED_INSTALLS+=("$1")
+  echo "Could not install $1 from Homebrew. Skipping it and carrying on."
+
+  return 0
+}
+
+# report_failed_installs
+# Name everything that was skipped, late enough in the run that the user still
+# has it on screen. Silent when nothing failed.
+report_failed_installs() {
+  [ "${#OMAKMA_FAILED_INSTALLS[@]}" -gt 0 ] || return 0
+
+  local app
+
+  echo ""
+  echo "Homebrew would not install these, so they were skipped:"
+  for app in "${OMAKMA_FAILED_INSTALLS[@]}"; do
+    echo "  - $app"
+  done
+  echo "They may have been disabled, renamed or withdrawn upstream. Everything else is installed."
+
+  return 0
 }
 
 # app_uninstall <cask>

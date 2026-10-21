@@ -7,7 +7,12 @@
 #
 # Sourced by test/run.sh, which is the entry point.
 
-OMAKMA_PATH=${OMAKMA_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}
+# Always the checkout these tests live in, never whatever the surrounding shell
+# exports. `defaults/bash/shell` exports OMAKMA_PATH as ~/.local/share/omakma,
+# so honouring an inherited value would quietly exercise the installed copy
+# instead of the code under test -- failing for the wrong reason when that copy
+# is old, and worse, passing for the wrong reason when it is merely different.
+OMAKMA_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 export OMAKMA_PATH
 
 TEST_PASS=0
@@ -49,11 +54,6 @@ sandbox_home() {
 # Source one installer or uninstaller the way bin/omakma does -- shared helpers
 # loaded, every brew call stubbed -- against a sandbox HOME. What it printed is
 # left in $TEST_OUTPUT for assert_says.
-#
-# The brew stubs below are called only by the script being sourced, which
-# ShellCheck cannot see; SC2329 is disabled for this function alone rather than
-# repo-wide, since nothing else stubs anything.
-# shellcheck disable=SC2329
 run_script() {
   local home="$1"
   local tree="$2"
@@ -67,7 +67,11 @@ run_script() {
     ;;
   esac
 
+  # exec, not `) 2>&1`: a redirection on the assignment would catch the
+  # assignment's stderr rather than the sourced script's, leaving anything the
+  # script writes to stderr invisible to assert_says.
   TEST_OUTPUT=$(
+    exec 2>&1
     HOME="$home"
     export HOME
     source "$OMAKMA_PATH/defaults/bash/functions"
@@ -76,7 +80,7 @@ run_script() {
     brew_app_uninstall() { :; }
     app_uninstall() { :; }
     source "$OMAKMA_PATH/$tree/$script"
-  ) 2>&1
+  )
 }
 
 # rewrite_line <file> <prefix> <replacement>

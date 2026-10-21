@@ -47,6 +47,31 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- A package Homebrew will not install no longer kills the whole run. The
+  `alacritty` cask was disabled upstream on 2026-09-01 for failing the macOS
+  Gatekeeper check, and Homebrew raises rather than warns when asked to install
+  a disabled cask on a machine that does not have it. `install.sh` runs under
+  `set -e`, `install/desktop.sh` sources its installers in a loop, and
+  `app-alacritty.sh` is alphabetically the first of 28 -- so a fresh install
+  died at the first desktop app, losing the other 27 along with the Dock and
+  font tweaks and the reboot prompt, and leaking the `caffeinate` process that
+  `desktop.sh` starts and never got to kill. The retry the ERR trap suggests
+  could never succeed. `app_install` and `brew_app_install` now record a package
+  Homebrew refuses, say so, and carry on; `report_failed_installs` names
+  everything skipped just before the reboot prompt. Only the `brew install`
+  itself is tolerated -- every other failure still stops the install, which is
+  covered by a test. The Alacritty installer stays in place rather than being
+  removed, so it starts working again if the cask is re-enabled.
+
+- The test suite no longer trusts an inherited `OMAKMA_PATH`. `defaults/bash/shell`
+  exports it as `~/.local/share/omakma`, so a shell that had sourced Omakma's own
+  config made `test/run.sh` exercise the *installed* copy rather than the
+  checkout -- failing for the wrong reason against an old install, and worse,
+  passing for the wrong reason against a merely different one. It is now derived
+  from the test directory's own location. Related: `assert_says` could never
+  match anything written to stderr, because the redirection sat on the
+  assignment rather than inside the command substitution.
+
 - ShellCheck now covers the bash files that carry no extension, which the
   `find -name '*.sh'` pattern had never reached: `bin/omakma`, the shipped
   `configs/bashrc`, and the helpers under `defaults/bash/` -- including
