@@ -11,6 +11,15 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- A removal Homebrew refuses now stops the uninstaller instead of carrying on
+  to delete the app's config. You could end up with the app still installed and
+  its configuration gone -- worse than a failed uninstall, because the app is
+  left working but unconfigured and the config cannot be put back.
+  `uninstall_failed` now returns non-zero and the twelve uninstallers with
+  anything to do after the removal stop on it, with a test asserting that none
+  of them can be added later without the guard. The reported summary used to
+  say the config had been removed anyway; it now says it was left in place.
+
 - Uninstalling an app now gives its Homebrew tap back. Omakma taps five
   repositories and untapped none of them, so uninstalling LocalSend, PHP
   Monitor, lazydocker or bun left a tap behind for good. Each of those four

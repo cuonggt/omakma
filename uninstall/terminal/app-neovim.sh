@@ -1,4 +1,4 @@
-brew_app_uninstall neovim
+brew_app_uninstall neovim || return 1 2>/dev/null || exit 1
 
 # Omakma clones the LazyVim starter into ~/.config/nvim and strips its .git so
 # the user can adopt it, which leaves the clone indistinguishable from a config

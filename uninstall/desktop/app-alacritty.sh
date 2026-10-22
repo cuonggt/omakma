@@ -1,4 +1,4 @@
-brew_app_uninstall alacritty
+brew_app_uninstall alacritty || return 1 2>/dev/null || exit 1
 
 remove_installed_config "$HOME/.config/alacritty/alacritty.toml" \
   "$OMAKMA_PATH/configs/alacritty.toml"

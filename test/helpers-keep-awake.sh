@@ -14,12 +14,15 @@
 
 # gone_within <pid>
 # True once the process disappears, allowing for the moment between the kill
-# and the process being reaped.
+# and the process being reaped. Ten seconds rather than three: this is the only
+# assertion in the suite whose outcome depends on wall-clock, and a loaded CI
+# runner should not be able to fail it. A keep-awake that genuinely leaked
+# outlives its stub for 30 seconds, so the longer budget still catches it.
 gone_within() {
   local pid="$1"
   local waited=0
 
-  while [ "$waited" -lt 30 ]; do
+  while [ "$waited" -lt 100 ]; do
     kill -0 "$pid" 2>/dev/null || return 0
     sleep 0.1
     waited=$((waited + 1))

@@ -1,4 +1,4 @@
-app_uninstall sublime-text
+app_uninstall sublime-text || return 1 2>/dev/null || exit 1
 
 SUBLIME_SUPPORT="$HOME/Library/Application Support/Sublime Text"
 

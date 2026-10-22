@@ -1,4 +1,4 @@
-brew_app_uninstall zellij
+brew_app_uninstall zellij || return 1 2>/dev/null || exit 1
 
 # `omakma theme` copies <theme>.kdl in beside the one the installer wrote, so
 # clear every theme file that still matches the theme it came from.
