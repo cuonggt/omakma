@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.4] - 2026-10-22
+
 ### Fixed
 
 - A failed download no longer ends the install. Every `curl`, `wget` and
