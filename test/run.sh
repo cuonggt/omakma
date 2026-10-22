@@ -20,22 +20,30 @@ source "$TEST_DIR/helpers.sh"
 CASE_FILES=()
 if [ "$#" -gt 0 ]; then
   for NAME in "$@"; do
-    if [ -f "$TEST_DIR/app-$NAME.sh" ]; then
-      CASE_FILES+=("$TEST_DIR/app-$NAME.sh")
-    elif [ -f "$TEST_DIR/helpers-$NAME.sh" ]; then
-      CASE_FILES+=("$TEST_DIR/helpers-$NAME.sh")
-    else
+    FOUND=""
+    for CANDIDATE in "$TEST_DIR/app-$NAME.sh" "$TEST_DIR/helpers-$NAME.sh" "$TEST_DIR/$NAME.sh"; do
+      if [ -f "$CANDIDATE" ]; then
+        FOUND="$CANDIDATE"
+        break
+      fi
+    done
+
+    if [ -z "$FOUND" ]; then
       echo "no case file for: $NAME" >&2
       exit 1
     fi
+
+    CASE_FILES+=("$FOUND")
   done
 else
-  # An unmatched glob stays literal in bash 3.2, so each candidate is tested
-  # rather than assumed to exist.
-  for CANDIDATE in "$TEST_DIR"/app-*.sh "$TEST_DIR"/helpers-*.sh; do
-    if [ -f "$CANDIDATE" ]; then
-      CASE_FILES+=("$CANDIDATE")
-    fi
+  # Everything in here except this script and the two it shares the directory
+  # with, rather than a list of name prefixes a new case file could fail to
+  # match and so never run.
+  for CANDIDATE in "$TEST_DIR"/*.sh; do
+    case "$(basename "$CANDIDATE")" in
+    run.sh | lint.sh | helpers.sh) ;;
+    *) CASE_FILES+=("$CANDIDATE") ;;
+    esac
   done
 fi
 

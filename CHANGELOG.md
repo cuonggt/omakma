@@ -9,7 +9,25 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Changed
+
+- A fresh install now gets the most recent release rather than whatever `master`
+  happens to be in the middle of, while `omakma update` keeps tracking `master`
+  -- so installs are pinned and updates are not, and a fix still reaches
+  existing machines without waiting for the next tag. Until now `boot.sh`
+  cloned `master` unpinned, which made both tags purely decorative.
+  `install/pin-to-release.sh` holds the choice, and moves `master` back to the
+  tag with `git reset` rather than checking the tag out: a detached HEAD would
+  leave `git pull` with nothing to follow and no fix would reach the machine
+  again. `$OMAKMA_REF` still overrides everything, with `master` for the tip,
+  and a repository with no tags yet installs `master` and says so. One useful
+  side effect: `install/preflight.sh` now pre-touches only the migration
+  markers that existed at the release, so migrations added afterwards do run on
+  the first `omakma update` -- which is what they are for.
+
+- `test/run.sh` sources every `*.sh` in `test/` bar its own three
+  infrastructure files, rather than matching `app-*` and `helpers-*`. A new
+  case file could previously be added and silently never run.
 
 ## [0.2.0] - 2026-10-21
 
