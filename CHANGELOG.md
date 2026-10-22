@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.3] - 2026-10-22
+
 ### Fixed
 
 - `omakma theme` and `omakma font` no longer fail on every app the user has
