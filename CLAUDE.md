@@ -10,7 +10,7 @@ Omakma is an opinionated macOS developer environment bootstrapper (macOS Sonoma 
 
 **Installation flow:** `boot.sh` → `install.sh` → `install/terminal.sh` + `install/desktop.sh`
 
-- `boot.sh` — Entry point (run via curl). Installs Xcode CLT, clones repo to `~/.local/share/omakma`, sources `install/pin-to-release.sh` to pick the version, runs `install.sh`
+- `boot.sh` — Entry point (run via curl). Installs Xcode CLT, clones repo to `~/.local/share/omakma`, sources `install/pin-to-release.sh` to pick the version, runs `install.sh`. Its first two steps are the functions `install_xcode_clt` and `clone_omakma`, and sourcing it with `$OMAKMA_BOOT_DEFINE_ONLY` set defines them without running anything — which is how `test/boot-steps.sh` reaches them, since they run before the repository exists and so cannot live in it. `$OMAKMA_CLONE_URL` and `$OMAKMA_CLONE_PATH` exist so a test can clone a local repository into a sandbox. The usual "am I being sourced" check is no help: `bash < <(curl ...)` feeds the script in on stdin, so `$0` is bash and `BASH_SOURCE` is empty
 - `install/pin-to-release.sh` — Decides what a fresh install gets: the most recent tag reachable from `origin/master`, or `$OMAKMA_REF`. It moves `master` back to the tag with `git reset` rather than checking the tag out, because a detached HEAD leaves `omakma update`'s `git pull` with nothing to follow and no fix would ever reach the machine again. So installs are pinned and updates are not
 - `install.sh` — Main orchestrator. Installs Homebrew, sources `defaults/bash/functions`, runs `install/preflight.sh` and the first-run choices via `gum`, then sources the terminal and desktop installers
 - `install/terminal/` — Individual installer scripts for CLI tools, languages, and databases
