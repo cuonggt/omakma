@@ -9,7 +9,24 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- `boot.sh` stops when the clone fails. It had no guard and no `set -e`, so a
+  failed clone carried on to source two paths that were not there, reporting
+  the missing files rather than the clone that never happened.
+
+### Changed
+
+- `boot.sh`'s first two steps are now the functions `install_xcode_clt` and
+  `clone_omakma`, and sourcing it with `$OMAKMA_BOOT_DEFINE_ONLY` set defines
+  them without running anything. They run before the repository exists, so
+  unlike `install/pin-to-release.sh` they cannot live inside it -- this is what
+  makes them reachable by a test at all, and they are the first script every
+  user runs. `$OMAKMA_CLONE_URL` and `$OMAKMA_CLONE_PATH` let a test clone a
+  local repository into a sandbox instead of GitHub into a home directory.
+  Covered by `test/boot-steps.sh`, including the grep/tail/sed pipeline that
+  picks the Command Line Tools label out of `softwareupdate -l`, which had
+  never been exercised.
 
 ## [0.2.5] - 2026-10-22
 
