@@ -30,6 +30,8 @@ bash < <(curl -sL https://raw.githubusercontent.com/cuonggt/omakma/master/boot.s
 
 This will start the installation process. It's almost entirely automated.
 
+You get the most recent [release](https://github.com/cuonggt/omakma/releases), rather than whatever `master` happens to be in the middle of. `omakma update` then tracks `master`, so fixes reach you without waiting for the next release.
+
 ## Installing a specific version
 
 Set the `OMAKMA_REF` environment variable to install from a specific branch, tag, or commit:
@@ -37,6 +39,8 @@ Set the `OMAKMA_REF` environment variable to install from a specific branch, tag
 ```
 OMAKMA_REF=my-branch bash < <(curl -sL https://raw.githubusercontent.com/cuonggt/omakma/master/boot.sh)
 ```
+
+Use `OMAKMA_REF=master` to install the tip instead of the last release.
 
 ## Daily Use
 

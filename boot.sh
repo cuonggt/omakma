@@ -31,11 +31,10 @@ fi
 echo -e "\nCloning Omakma..."
 rm -rf ~/.local/share/omakma
 git clone https://github.com/cuonggt/omakma.git ~/.local/share/omakma >/dev/null
-if [[ $OMAKMA_REF != "master" ]]; then
-  pushd ~/.local/share/omakma > /dev/null || exit 1
-  git fetch origin "${OMAKMA_REF:-master}" && git checkout "${OMAKMA_REF:-master}"
-  popd > /dev/null || exit 1
-fi
+
+# Pick the version to install: the most recent release by default, master or
+# any other ref through $OMAKMA_REF.
+source ~/.local/share/omakma/install/pin-to-release.sh ~/.local/share/omakma
 
 echo -e "\nInstallation starting..."
 source ~/.local/share/omakma/install.sh
