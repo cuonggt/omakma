@@ -7,6 +7,6 @@ if ! fc-list | grep -qi "JetBrainsMono"; then
     rm -rf /tmp/JetBrainsMono.zip /tmp/JetBrainsMono
     fc-cache
   else
-    echo "Failed to download JetBrainsMono font"
+    download_failed "the JetBrainsMono font"
   fi
 fi
