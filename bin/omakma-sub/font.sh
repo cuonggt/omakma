@@ -17,10 +17,17 @@ set_font() {
     fi
   fi
 
-  cp "$OMAKMA_PATH/configs/alacritty/fonts/$file_name.toml" "$HOME/.config/alacritty/font.toml"
-  gsed -i "s/^font-family = .*$/font-family = $font_name/g" "$HOME/.config/ghostty/config"
-  gsed -i "s/\"font_face\": \".*\"/\"font_face\": \"$file_name Nerd Font Mono, monospace\"/g" "$HOME/Library/Application Support/Sublime Text/Packages/User/Preferences.sublime-settings"
-  gsed -i "s/\"editor.fontFamily\": \".*\"/\"editor.fontFamily\": \"$file_name Nerd Font Mono, monospace\"/g" "$HOME/Library/Application Support/Code/User/settings.json"
+  # Each is skipped when the app's config is not there, so changing font after
+  # uninstalling something says nothing rather than failing on every file.
+  update_config "$OMAKMA_PATH/configs/alacritty/fonts/$file_name.toml" "$HOME/.config/alacritty/font.toml"
+
+  edit_config "$HOME/.config/ghostty/config" "s/^font-family = .*$/font-family = $font_name/g"
+
+  edit_config "$HOME/Library/Application Support/Sublime Text/Packages/User/Preferences.sublime-settings" \
+    "s/\"font_face\": \".*\"/\"font_face\": \"$file_name Nerd Font Mono, monospace\"/g"
+
+  edit_config "$HOME/Library/Application Support/Code/User/settings.json" \
+    "s/\"editor.fontFamily\": \".*\"/\"editor.fontFamily\": \"$file_name Nerd Font Mono, monospace\"/g"
 }
 
 FONT_NAMES=("JetBrains Mono" "Cascadia Mono" "Fira Mono" "Meslo")

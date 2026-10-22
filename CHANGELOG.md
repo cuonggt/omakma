@@ -9,7 +9,26 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- `omakma theme` and `omakma font` no longer fail on every app the user has
+  uninstalled. Both edited config files in place and copied theme files in as
+  though each app were still installed, so switching theme on a machine with
+  anything removed printed a dozen `No such file or directory` errors from a
+  routine operation and then redrew the menu as though nothing had happened.
+  Two new helpers, `edit_config` and `update_config`, skip an app whose config
+  is not there. `themes/set-sublime-theme.sh` went further and git-cloned a
+  colour scheme repository into a directory tree for a Sublime Text that was
+  not installed; it now does nothing at all without Sublime's config. The
+  Sublime and VS Code cases were made reachable by this release's own uninstall
+  changes, which started removing config those switchers had always assumed.
+
+- `edit_config` takes GNU sed under either name, `gsed` on macOS or `sed`
+  elsewhere, rather than assuming `gsed`. It refuses to fall back to BSD sed,
+  which reads the expression as `-i`'s backup suffix and mangles the file, and
+  says so instead. `omakma theme` also slugs its choice with `tr` rather than
+  `gsed`, since gnu-sed is installable but skippable and a missing one there
+  would have silently blanked the choice.
 
 ## [0.2.2] - 2026-10-22
 
