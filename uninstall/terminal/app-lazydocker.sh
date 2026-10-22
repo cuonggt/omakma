@@ -1,1 +1,3 @@
 brew_app_uninstall jesseduffield/lazydocker/lazydocker
+
+untap_if_unused jesseduffield/lazydocker

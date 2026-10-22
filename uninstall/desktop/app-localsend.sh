@@ -1,1 +1,3 @@
 brew_app_uninstall localsend
+
+untap_if_unused localsend/localsend
