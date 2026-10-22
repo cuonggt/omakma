@@ -9,7 +9,19 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- Uninstalling an app now gives its Homebrew tap back. Omakma taps five
+  repositories and untapped none of them, so uninstalling LocalSend, PHP
+  Monitor, lazydocker or bun left a tap behind for good. Each of those four
+  uninstallers now calls a new `untap_if_unused` helper, which untaps only
+  while nothing is still installed from the tap. That guard is the point rather
+  than a nicety: `brew untap` on a tap that still has packages installed offers
+  to uninstall them first and prompts while doing it, so an unguarded untap
+  could take unrelated packages with it. `shivammathur/php` is deliberately
+  left alone -- `omakma install` installs PHP versions from it, so it outlives
+  any single app that needs it, and a test asserts no uninstaller ever passes
+  it.
 
 ## [0.2.1] - 2026-10-22
 

@@ -3,7 +3,9 @@
 # itself installs from, and only those: anything else already on the machine is
 # the user's own business.
 #
-# Keep this list in step with the installers that tap:
+# Keep this list in step with the installers that tap. Each app's uninstaller
+# untaps its own tap again through untap_if_unused, except shivammathur/php,
+# which `omakma install` also installs PHP versions from:
 #   localsend/localsend        install/desktop/app-localsend.sh
 #   nicoverbruggen/cask        install/desktop/app-phpmon.sh
 #   shivammathur/php           install/desktop/app-phpmon.sh

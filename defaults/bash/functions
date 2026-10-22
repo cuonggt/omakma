@@ -152,6 +152,38 @@ report_failed_uninstalls() {
   return 0
 }
 
+# untap_if_unused <tap>
+# Remove a tap Omakma added, but only while nothing is installed from it.
+#
+# A tap is shared ground and keeps no record of who added it, so the test is
+# whether anything would be orphaned rather than who owns it. That guard is not
+# a courtesy: `brew untap` on a tap that still has packages installed offers to
+# uninstall them first and prompts while doing it, which is no way for an
+# uninstaller to behave. `--force`, which skips straight to uninstalling them,
+# is never passed.
+#
+# shivammathur/php is deliberately never passed here. `omakma install` installs
+# PHP versions from it, so it outlives any single app that happens to need it.
+untap_if_unused() {
+  local tap="$1"
+
+  brew tap 2>/dev/null | grep -Fqx "$tap" || return 0
+
+  local package
+  while IFS= read -r package; do
+    case "$package" in
+    "$tap"/*)
+      echo "Kept the $tap tap: $package is still installed from it."
+      return 0
+      ;;
+    esac
+  done <<<"$(brew list --full-name 2>/dev/null)"
+
+  brew untap "$tap" || echo "Could not untap $tap."
+
+  return 0
+}
+
 # app_uninstall <cask>
 # Remove a Homebrew cask, if it is installed. A cask that is not installed is
 # nothing to do rather than a failure, which is what keeps these scripts safe to
