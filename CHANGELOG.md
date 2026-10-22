@@ -23,6 +23,10 @@ installs; this file describes *why*.
   Sublime and VS Code cases were made reachable by this release's own uninstall
   changes, which started removing config those switchers had always assumed.
 
+- `omakma font` creates `~/Library/Fonts` before copying a downloaded font into
+  it. `install/desktop/fonts.sh` creates it at install time, so `omakma font`
+  had never needed to -- but it should not depend on having been run after it.
+
 - `edit_config` takes GNU sed under either name, `gsed` on macOS or `sed`
   elsewhere, rather than assuming `gsed`. It refuses to fall back to BSD sed,
   which reads the expression as `-i`'s backup suffix and mangles the file, and
