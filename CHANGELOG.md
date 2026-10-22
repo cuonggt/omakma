@@ -9,7 +9,36 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- A failed download no longer ends the install. Every `curl`, `wget` and
+  `git clone` under `install/` ran unguarded while `install.sh` runs under
+  `set -e`, so a network blip aborted the whole run -- and
+  `install/terminal/a-shell.sh` clones three repositories among the very first
+  things a fresh install does, since it sorts first of the terminal installers
+  and those run before the desktop ones. The same shape as a cask disabled
+  upstream, with a different cause. Two new helpers, `download_failed` and
+  `clone_if_missing`, record what could not be fetched and carry on, sharing
+  the summary that already named skipped packages.
+
+- Oh My Zsh and Rust no longer fail silently. Both were installed with
+  `sh -c "$(curl ...)"`, which turns a failed download into `sh -c ""` -- that
+  succeeds, so nothing was installed and nothing said so. In Oh My Zsh's case
+  the three plugin clones two lines later then failed into a `.oh-my-zsh` that
+  was not there, which is what actually ended the run. Both now fetch to a file
+  and check it, and the plugins are skipped when Oh My Zsh is absent.
+
+- `install/desktop/app-recordly.sh` takes its mount point from `hdiutil`
+  rather than searching all of `/Volumes`, which could have found a
+  `Recordly.app` on an unrelated disk, and detaches the image whether or not
+  the app was found -- a bad image used to stay mounted. Its download comes
+  from a third-party GitHub release, so it was the likeliest of all of these to
+  fail.
+
+- `install/terminal/app-neovim.sh` creates `lua/plugins` before writing the
+  theme into it. The LazyVim starter ships that directory, so this never
+  failed, but the copy was one upstream layout change away from ending the
+  install.
 
 ## [0.2.3] - 2026-10-22
 

@@ -95,6 +95,34 @@ cask_install() {
 # itself is tolerated -- every other failure still stops the install.
 OMAKMA_FAILED_INSTALLS=()
 
+# download_failed <name>
+# Record that something could not be fetched, say so, and carry on. A download
+# is no more Omakma's error to die on than a package Homebrew will not hand
+# over: install.sh runs under `set -e` and install/terminal/a-shell.sh clones
+# three repositories among the very first things a fresh install does, so a
+# network blip there used to end the entire run before anything was installed.
+# It shares the install summary, since a skipped app is a skipped app whatever
+# the reason.
+download_failed() {
+  OMAKMA_FAILED_INSTALLS+=("$1")
+  echo "Could not download $1. Skipping it and carrying on."
+
+  return 0
+}
+
+# clone_if_missing <dir> <url>
+# Clone a repository Omakma needs, unless it is already there. A failed clone --
+# no network, a repository renamed or taken down -- is recorded under the
+# directory's name and skipped rather than ending the install.
+clone_if_missing() {
+  local dir="$1"
+  local url="$2"
+
+  [ -d "$dir" ] && return 0
+
+  git clone "$url" "$dir" || download_failed "$(basename "$dir")"
+}
+
 # install_unavailable <name>
 # Record that a package could not be installed, and carry on.
 install_unavailable() {
@@ -113,11 +141,11 @@ report_failed_installs() {
   local app
 
   echo ""
-  echo "Homebrew would not install these, so they were skipped:"
+  echo "These could not be installed, so they were skipped:"
   for app in "${OMAKMA_FAILED_INSTALLS[@]}"; do
     echo "  - $app"
   done
-  echo "They may have been disabled, renamed or withdrawn upstream. Everything else is installed."
+  echo "A package may have been disabled, renamed or withdrawn upstream, or a download may have failed. Everything else is installed."
 
   return 0
 }

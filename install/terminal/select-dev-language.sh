@@ -61,7 +61,17 @@ if [[ -n "$languages" ]]; then
       mise use --global python@latest
       ;;
     Rust)
-      bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs)" -- -y
+      # Fetched to a file first: `bash -c "$(curl ...)"` turns a failed download
+      # into `bash -c ""`, which succeeds and installs nothing.
+      RUSTUP_INSTALLER=$(mktemp)
+
+      if curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o "$RUSTUP_INSTALLER"; then
+        bash "$RUSTUP_INSTALLER" -y || download_failed Rust
+      else
+        download_failed Rust
+      fi
+
+      rm -f "$RUSTUP_INSTALLER"
       ;;
     esac
   done <<< "$languages"
