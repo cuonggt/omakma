@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.2] - 2026-10-22
+
 ### Fixed
 
 - A removal Homebrew refuses now stops the uninstaller instead of carrying on
