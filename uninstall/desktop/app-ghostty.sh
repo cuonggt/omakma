@@ -1,4 +1,4 @@
-app_uninstall ghostty
+app_uninstall ghostty || return 1 2>/dev/null || exit 1
 
 # `omakma theme`, `omakma font` and the font-size menu each rewrite a line
 # inside config in place rather than recopying it, so once any of them has run

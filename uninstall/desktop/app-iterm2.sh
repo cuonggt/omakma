@@ -1,4 +1,4 @@
-app_uninstall iterm2
+app_uninstall iterm2 || return 1 2>/dev/null || exit 1
 
 # Safe to remove whether or not iTerm2 is running: iTerm2 reads dynamic profiles
 # from disk rather than caching them in its preferences.

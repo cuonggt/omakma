@@ -1,4 +1,4 @@
-app_uninstall visual-studio-code
+app_uninstall visual-studio-code || return 1 2>/dev/null || exit 1
 
 # Only remove the symlink while it is still the one the installer made: it was
 # created with `ln -fs`, so a `code` the user had pointing elsewhere was already

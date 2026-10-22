@@ -125,13 +125,15 @@ report_failed_installs() {
 OMAKMA_FAILED_UNINSTALLS=()
 
 # uninstall_failed <name>
-# Record that Homebrew would not remove a package, and carry on so the rest of
-# the uninstaller still runs.
+# Record that Homebrew would not remove a package, and report failure so the
+# uninstaller stops. An uninstaller that carried on would strip the config of an
+# app that is still installed, which is worse than not uninstalling it: the app
+# is left working but unconfigured, and the config cannot be put back.
 uninstall_failed() {
   OMAKMA_FAILED_UNINSTALLS+=("$1")
-  echo "Could not remove $1 with Homebrew."
+  echo "Could not remove $1 with Homebrew. Leaving the rest of it alone."
 
-  return 0
+  return 1
 }
 
 # report_failed_uninstalls
@@ -147,7 +149,7 @@ report_failed_uninstalls() {
     echo "  - $app"
   done
   echo "The app may still be running, or Homebrew may no longer know that name."
-  echo "Any config the uninstaller cleans up was still removed."
+  echo "Their config was left in place, so nothing is half-removed."
 
   return 0
 }
