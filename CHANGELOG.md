@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.1] - 2026-10-22
+
 ### Changed
 
 - A fresh install now gets the most recent release rather than whatever `master`
