@@ -228,6 +228,51 @@ copy_config() {
   cp "$src" "$dst"
 }
 
+# edit_config <file> <sed-expression>...
+# Rewrite lines in a config file in place, but only while the file is still
+# there. An app the user uninstalled took its config with it, and `omakma theme`
+# used to fail on every file it could no longer find -- a dozen errors from a
+# routine operation, ending with the menu redrawn as though nothing had
+# happened.
+edit_config() {
+  local file="$1"
+  shift
+
+  [ -f "$file" ] || return 0
+
+  # These expressions are GNU sed's, and `-i` takes no argument there. gnu-sed
+  # is installed by apps-terminal.sh, which is allowed to skip a package
+  # Homebrew will not hand over, so gsed cannot simply be assumed. Falling back
+  # to BSD sed would be worse than doing nothing: it reads the expression as
+  # `-i`'s backup suffix and mangles the file. So take GNU sed under either
+  # name, and otherwise say so and change nothing.
+  local sed_command=""
+  if command -v gsed &>/dev/null; then
+    sed_command="gsed"
+  elif sed --version >/dev/null 2>&1; then
+    sed_command="sed"
+  else
+    echo "GNU sed is not installed, so $file was left unchanged."
+
+    return 0
+  fi
+
+  local expression
+  for expression in "$@"; do
+    "$sed_command" -i "$expression" "$file"
+  done
+}
+
+# update_config <src> <dst>
+# Put a theme or font file into an app's config directory, but only while that
+# directory is still there. Creating it would mean writing config for an app
+# that is not installed.
+update_config() {
+  [ -d "$(dirname "$2")" ] || return 0
+
+  cp "$1" "$2"
+}
+
 # backup_config <file>
 # Keep what is in a file Omakma is about to change in place, as <file>.bak, the
 # way copy_config does for a file it overwrites wholesale. An existing backup is
