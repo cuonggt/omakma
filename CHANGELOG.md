@@ -9,7 +9,22 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- `omakma install` no longer claims success when a package was skipped. It
+  gated its "Install completed!" spinner on the sourced installer's exit
+  status, but the install helpers return 0 when Homebrew will not hand a
+  package over or a download fails -- so the spinner always fired, and the
+  `clear` right after it wiped the "Could not install..." message that was the
+  only account of what had happened. `report_failed_installs` was never called
+  in that path either, so everything the summary exists to say was invisible
+  unless you happened to be doing a full fresh install. The dispatch now checks
+  the failure list rather than an exit status, and keeps the screen when there
+  is something to read -- the same fix the uninstall menu already had.
+
+- `omakma install` slugs its choice with `tr` rather than `gsed`, since gnu-sed
+  is installable but skippable and a missing one would have blanked the choice
+  and sourced a path that is not there.
 
 ## [0.2.4] - 2026-10-22
 

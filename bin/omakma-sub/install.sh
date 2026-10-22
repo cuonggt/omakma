@@ -14,6 +14,7 @@ CHOICES=(
 )
 
 CHOICE=$(gum choose "${CHOICES[@]}" --height 19 --header "Install application")
+INSTALL_RAN=false
 
 if [[ "$CHOICE" == "<< Back"* ]] || [[ -z "$CHOICE" ]]; then
   # Don't install anything
@@ -21,12 +22,15 @@ if [[ "$CHOICE" == "<< Back"* ]] || [[ -z "$CHOICE" ]]; then
 elif [[ "$CHOICE" == "> All"* ]]; then
   INSTALLER_FILE=$(gum file "$OMAKMA_PATH/install")
 
-  [[ -n "$INSTALLER_FILE" ]] &&
-    gum confirm "Run installer?" &&
-    source "$INSTALLER_FILE" &&
-    gum spin --spinner globe --title "Install completed!" -- sleep 3
+  if [[ -n "$INSTALLER_FILE" ]] && gum confirm "Run installer?"; then
+    source "$INSTALLER_FILE"
+    INSTALL_RAN=true
+  fi
 else
-  INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | gsed 's/ /-/g')
+  # tr rather than gsed for the slug: gnu-sed is installable but skippable, and
+  # a missing one here would blank the choice and source a path that is not
+  # there.
+  INSTALLER=$(echo "$CHOICE" | awk -F ' {2,}' '{print $1}' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 
   case "$INSTALLER" in
   "dev-language") INSTALLER_FILE="$OMAKMA_PATH/install/terminal/select-dev-language.sh" ;;
@@ -35,8 +39,23 @@ else
   *) INSTALLER_FILE="$OMAKMA_PATH/install/desktop/optional/app-$INSTALLER.sh" ;;
   esac
 
-  source "$INSTALLER_FILE" && gum spin --spinner globe --title "Install completed!" -- sleep 3
+  source "$INSTALLER_FILE"
+  INSTALL_RAN=true
 fi
 
-clear
+# "Install completed!" used to fire whichever way it went. The install helpers
+# return 0 when Homebrew will not hand a package over, or a download fails, so
+# the && chain that gated the spinner never saw a failure -- and the clear below
+# then wiped the only account of it. Say what actually happened, and when
+# something was skipped keep it on screen.
+if [ "${#OMAKMA_FAILED_INSTALLS[@]}" -gt 0 ]; then
+  report_failed_installs
+else
+  if [ "$INSTALL_RAN" = true ]; then
+    gum spin --spinner globe --title "Install completed!" -- sleep 3
+  fi
+
+  clear
+fi
+
 source "$OMAKMA_PATH/bin/omakma"
