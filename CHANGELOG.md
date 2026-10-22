@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.6] - 2026-10-22
+
 ### Fixed
 
 - `boot.sh` stops when the clone fails. It had no guard and no `set -e`, so a
