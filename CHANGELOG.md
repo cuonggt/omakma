@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.5] - 2026-10-22
+
 ### Fixed
 
 - `omakma install` no longer claims success when a package was skipped. It
