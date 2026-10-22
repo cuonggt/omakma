@@ -7,6 +7,9 @@ set_font() {
   if ! fc-list | grep -qi "$font_name"; then
     if wget -q -O "/tmp/$file_name.zip" "$url"; then
       unzip -o "/tmp/$file_name.zip" -d "/tmp/$file_name"
+      # install/desktop/fonts.sh creates this, but `omakma font` should not
+      # depend on having been run after it.
+      mkdir -p "$HOME/Library/Fonts"
       cp "/tmp/$file_name"/*."$file_type" "$HOME/Library/Fonts"
       rm -rf "/tmp/$file_name.zip" "/tmp/$file_name"
       fc-cache

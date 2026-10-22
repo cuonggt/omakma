@@ -47,6 +47,30 @@ run_switcher() {
     }
     code() { return 1; }
 
+    # Nothing here may reach the network or the real font store. GitHub's
+    # runners have wget, so leaving font.sh unstubbed meant it downloaded a font
+    # archive for real and then failed copying it into a sandbox HOME with no
+    # Library/Fonts -- a failure that could not happen on a machine without
+    # wget, which is why it passed locally and in a container.
+    fc-list() {
+      printf '%s\n' "JetBrainsMono Nerd Font" "CaskaydiaMono Nerd Font" \
+        "FiraMono Nerd Font" "MesloLGS Nerd Font"
+    }
+    fc-cache() { :; }
+    clear() { :; }
+    wget() {
+      echo "ATTEMPTED wget" >&2
+      return 1
+    }
+    curl() {
+      echo "ATTEMPTED curl" >&2
+      return 1
+    }
+    unzip() {
+      echo "ATTEMPTED unzip" >&2
+      return 1
+    }
+
     source "$OMAKMA_PATH/bin/omakma-sub/$SWITCHER_NAME.sh"
   )
 }
@@ -101,6 +125,44 @@ echo "changing font with nothing installed says nothing"
 HOME_DIR=$(sandbox_home switch-font-empty)
 run_switcher "$HOME_DIR" font "Fira Mono"
 assert_quiet "no errors for any of the four files it writes"
+case "$TEST_OUTPUT" in
+*"ATTEMPTED wget"* | *"ATTEMPTED curl"*)
+  test_fail "the switcher tried to download a font, so this suite needs the network"
+  ;;
+*) test_pass "and no font is downloaded" ;;
+esac
+assert_gone "nor is a font store created" "$HOME_DIR/Library/Fonts"
+
+echo "a font that is not installed yet is still only a download away"
+HOME_DIR=$(sandbox_home switch-font-missing)
+mkdir -p "$HOME_DIR/.config/alacritty"
+cp "$OMAKMA_PATH/configs/alacritty/fonts/JetBrainsMono.toml" "$HOME_DIR/.config/alacritty/font.toml"
+# fc-list reports nothing, so set_font takes the download path -- with wget
+# blocked, it should report that and carry on rather than failing on the copy.
+TEST_OUTPUT=$(
+  exec 2>&1
+  set --
+  HOME="$HOME_DIR"
+  export HOME
+  source "$OMAKMA_PATH/defaults/bash/functions"
+  GUM_CALLS_FILE="$TEST_SANDBOX/gum-calls-font-missing"
+  : >"$GUM_CALLS_FILE"
+  gum() {
+    printf 'x' >>"$GUM_CALLS_FILE"
+    if [ "$(wc -c <"$GUM_CALLS_FILE" | tr -d ' ')" = 1 ]; then
+      echo "Fira Mono"
+    else
+      echo "Quit"
+    fi
+  }
+  fc-list() { :; }
+  wget() { return 1; }
+  code() { return 1; }
+  source "$OMAKMA_PATH/bin/omakma-sub/font.sh"
+)
+assert_says "it says the download failed" "Failed to download"
+assert_quiet "and nothing else went wrong"
+assert_same "the alacritty font config is still switched" "$HOME_DIR/.config/alacritty/font.toml" "$OMAKMA_PATH/configs/alacritty/fonts/FiraMono.toml"
 
 echo "edit_config leaves a file it cannot find alone"
 TEST_OUTPUT=$(
