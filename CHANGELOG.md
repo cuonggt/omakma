@@ -19,6 +19,13 @@ installs; this file describes *why*.
   turned up only because the new coverage ran on macOS and failed there while
   passing on Linux. The loop is guarded on the count now, the way the install
   helpers already are.
+- `install/preflight.sh` is covered too, in the same file as the runner it pairs
+  with. On its own it only writes marker files; what matters is the property
+  across both halves -- preflight marks every migration that exists, migrate
+  then runs only what is not marked, and one added afterwards still reaches the
+  machine. Either script could be tested alone and pass while that broke.
+  Blanking preflight now fails eleven assertions, including a fresh install
+  being put through every historical fix.
 
 - Three cases in the test suite could not fail, found by blanking each file the
   suite covers and checking whether anything went red. Two were loops over a
