@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.11] - 2026-10-27
+
 ### Fixed
 
 - `install/desktop/select-optional-apps.sh` asks which optional apps to install
