@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.8] - 2026-10-27
+
 ### Fixed
 
 - Four failure messages blamed the network for something that had downloaded
