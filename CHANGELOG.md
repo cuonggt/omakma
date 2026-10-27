@@ -9,7 +9,14 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Changed
+
+- `test/run.sh` re-lists every failed assertion at the end of a failing run,
+  each with the case file it came from, and prints the command that runs just
+  those files again. A full run is over five hundred lines, so the handful that
+  matter scroll off the top: one CI run came back 229/1 with the log truncated
+  above the failure, which left nothing to diagnose and nothing to reproduce. A
+  passing run is unchanged.
 
 ## [0.2.8] - 2026-10-27
 
