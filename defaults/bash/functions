@@ -132,6 +132,19 @@ install_unavailable() {
   return 0
 }
 
+# setup_failed <name>
+# Record that something arrived but could not be set up, and carry on. It
+# differs from download_failed only in what it says, and that is the point: an
+# installer that downloaded fine and then failed, or a `valet install` that
+# did, is not a failed download, and calling it one sends the user off to look
+# at their network.
+setup_failed() {
+  OMAKMA_FAILED_INSTALLS+=("$1")
+  echo "Could not finish setting up $1. Skipping it and carrying on."
+
+  return 0
+}
+
 # report_failed_installs
 # Name everything that was skipped, late enough in the run that the user still
 # has it on screen. Silent when nothing failed.

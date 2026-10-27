@@ -33,17 +33,62 @@ if [[ -n "$languages" ]]; then
       # after another, so skip them rather than taking the install down.
       if command -v php &> /dev/null; then
         if ! command -v composer &> /dev/null; then
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php --quiet
-          sudo mkdir -p /usr/local/bin
-          sudo mv composer.phar /usr/local/bin/composer
-          rm composer-setup.php
+          # Downloaded to a temp directory and checked before it is run.
+          # `php -r "copy(...)"` exits 0 when the download fails and writes no
+          # file, so the line after it ran php against a file that was not
+          # there -- which, under set -e, ended the install at the retry
+          # message before install/desktop.sh had run at all. Since PHP is
+          # preselected, that was every default install on a bad connection.
+          # The checksum is published on a different host to the installer,
+          # which is what Composer publishes it for. Hashed with php rather
+          # than shasum: php is already known to be here, it is what Composer's
+          # own instructions use, and shasum is missing on the Linux runner the
+          # tests run on.
+          COMPOSER_TMP=$(mktemp -d)
+
+          if ! curl --proto '=https' --tlsv1.2 -sSf https://getcomposer.org/installer -o "$COMPOSER_TMP/installer" ||
+            ! curl --proto '=https' --tlsv1.2 -sSf https://composer.github.io/installer.sig -o "$COMPOSER_TMP/installer.sig"; then
+            download_failed Composer
+          else
+            # shellcheck disable=SC2016 # $argv is PHP's, so the quotes stay single
+            if ! COMPOSER_HASH=$(php -r 'echo hash_file("sha384", $argv[1]);' -- "$COMPOSER_TMP/installer"); then
+              setup_failed Composer
+            elif [ "$COMPOSER_HASH" != "$(cat "$COMPOSER_TMP/installer.sig")" ]; then
+              echo "The Composer installer did not match its published checksum, so it was not run."
+              download_failed Composer
+            # --install-dir and --filename keep the phar out of whatever
+            # directory the install was started from. Nothing here ever cd's, so
+            # the old version wrote composer-setup.php and composer.phar into
+            # $PWD -- the user's home, for the documented one-liner -- and left
+            # the setup script sitting there whenever a later step failed.
+            elif ! php "$COMPOSER_TMP/installer" --quiet --install-dir="$COMPOSER_TMP" --filename=composer; then
+              setup_failed Composer
+            elif ! sudo mkdir -p /usr/local/bin ||
+              ! sudo mv "$COMPOSER_TMP/composer" /usr/local/bin/composer; then
+              setup_failed Composer
+            fi
+          fi
+
+          rm -rf "$COMPOSER_TMP"
         fi
 
+        # Valet comes from Composer rather than Homebrew, into
+        # ~/.composer/vendor/bin. Look for it again afterwards rather than
+        # assuming the require worked: a failed one left `valet install` to run
+        # as a command that was not there, and took the install with it.
         if ! command -v valet &> /dev/null; then
-          composer global require laravel/valet
-          valet install
-          valet trust
+          if ! command -v composer &> /dev/null; then
+            echo "Skipping Valet: Composer is not available."
+          elif ! composer global require laravel/valet; then
+            download_failed Valet
+          elif ! command -v valet &> /dev/null; then
+            echo "Valet installed, but is not on PATH, so it was not set up."
+            setup_failed Valet
+          elif ! valet install; then
+            setup_failed Valet
+          else
+            valet trust || echo "Could not run valet trust, so Valet will ask for your password when it starts."
+          fi
         fi
       fi
       ;;
