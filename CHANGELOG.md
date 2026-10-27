@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.10] - 2026-10-27
+
 ### Fixed
 
 - `omakma update` no longer blames the network for every failure, and no longer
