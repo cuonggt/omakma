@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.12] - 2026-10-27
+
 ### Fixed
 
 - `omakma theme` no longer configures Sublime Text or VS Code for a theme whose
