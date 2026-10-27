@@ -8,13 +8,16 @@
 # a colour scheme repository into a directory tree for a Sublime Text that was
 # not there.
 
-# run_switcher <home> <sub-command> <first-choice>
+# run_switcher <home> <sub-command> <first-choice> [tools: fail|ok]
 # Source a real sub-command with gum answering once and then quitting, so the
-# menu it re-enters at the end exits instead of waiting.
+# menu it re-enters at the end exits instead of waiting. "tools" decides whether
+# the Sublime package clone and the VS Code extension install succeed; it
+# defaults to fail, which is what every case before this one assumed.
 run_switcher() {
   SWITCHER_HOME="$1"
   SWITCHER_NAME="$2"
   SWITCHER_CHOICE="$3"
+  SWITCHER_TOOLS="${4:-fail}"
 
   TEST_OUTPUT=$(
     exec 2>&1
@@ -40,12 +43,28 @@ run_switcher() {
         echo "Quit"
       fi
     }
-    # So a clone can be seen in the output rather than actually happening.
+    TOOLS_MODE="$SWITCHER_TOOLS"
+
+    # So a clone can be seen in the output rather than actually happening. When
+    # it is meant to work, the package directory is created, since that is what
+    # the colour scheme the config names lives in.
     git() {
       echo "ATTEMPTED git $1" >&2
+
+      if [ "$TOOLS_MODE" = ok ] && [ "$1" = clone ]; then
+        mkdir -p "$3"
+        return 0
+      fi
+
       return 1
     }
-    code() { return 1; }
+    code() {
+      if [ "$TOOLS_MODE" = ok ]; then
+        return 0
+      fi
+
+      return 1
+    }
 
     # Nothing here may reach the network or the real font store. GitHub's
     # runners have wget, so leaving font.sh unstubbed meant it downloaded a font
@@ -246,3 +265,72 @@ TEST_OUTPUT=$(
   update_config "$OMAKMA_PATH/configs/zellij.kdl" "$TEST_SANDBOX/real-app/config.kdl"
 )
 assert_same "the file is placed" "$TEST_SANDBOX/real-app/config.kdl" "$OMAKMA_PATH/configs/zellij.kdl"
+
+# sandbox_sublime <name>
+# A HOME with Sublime Text's config in place, so the theme setter gets past its
+# "is Sublime even installed" guard and reaches the clone.
+sandbox_sublime() {
+  local home
+  home=$(sandbox_home "$1")
+
+  mkdir -p "$home/Library/Application Support/Sublime Text/Packages/User"
+  cp "$OMAKMA_PATH/configs/sublime/Preferences.sublime-settings" \
+    "$home/Library/Application Support/Sublime Text/Packages/User/Preferences.sublime-settings"
+
+  printf '%s' "$home"
+}
+
+# sandbox_vscode <name>
+# A HOME with VS Code's settings.json in place.
+sandbox_vscode() {
+  local home
+  home=$(sandbox_home "$1")
+
+  mkdir -p "$home/Library/Application Support/Code/User"
+  cp "$OMAKMA_PATH/configs/vscode.json" \
+    "$home/Library/Application Support/Code/User/settings.json"
+
+  printf '%s' "$home"
+}
+
+echo "a Sublime colour scheme that will not download leaves the theme alone"
+HOME_DIR=$(sandbox_sublime switch-theme-sublime-fail)
+SUBLIME_PREFS="$HOME_DIR/Library/Application Support/Sublime Text/Packages/User/Preferences.sublime-settings"
+cp "$SUBLIME_PREFS" "$TEST_SANDBOX/sublime-prefs.before"
+run_switcher "$HOME_DIR" theme Nord fail
+assert_says "the download is reported" "Could not download"
+assert_says "and what it meant for the theme" "Sublime Text's theme was left as it was"
+assert_same "the preferences are untouched" "$SUBLIME_PREFS" "$TEST_SANDBOX/sublime-prefs.before"
+
+echo "a Sublime colour scheme that downloads is applied"
+HOME_DIR=$(sandbox_sublime switch-theme-sublime-ok)
+SUBLIME_PREFS="$HOME_DIR/Library/Application Support/Sublime Text/Packages/User/Preferences.sublime-settings"
+cp "$SUBLIME_PREFS" "$TEST_SANDBOX/sublime-prefs-ok.before"
+run_switcher "$HOME_DIR" theme Nord ok
+assert_quiet "nothing is reported as a failure" "was left as it was"
+if cmp -s "$SUBLIME_PREFS" "$TEST_SANDBOX/sublime-prefs-ok.before"; then
+  test_fail "the preferences were not rewritten, so the case above proves nothing"
+else
+  test_pass "the preferences are rewritten"
+fi
+
+echo "a VS Code extension that will not install leaves the theme alone"
+HOME_DIR=$(sandbox_vscode switch-theme-vscode-fail)
+VSCODE_SETTINGS="$HOME_DIR/Library/Application Support/Code/User/settings.json"
+cp "$VSCODE_SETTINGS" "$TEST_SANDBOX/vscode-settings.before"
+run_switcher "$HOME_DIR" theme Nord fail
+assert_says "the extension is reported" "Could not finish setting up"
+assert_says "and what it meant for the theme" "VS Code's theme was left as it was"
+assert_same "the settings are untouched" "$VSCODE_SETTINGS" "$TEST_SANDBOX/vscode-settings.before"
+
+echo "a VS Code extension that installs is applied"
+HOME_DIR=$(sandbox_vscode switch-theme-vscode-ok)
+VSCODE_SETTINGS="$HOME_DIR/Library/Application Support/Code/User/settings.json"
+cp "$VSCODE_SETTINGS" "$TEST_SANDBOX/vscode-settings-ok.before"
+run_switcher "$HOME_DIR" theme Nord ok
+assert_quiet "nothing is reported as a failure" "was left as it was"
+if cmp -s "$VSCODE_SETTINGS" "$TEST_SANDBOX/vscode-settings-ok.before"; then
+  test_fail "the settings were not rewritten, so the case above proves nothing"
+else
+  test_pass "the settings are rewritten"
+fi
