@@ -11,6 +11,15 @@ installs; this file describes *why*.
 
 ### Fixed
 
+- `bin/omakma-sub/migrate.sh` no longer depends on `set -u` being off. It
+  expanded `"${migrations[@]}"` directly, and bash 3.2 -- which is what macOS
+  ships -- treats an empty array there as an unbound variable, so a machine with
+  no pending migrations would have died the moment anything sourcing it set
+  `set -u`. bash 4.4 and later do not, so CI could never have found this: it
+  turned up only because the new coverage ran on macOS and failed there while
+  passing on Linux. The loop is guarded on the count now, the way the install
+  helpers already are.
+
 - Three cases in the test suite could not fail, found by blanking each file the
   suite covers and checking whether anything went red. Two were loops over a
   list parsed out of a production file -- the optional-app labels and the

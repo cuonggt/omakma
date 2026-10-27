@@ -17,17 +17,24 @@ shopt -s nullglob
 migrations=("$OMAKMA_MIGRATIONS_DIR"/*.sh)
 shopt -u nullglob
 
-for migration in "${migrations[@]}"; do
-  basename=$(basename "$migration")
-  marker="$OMAKMA_MIGRATIONS_STATE/$basename"
+# Guarded on the count rather than expanded straight away: bash 3.2 treats
+# "${empty[@]}" as an unbound variable under `set -u`, so a machine with no
+# pending migrations would have died here the moment anything sourcing this set
+# it. bash 4.4 and later do not, so CI could never have caught it -- macOS ships
+# 3.2.57, which is the only version that matters.
+if [ "${#migrations[@]}" -gt 0 ]; then
+  for migration in "${migrations[@]}"; do
+    basename=$(basename "$migration")
+    marker="$OMAKMA_MIGRATIONS_STATE/$basename"
 
-  [[ -e "$marker" ]] && continue
+    [[ -e "$marker" ]] && continue
 
-  echo "Running migration: $basename"
-  if ( source "$migration" ); then
-    touch "$marker"
-  else
-    echo "Migration failed: $basename"
-    return 1 2>/dev/null || exit 1
-  fi
-done
+    echo "Running migration: $basename"
+    if ( source "$migration" ); then
+      touch "$marker"
+    else
+      echo "Migration failed: $basename"
+      return 1 2>/dev/null || exit 1
+    fi
+  done
+fi
