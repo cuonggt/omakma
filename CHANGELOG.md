@@ -9,7 +9,17 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- `omakma theme` no longer configures Sublime Text or VS Code for a theme whose
+  files never arrived. `themes/set-sublime-theme.sh` cloned the colour scheme
+  package with a bare `git clone` rather than `clone_if_missing`, and
+  `themes/set-vscode-theme.sh` ran `code --install-extension` unguarded; both
+  then rewrote the app's config regardless, naming a scheme inside a package
+  that was not there or a theme from an extension that had not installed. Each
+  now reports the failure and leaves the previous working theme in place, which
+  is the only one of the two outcomes the user can undo. A failure in one app
+  still lets the others be themed.
 
 ## [0.2.11] - 2026-10-27
 
