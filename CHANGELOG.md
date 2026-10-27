@@ -9,7 +9,22 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- `omakma update` no longer blames the network for every failure, and no longer
+  strands the machine. It ran `git pull --rebase` and printed "check your
+  network connection" whatever went wrong, so a checkout the user had edited,
+  or one carrying a local commit, sent them to their router over the one thing
+  only they could fix. Worse, a rebase that stopped part-way was left where it
+  stopped: the checkout ends up on a detached HEAD with unmerged files, "try
+  again" fails forever after that, and a detached HEAD is the single state
+  `install/pin-to-release.sh` exists to avoid -- `git pull` has nothing to
+  follow, so no fix ever reaches the machine again. A half-finished rebase is
+  now undone and the checkout left exactly as it was, and a dirty checkout, a
+  detached HEAD, a branch tracking nothing and a rebase left over from an
+  earlier attempt are each identified before the network is touched and given
+  the command that clears them. The fetch and the rebase run as two steps, so
+  being offline and having diverged no longer share a message.
 
 ## [0.2.9] - 2026-10-27
 
