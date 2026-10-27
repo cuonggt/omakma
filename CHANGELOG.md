@@ -17,6 +17,13 @@ installs; this file describes *why*.
   matter scroll off the top: one CI run came back 229/1 with the log truncated
   above the failure, which left nothing to diagnose and nothing to reproduce. A
   passing run is unchanged.
+- The README's Development section covers the test suite and ShellCheck, points
+  at this file, and says plainly what the tests do not cover. Until now a
+  contributor browsing the repository had no way to discover that `test/run.sh`
+  and `test/lint.sh` exist, or that CI gates on both -- it was written only in
+  `CLAUDE.md`, which is guidance for an assistant rather than documentation for
+  a person. The uninstaller coverage count there was also stale: eight of the
+  forty-four have cases now, not five.
 
 ## [0.2.8] - 2026-10-27
 

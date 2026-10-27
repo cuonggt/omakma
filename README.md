@@ -76,6 +76,46 @@ success.
 
 ## Development
 
+Every change is recorded in [CHANGELOG.md](CHANGELOG.md), which describes *why*
+it was made rather than only what moved.
+
+### Tests
+
+`test/run.sh` exercises how the installers and uninstallers treat config under
+your home directory.
+
+```
+test/run.sh            # every case file
+test/run.sh alacritty  # just test/app-alacritty.sh
+```
+
+It is safe to run on a machine you care about: every case gets a throwaway
+`HOME` under `$TMPDIR`, every `brew` call is stubbed, and nothing reaches the
+network. A failing run lists what broke at the end, with the command that runs
+just those case files again.
+
+ShellCheck is the other gate:
+
+```
+test/lint.sh
+```
+
+CI runs both on every push and pull request to `master`, and any ShellCheck
+finding fails the build. Note that the target is bash 3.2 -- macOS ships
+`/bin/bash` 3.2.57 -- so ShellCheck will sometimes suggest syntax that is not
+available here.
+
+### What the tests do not cover
+
+Config handling is the only part of the codebase with automated coverage, and
+**no uninstaller has ever actually removed anything**: every `brew` call is
+stubbed, so a green build shows that a script deletes the right config, never
+that it uninstalls the package. Eight of the forty-four uninstallers have cases
+covering which files they delete; the rest are unexercised. Try
+`omakma uninstall` on a machine you can afford to break before trusting it.
+
+### Migrations
+
 A fix made inside an installer only ever reaches machines set up after it. When
 a change needs to reach existing installs too, add a migration:
 
