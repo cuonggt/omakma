@@ -103,7 +103,8 @@ echo "a-shell.sh reports an Oh My Zsh installer that downloads but will not run"
 HOME_DIR=$(sandbox_with_checkout shell-ohmyzsh-broken)
 run_installer "$HOME_DIR" terminal/a-shell.sh fail ok
 assert_says "the installer runs to the end" "reached_end=yes"
-assert_says "it reports Oh My Zsh rather than succeeding silently" "Could not download Oh My Zsh"
+assert_says "it reports Oh My Zsh rather than succeeding silently" "Could not finish setting up Oh My Zsh"
+assert_quiet "and not as a download problem, since the download worked" "Could not download Oh My Zsh"
 
 echo "app-sublime.sh survives its seven clones and Package Control failing"
 HOME_DIR=$(sandbox_home sublime-downloads-fail)
@@ -161,3 +162,16 @@ assert_says "returns success so set -e cannot abort" "returned=0"
 assert_says "it is recorded" "recorded=1"
 assert_says "it says so at the point of failure" "Could not download something"
 assert_says "the summary covers downloads as well as packages" "a download may have failed"
+
+echo "setup_failed records the same way, without blaming the download"
+TEST_OUTPUT=$(
+  exec 2>&1
+  source "$OMAKMA_PATH/defaults/bash/functions"
+  setup_failed "something"
+  echo "returned=$?"
+  echo "recorded=${#OMAKMA_FAILED_INSTALLS[@]}"
+)
+assert_says "returns success so set -e cannot abort" "returned=0"
+assert_says "it is recorded" "recorded=1"
+assert_says "it says what actually went wrong" "Could not finish setting up something"
+assert_quiet "and does not call it a download" "Could not download"

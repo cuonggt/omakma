@@ -22,14 +22,14 @@ if ! app_installed "Recordly.app"; then
         cp -R "$APP_SRC" /Applications/
         xattr -dr com.apple.quarantine /Applications/Recordly.app 2>/dev/null || true
       else
-        download_failed Recordly
+        setup_failed Recordly
       fi
 
       # Detached either way: the old version only unmounted when it found the
       # app, so a bad image stayed mounted.
       hdiutil detach -quiet "$RECORDLY_VOLUME"
     else
-      download_failed Recordly
+      setup_failed Recordly
     fi
   else
     download_failed Recordly

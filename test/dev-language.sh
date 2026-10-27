@@ -215,15 +215,6 @@ run_language() {
   )
 }
 
-# assert_quiet <description> <substring>
-# The other side of assert_says: something the run must not have done.
-assert_quiet() {
-  case "$TEST_OUTPUT" in
-  *"$2"*) test_fail "$1 (in output: $2)" ;;
-  *) test_pass "$1" ;;
-  esac
-}
-
 echo "a Composer installer that will not download is skipped, not fatal"
 language_defaults
 CURL_MODE=fail

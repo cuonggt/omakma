@@ -177,6 +177,17 @@ assert_says() {
   esac
 }
 
+# assert_quiet <description> <substring>
+# The other side of assert_says: something the run must not have said. A wrong
+# explanation is its own kind of failure looking like a success -- reporting a
+# failed `valet install` as a failed download sends the user to their router.
+assert_quiet() {
+  case "$TEST_OUTPUT" in
+  *"$2"*) test_fail "$1 (in output: $2)" ;;
+  *) test_pass "$1" ;;
+  esac
+}
+
 test_summary() {
   echo
   echo "pass=$TEST_PASS fail=$TEST_FAIL"

@@ -9,7 +9,15 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- Four failure messages blamed the network for something that had downloaded
+  fine and then failed to run: the Oh My Zsh and rustup installers, and a
+  Recordly disk image that either would not mount or had no app inside. They
+  report through `setup_failed` now. The wording is the whole change and the
+  whole point of it -- sending someone to look at their router over an
+  installer that ran and failed is its own kind of failure looking like a
+  success.
 
 ## [0.2.7] - 2026-10-27
 

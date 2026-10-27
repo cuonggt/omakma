@@ -111,7 +111,7 @@ if [[ -n "$languages" ]]; then
       RUSTUP_INSTALLER=$(mktemp)
 
       if curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o "$RUSTUP_INSTALLER"; then
-        bash "$RUSTUP_INSTALLER" -y || download_failed Rust
+        bash "$RUSTUP_INSTALLER" -y || setup_failed Rust
       else
         download_failed Rust
       fi
