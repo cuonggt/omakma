@@ -50,9 +50,15 @@ fi
 test_begin
 
 for CASE_FILE in "${CASE_FILES[@]}"; do
+  # Named here so a failure carries its case file into the summary, and so the
+  # name it reports is the one that selects it again on the command line.
+  TEST_CASE=$(basename "$CASE_FILE" .sh)
+
   echo
-  echo "== $(basename "$CASE_FILE" .sh)"
+  echo "== $TEST_CASE"
   source "$CASE_FILE"
 done
+
+TEST_CASE=""
 
 test_summary

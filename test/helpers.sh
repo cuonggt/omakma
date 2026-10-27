@@ -20,6 +20,16 @@ TEST_FAIL=0
 TEST_SANDBOX=""
 TEST_OUTPUT=""
 
+# The case file currently being sourced, and every failure collected as it
+# happens. A full run prints over five hundred lines, so the handful that matter
+# scroll off the top: one CI run came back 229/1 with the log truncated above
+# the failure, which left nothing to diagnose and nothing to reproduce.
+# test_summary re-lists them at the end, where a truncated log still has them,
+# with the command that runs just those case files again.
+TEST_CASE=""
+TEST_FAILURES=()
+TEST_FAILED_CASES=()
+
 test_begin() {
   TEST_SANDBOX=$(mktemp -d "${TMPDIR:-/tmp}/omakma-test.XXXXXX") || exit 1
   trap test_cleanup EXIT
@@ -153,6 +163,13 @@ test_pass() {
 test_fail() {
   TEST_FAIL=$((TEST_FAIL + 1))
   echo "  FAIL $1"
+
+  if [ -n "$TEST_CASE" ]; then
+    TEST_FAILURES+=("$TEST_CASE: $1")
+    TEST_FAILED_CASES+=("$TEST_CASE")
+  else
+    TEST_FAILURES+=("$1")
+  fi
 }
 
 assert_gone() {
@@ -191,5 +208,34 @@ assert_quiet() {
 test_summary() {
   echo
   echo "pass=$TEST_PASS fail=$TEST_FAIL"
+
+  # Guarded on the count rather than expanded straight away: run.sh sets
+  # `set -u`, under which bash 3.2 treats "${empty[@]}" as an unbound variable.
+  if [ "${#TEST_FAILURES[@]}" -gt 0 ]; then
+    local failure
+
+    echo
+    echo "Failed:"
+    for failure in "${TEST_FAILURES[@]}"; do
+      echo "  $failure"
+    done
+  fi
+
+  if [ "${#TEST_FAILED_CASES[@]}" -gt 0 ]; then
+    local name
+    local cases=""
+
+    # Each case file once, so the hint is a command to paste rather than a list
+    # to deduplicate by hand.
+    for name in "${TEST_FAILED_CASES[@]}"; do
+      if [[ " $cases " != *" $name "* ]]; then
+        cases="$cases $name"
+      fi
+    done
+
+    echo
+    echo "Reproduce:$(printf ' test/run.sh%s' "$cases")"
+  fi
+
   [ "$TEST_FAIL" -eq 0 ]
 }
