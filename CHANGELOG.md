@@ -9,6 +9,10 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.2.9] - 2026-10-27
+
 ### Changed
 
 - `test/run.sh` re-lists every failed assertion at the end of a failing run,
