@@ -1,1 +1,0 @@
-brew_app_uninstall ollama

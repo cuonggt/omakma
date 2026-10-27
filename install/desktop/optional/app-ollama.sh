@@ -1,1 +1,0 @@
-brew_app_install ollama

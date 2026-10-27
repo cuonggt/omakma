@@ -9,7 +9,18 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Removed
+
+- The second Ollama installer. There were two -- `brew_install ollama` under
+  `install/terminal/optional/` and `brew_app_install ollama` under
+  `install/desktop/optional/`, with byte-identical uninstallers -- and the
+  desktop pair was reachable only through the install menu's file browser, since
+  the menu routes the name to the terminal copy. It was also the wrong one:
+  Homebrew's `ollama` is a formula with no app bundle, so `brew_app_install`
+  guarded on an `/Applications/Ollama.app` the formula never creates and the
+  guard could never fire. `test/menu.sh` now drives every install-menu entry
+  through the real dispatch and checks it resolves to a file that is there,
+  which is what makes removing one safe.
 
 ## [0.2.10] - 2026-10-27
 
