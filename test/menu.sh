@@ -149,6 +149,7 @@ echo "every entry in the install menu resolves to an installer that is there"
 # menu it is checking, and the loop is fed by a heredoc rather than a pipe, which
 # would put the counters in a subshell and lose them.
 MENU_LABELS=$(sed -n '/^CHOICES=(/,/^)/p' "$OMAKMA_PATH/bin/omakma-sub/install.sh" | sed -n 's/^  "\(.*\)"$/\1/p')
+assert_parsed "the labels are read out of the install sub-command" "$MENU_LABELS"
 while IFS= read -r MENU_LABEL; do
   MENU_ENTRY=$(printf '%s' "$MENU_LABEL" | awk -F ' {2,}' '{print $1}')
 

@@ -96,6 +96,7 @@ echo "every label the first-run prompt offers has an installer behind it"
 # Read out of install/first-run-choices.sh rather than restated here, so a label
 # added there without an installer fails this rather than a user's install.
 OPTIONAL_LABELS=$(sed -n 's/^OPTIONAL_APPS=(\(.*\))$/\1/p' "$OMAKMA_PATH/install/first-run-choices.sh" | tr -d '"')
+assert_parsed "the labels are read out of first-run-choices.sh" "$OPTIONAL_LABELS"
 for OPTIONAL_LABEL in $OPTIONAL_LABELS; do
   OPTIONAL_SLUG=$(printf '%s' "$OPTIONAL_LABEL" | tr '[:upper:]' '[:lower:]')
   assert_exists "$OPTIONAL_LABEL has an installer" "$OMAKMA_PATH/install/desktop/optional/app-$OPTIONAL_SLUG.sh"

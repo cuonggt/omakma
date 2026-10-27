@@ -205,6 +205,20 @@ assert_quiet() {
   esac
 }
 
+# assert_parsed <description> <value>
+# A list read out of a production file, asserted before it is looped over. An
+# empty result means the parse broke, not that there is nothing to check -- and
+# a loop over nothing runs no assertions and reports no failure, so the section
+# prints its heading, contributes nothing and the run stays green. Two loops in
+# this suite failed open that way.
+assert_parsed() {
+  if [ -n "$2" ]; then
+    test_pass "$1"
+  else
+    test_fail "$1 (parsed nothing, so the checks below ran on an empty list)"
+  fi
+}
+
 test_summary() {
   echo
   echo "pass=$TEST_PASS fail=$TEST_FAIL"

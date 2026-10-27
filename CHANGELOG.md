@@ -9,7 +9,22 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- Three cases in the test suite could not fail, found by blanking each file the
+  suite covers and checking whether anything went red. Two were loops over a
+  list parsed out of a production file -- the optional-app labels and the
+  install menu's entries -- which ran no assertions at all when the parse
+  broke, printed their heading with nothing under it, and reported no failure;
+  between them that was seventeen assertions that could vanish silently. The
+  third asserted only that changing the font size printed no errors, which an
+  empty `font-size.sh` satisfies as well as a working one. `assert_parsed` now
+  asserts the parse before either loop, and the font size is checked by reading
+  it back out of the config.
+- `test/switchers.sh`'s one-argument `assert_quiet` is now `assert_no_errors`.
+  Case files are sourced into one shell in alphabetical order, so it had been
+  taking over `test/update.sh`'s two-argument calls and leaving five of them
+  checking for the word "cannot" instead of the message they named.
 
 ## [0.2.12] - 2026-10-27
 
