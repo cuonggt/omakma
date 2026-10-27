@@ -145,6 +145,27 @@ HOME_DIR=$(sandbox_home switch-size-empty)
 run_switcher "$HOME_DIR" font-size 12
 assert_no_errors "no errors for alacritty or ghostty"
 
+echo "changing font size writes it into the configs that are there"
+# The case above passes against an empty font-size.sh, since a script that does
+# nothing also says nothing. This one is what holds the sub-command to doing its
+# job: blank the script and these two fail.
+HOME_DIR=$(sandbox_home switch-size-applied)
+mkdir -p "$HOME_DIR/.config/alacritty" "$HOME_DIR/.config/ghostty"
+cp "$OMAKMA_PATH/configs/alacritty/font-size.toml" "$HOME_DIR/.config/alacritty/font-size.toml"
+cp "$OMAKMA_PATH/configs/ghostty/config" "$HOME_DIR/.config/ghostty/config"
+run_switcher "$HOME_DIR" font-size 12
+assert_no_errors "no errors for the apps that are missing"
+if grep -q '^size = 12$' "$HOME_DIR/.config/alacritty/font-size.toml"; then
+  test_pass "alacritty's font size is set"
+else
+  test_fail "alacritty's font size was not set: $(grep '^size' "$HOME_DIR/.config/alacritty/font-size.toml")"
+fi
+if grep -q '^font-size = 12$' "$HOME_DIR/.config/ghostty/config"; then
+  test_pass "ghostty's font size is set"
+else
+  test_fail "ghostty's font size was not set: $(grep '^font-size' "$HOME_DIR/.config/ghostty/config")"
+fi
+
 echo "changing font with nothing installed says nothing"
 HOME_DIR=$(sandbox_home switch-font-empty)
 run_switcher "$HOME_DIR" font "Fira Mono"
