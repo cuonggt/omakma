@@ -75,8 +75,13 @@ run_switcher() {
   )
 }
 
-# assert_quiet <description>
-assert_quiet() {
+# assert_no_errors <description>
+# No error from any app that is not installed. Named apart from helpers.sh's
+# assert_quiet, which takes a substring that must be absent: this file is
+# sourced before test/update.sh, so defining a one-argument assert_quiet here
+# silently took over its calls and left five of them checking for "cannot"
+# instead of the message they named. They passed, which is worse.
+assert_no_errors() {
   case "$TEST_OUTPUT" in
   *"No such file or directory"* | *"can't read"* | *"cannot"*)
     test_fail "$1 (said: $(printf '%s' "$TEST_OUTPUT" | grep -im1 'no such file\|can.t read\|cannot'))"
@@ -88,7 +93,7 @@ assert_quiet() {
 echo "switching theme with nothing installed says nothing"
 HOME_DIR=$(sandbox_home switch-theme-empty)
 run_switcher "$HOME_DIR" theme Nord
-assert_quiet "no errors for any app that is not there"
+assert_no_errors "no errors for any app that is not there"
 case "$TEST_OUTPUT" in
 *"ATTEMPTED git"*) test_fail "it tried to clone a Sublime package with no Sublime installed" ;;
 *) test_pass "and no Sublime package is cloned" ;;
@@ -101,7 +106,7 @@ mkdir -p "$HOME_DIR/.config/ghostty/themes" "$HOME_DIR/.config/zellij/themes"
 cp "$OMAKMA_PATH/configs/ghostty/config" "$HOME_DIR/.config/ghostty/config"
 cp "$OMAKMA_PATH/configs/zellij.kdl" "$HOME_DIR/.config/zellij/config.kdl"
 run_switcher "$HOME_DIR" theme Nord
-assert_quiet "no errors for the apps that are missing"
+assert_no_errors "no errors for the apps that are missing"
 # themes/nord/ghostty holds the Ghostty theme name, which is lowercase here.
 if grep -q '^theme = nord$' "$HOME_DIR/.config/ghostty/config"; then
   test_pass "ghostty's theme is set"
@@ -119,12 +124,12 @@ assert_gone "while alacritty, which is not installed, gets nothing" "$HOME_DIR/.
 echo "changing font size with nothing installed says nothing"
 HOME_DIR=$(sandbox_home switch-size-empty)
 run_switcher "$HOME_DIR" font-size 12
-assert_quiet "no errors for alacritty or ghostty"
+assert_no_errors "no errors for alacritty or ghostty"
 
 echo "changing font with nothing installed says nothing"
 HOME_DIR=$(sandbox_home switch-font-empty)
 run_switcher "$HOME_DIR" font "Fira Mono"
-assert_quiet "no errors for any of the four files it writes"
+assert_no_errors "no errors for any of the four files it writes"
 case "$TEST_OUTPUT" in
 *"ATTEMPTED wget"* | *"ATTEMPTED curl"*)
   test_fail "the switcher tried to download a font, so this suite needs the network"
@@ -161,7 +166,7 @@ TEST_OUTPUT=$(
   source "$OMAKMA_PATH/bin/omakma-sub/font.sh"
 )
 assert_says "it says the download failed" "Failed to download"
-assert_quiet "and nothing else went wrong"
+assert_no_errors "and nothing else went wrong"
 assert_same "the alacritty font config is still switched" "$HOME_DIR/.config/alacritty/font.toml" "$OMAKMA_PATH/configs/alacritty/fonts/FiraMono.toml"
 
 echo "edit_config leaves a file it cannot find alone"
@@ -172,7 +177,7 @@ TEST_OUTPUT=$(
   echo "returned=$?"
 )
 assert_says "returns success" "returned=0"
-assert_quiet "and says nothing"
+assert_no_errors "and says nothing"
 
 echo "edit_config applies every expression it is given"
 EDIT_FILE="$TEST_SANDBOX/edit-me.conf"
