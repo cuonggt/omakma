@@ -6,7 +6,7 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
   OHMYZSH_INSTALLER=$(mktemp)
 
   if curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -o "$OHMYZSH_INSTALLER"; then
-    sh "$OHMYZSH_INSTALLER" "" --unattended || download_failed "Oh My Zsh"
+    sh "$OHMYZSH_INSTALLER" "" --unattended || setup_failed "Oh My Zsh"
   else
     download_failed "Oh My Zsh"
   fi
