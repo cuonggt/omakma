@@ -9,6 +9,21 @@ installs; this file describes *why*.
 
 ## [Unreleased]
 
+### Fixed
+
+- `install/desktop/select-optional-apps.sh` asks which optional apps to install
+  when nothing has chosen them, instead of silently installing none. Its two
+  siblings, `select-dev-language.sh` and `select-dev-database.sh`, have always
+  had that fallback; this one had none, so reaching it through `omakma install`
+  did nothing at all. It also tested `${OMAKMA_FIRST_RUN_OPTIONAL_APPS}` for
+  being non-empty rather than set, which the prompt now makes load-bearing: an
+  empty value is the user having chosen none of them on first run, and reading
+  that as "never asked" interrupts an install that is already running to ask a
+  second time. The old form was additionally a `set -u` hazard -- a plain
+  reference to an unset variable is a fatal unbound-variable error, where
+  `${VAR+set}` is safe by construction -- which never fired only because
+  `install.sh` does not use `set -u`.
+
 ### Removed
 
 - The second Ollama installer. There were two -- `brew_install ollama` under
