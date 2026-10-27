@@ -135,3 +135,32 @@ run_menu "$HOME_DIR" uninstall "" "$OMAKMA_PATH/uninstall/terminal/app-zellij.sh
 assert_says "the spinner runs" "Uninstall completed!"
 assert_says "the screen is cleared as before" "CLEARED"
 assert_gone "and the config is cleaned up" "$HOME_DIR/.config/zellij"
+
+echo "every entry in the install menu resolves to an installer that is there"
+# Driven through the real dispatch rather than re-deriving the paths here. Three
+# entries are routed into install/terminal/ by name -- dev-language, dev-database
+# and ollama, none of which is a desktop app -- and everything else falls through
+# to install/desktop/optional/, so a label whose file is missing shows up only as
+# bash failing to source it. There used to be two ollama installers, one in each
+# tree, and the desktop one was reachable only through the file browser; deleting
+# it is safe exactly as long as the name still routes somewhere that exists.
+#
+# The labels are read out of the sub-command so this list cannot drift from the
+# menu it is checking, and the loop is fed by a heredoc rather than a pipe, which
+# would put the counters in a subshell and lose them.
+MENU_LABELS=$(sed -n '/^CHOICES=(/,/^)/p' "$OMAKMA_PATH/bin/omakma-sub/install.sh" | sed -n 's/^  "\(.*\)"$/\1/p')
+while IFS= read -r MENU_LABEL; do
+  MENU_ENTRY=$(printf '%s' "$MENU_LABEL" | awk -F ' {2,}' '{print $1}')
+
+  # Neither opens an installer by name: one opens the file browser, one leaves.
+  if [ "$MENU_ENTRY" = "> All" ] || [ "$MENU_ENTRY" = "<< Back" ]; then
+    continue
+  fi
+
+  MENU_SLUG=$(printf '%s' "$MENU_ENTRY" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+  HOME_DIR=$(sandbox_home "menu-resolve-$MENU_SLUG")
+  run_menu "$HOME_DIR" install "$MENU_ENTRY" "" ok
+  assert_quiet "$MENU_ENTRY resolves to an installer" "No such file or directory"
+done <<MENU_ENTRIES
+$MENU_LABELS
+MENU_ENTRIES
