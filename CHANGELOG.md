@@ -11,6 +11,42 @@ installs; this file describes *why*.
 
 Nothing yet.
 
+## [0.2.7] - 2026-10-27
+
+### Fixed
+
+- A failed Composer download no longer ends the whole install. The bootstrap in
+  `install/terminal/select-dev-language.sh` fetched the installer with
+  `php -r "copy(...)"`, which exits 0 when the download fails and writes no
+  file, so the line after it ran php against a file that was not there. Under
+  `set -e` that ended the run at the retry message before `install/desktop.sh`
+  had been reached at all -- no desktop apps, no Dock, no themes, no fonts. PHP
+  is preselected in `install/first-run-choices.sh`, so this was every default
+  install on a bad connection.
+- The Composer installer is verified before it runs, against the checksum
+  Composer publishes on a separate host, rather than being downloaded and
+  executed unchecked.
+- Neither `composer-setup.php` nor the phar is written into the directory the
+  install was started from. Nothing in the install ever `cd`s, so for the
+  documented one-liner that was the user's home, and the setup script was left
+  sitting there whenever a later step failed.
+- `composer global require laravel/valet`, `valet install` and `valet trust`
+  are each guarded, and Valet is looked for again after the require rather than
+  assumed onto PATH -- a failed require left `valet install` to run as a command
+  that was not there, taking the install with it.
+
+### Added
+
+- `setup_failed`, alongside `download_failed`, for something that arrived and
+  then could not be set up. The two differ only in what they say, which is the
+  point: reporting a failed `valet install` as a failed download sends the user
+  off to look at their network.
+- `test/dev-language.sh`, covering the nine ways the Composer bootstrap can
+  fail plus the happy path, and taking the suite to 364 assertions. It hashes
+  through a stubbed php rather than for real, so the cases need no hash tool of
+  their own -- plain Ubuntu has no `shasum`, which is also why the installer
+  hashes with php.
+
 ## [0.2.6] - 2026-10-22
 
 ### Fixed
